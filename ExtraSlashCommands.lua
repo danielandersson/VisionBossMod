@@ -163,9 +163,9 @@ end
 
 function VBM_PrintAboutInfo()
 	vbm_print(vbm_c_p.."You are running: "..vbm_c_g.."VisionBossMod v"..vbm_c_w..VBM_VERSION);
-	vbm_print(vbm_c_w.."by Vislike @ EU Shattered Halls");
-	vbm_print(vbm_c_p.."Website: "..vbm_c_lb.."http://www.closure-wow.com/forum/viewtopic.php?f=13&t=13");
-	vbm_print(vbm_c_p.."Get latest VBM: "..vbm_c_lb.."http://fogz.mine.nu:8080/files/VisionBossMod.rar");
+	vbm_print(vbm_c_w.."by Kyau @ US Cenarius");
+	vbm_print(vbm_c_p.."Website: "..vbm_c_lb.."http://kyau.net/vbm/");
+	vbm_print(vbm_c_p.."Get latest VBM: "..vbm_c_lb.."http://kyau.net/VisionBossMod.7z");
 end
 
 function VBM_Slashcommandinfo()
@@ -307,9 +307,9 @@ end
 ]]--
 
 function VBM_PromoteAllRaid()
-	if(IsRaidLeader()) then
+	if(UnitIsGroupLeader("player")) then
 		local i;
-		for i=1,GetNumRaidMembers() do
+		for i=1,GetNumGroupMembers() do
 			PromoteToAssistant("raid"..i);
 		end
 	else
@@ -340,9 +340,9 @@ function VBM_Set_Normal()
 		end
 	else
 		--check size of raid
-		if(GetNumRaidMembers()>15) then
+		if(GetNumGroupMembers()>15) then
 			VBM_Set_Normal25();
-		elseif(GetNumRaidMembers()>0) then
+		elseif(GetNumGroupMembers()>0) then
 			VBM_Set_Normal10();
 			VBM_Set_Normal5();
 		else
@@ -361,9 +361,9 @@ function VBM_Set_Heroic()
 		end
 	else
 		--check size of raid
-		if(GetNumRaidMembers()>15) then
+		if(GetNumGroupMembers()>15) then
 			VBM_Set_Heroic25();
-		elseif(GetNumRaidMembers()>0) then
+		elseif(GetNumGroupMembers()>0) then
 			VBM_Set_Heroic10();
 			VBM_Set_Heroic5();
 		else
@@ -436,7 +436,7 @@ function VBM_PrintVersions(msg,_,announce)
 	vl_names = {};
 	--building list
 	local i;
-	for i=1,GetNumRaidMembers() do
+	for i=1,GetNumGroupMembers() do
 		name = GetRaidRosterInfo(i); --get name
 		--if raid member doesnt have a version add version 0
 		if(VBM_VERSION_LIST[name]==nil) then VBM_VERSION_LIST[name] = 0; end
@@ -479,7 +479,7 @@ function VBM_PrintVersions(msg,_,announce)
 	end
 	
 	--if you are not in raid
-	if(GetNumRaidMembers()<=0) then
+	if(GetNumGroupMembers()<=0) then
 		vbm_printc("You are running: "..vbm_c_g.."VisionBossMod v"..vbm_c_w..VBM_VERSION);
 		if(VBMSettings.newestversion > VBM_VERSION) then
 			vbm_printc("There is a "..vbm_c_g.."newer version "..vbm_c_p.."out: "..vbm_c_w..VBMSettings.newestversion);
@@ -500,7 +500,7 @@ function VBM_Slash_SS(msg,_,...)
 	local i;
 	--check raid
 	
-	for i=1,GetNumRaidMembers() do
+	for i=1,GetNumGroupMembers() do
 		if(VBM_CheckForBuff("Soulstone Resurrection","raid"..i)) then
 			if(ss==false) then
 				ss = GetRaidRosterInfo(i);
@@ -570,7 +570,7 @@ function VBM_NotNearMe(msg,_,...)
 	local not_in_raid = "";
 	local not_visible = "";
 	local c_vis,c_near = 0,0;
-	for r_m=1,GetNumRaidMembers() do
+	for r_m=1,GetNumGroupMembers() do
 		if(not UnitIsVisible("raid"..r_m)) then
 			not_visible = not_visible..UnitName("raid"..r_m).." ";
 			c_vis = c_vis+1;
@@ -654,14 +654,14 @@ function VBM_CallRandomPet(text)
 end
 
 function VBM_DisbandRaid()
-	if(IsRaidLeader()) then
+	if(UnitIsGroupLeader("player")) then
 		StaticPopupDialogs["VBM_CONFIRM_RAIDDISBAND"] = {
 		  text = "Are you sure you want to disband raid?",
 		  button1 = "Yes",
 		  button2 = "No",
 		  OnAccept = function()
 			vbm_sendchat("* * * Disbanding Raid * * *");
-			for i=GetNumRaidMembers()-1,1,-1 do
+			for i=GetNumGroupMembers()-1,1,-1 do
 				UninviteUnit("raid"..i);
 			end
 			vbm_printc("RaidDisband: complete");
@@ -677,7 +677,7 @@ function VBM_DisbandRaid()
 end
 
 function VBM_SetUpPull(time)
-	if(IsRaidLeader() or IsRaidOfficer()) then
+	if(UnitIsGroupLeader("player") or UnitIsGroupAssistant("player")) then
 		if(time=="") then
 			--do last pull
 			vbm_raidwarn("* * Pull in "..VBMSettings['PullCD'].." seconds * *");
@@ -940,7 +940,7 @@ local function dovotesetupcheck(r)
 		vbm_printc("Error: You are in combat");
 		return false;
 	end
-	if(GetNumRaidMembers()>0 and not (IsRaidLeader() or IsRaidOfficer()) ) then
+	if(GetNumGroupMembers()>0 and not (UnitIsGroupLeader("player") or UnitIsGroupAssistant("player")) ) then
 		vbm_printc("Error: You are not RaidLeader or RaidOfficer");
 		return false;
 	end
@@ -953,7 +953,7 @@ local function votestart(r)
 	VBM_Delay(25,vbm_sendchatnovbm,"Vote ends in 5 sec");
 	--setup vote list for valid players
 	local i;
-	for i=1,GetNumRaidMembers() do
+	for i=1,GetNumGroupMembers() do
 		running_vote[UnitName("raid"..i)] = 0;
 	end
 end

@@ -84,7 +84,7 @@ function VBM_RM_ClearAll()
 end
 
 function VBM_RaidModes_RequestSend()
-	if(IsRaidLeader() or IsRaidOfficer()) then
+	if(UnitIsGroupLeader("player") or UnitIsGroupAssistant("player")) then
 		local m,d,p,d2;
 		for m,d in pairs(VBM_MODES) do
 			for p,d2 in pairs(d) do

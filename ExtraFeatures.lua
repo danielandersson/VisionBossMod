@@ -212,7 +212,7 @@ end
 
 function VBM_Officers_chat_commands(arg1,arg2)
 	if(arg1 == "!a") then
-		if(IsRaidLeader()) then
+		if(UnitIsGroupLeader("player")) then
 			PromoteToAssistant(arg2);
 		end
 		return;
@@ -221,14 +221,14 @@ function VBM_Officers_chat_commands(arg1,arg2)
 	-- kick
 	found,_,p1 = string.find(arg1,"!kick (.+)");
 	if(found) then
-		if(IsRaidLeader()) then
+		if(UnitIsGroupLeader("player")) then
 			UninviteUnit(p1);
 		end
 		return;
 	end
 	found,_,p1 = string.find(arg1,"!k (.+)");
 	if(found) then
-		if(IsRaidLeader()) then
+		if(UnitIsGroupLeader("player")) then
 			UninviteUnit(p1);
 		end
 		return;
@@ -236,14 +236,14 @@ function VBM_Officers_chat_commands(arg1,arg2)
 	-- promote
 	found,_,p1 = string.find(arg1,"!promote (.+)");
 	if(found) then
-		if(IsRaidLeader()) then
+		if(UnitIsGroupLeader("player")) then
 			PromoteToAssistant(p1);
 		end
 		return;
 	end
 	found,_,p1 = string.find(arg1,"!p (.+)");
 	if(found) then
-		if(IsRaidLeader()) then
+		if(UnitIsGroupLeader("player")) then
 			PromoteToAssistant(p1);
 		end
 		return;
@@ -273,6 +273,9 @@ function VisionBossMod_Auto_Repair()
 				vbm_print("|cFF8888CC<VisionBossMod> AutoRepair cost: "..VBM_FormatMoney(rc));
 			end
 		end
+
+        -- hide the repair dialog
+        StaticPopup_Hide("USE_GUILDBANK_REPAIR");
 	end
 end
 
@@ -340,7 +343,7 @@ function VBM_MakeLeaderRollList()
 	local i;
 	local c=0;
 	local l = {};
-	for i=1,GetNumRaidMembers() do
+	for i=1,GetNumGroupMembers() do
 		c = c+1;
 		l[#l+1] = i.." = "..UnitName("raid"..i);
 		if(c>4) then
@@ -356,17 +359,11 @@ function VBM_MakeLeaderRollList()
 end
 
 function VBM_MakeLeaderRoll()
-	if(GetNumRaidMembers()>0) then
-		if (IsRaidLeader() or IsRaidOfficer()) then
-			RandomRoll(1,GetNumRaidMembers());
+	if(GetNumGroupMembers()>0) then
+		if (UnitIsGroupLeader("player") or UnitIsGroupAssistant("player")) then
+			RandomRoll(1,GetNumGroupMembers());
 		else
 			vbm_printc("LeaderRoll: You are not Leader or promoted");
-		end
-	elseif(GetNumPartyMembers()>0) then
-		if(IsPartyLeader()) then
-			RandomRoll(1,GetNumPartyMembers()+1);
-		else
-			vbm_printc("LeaderRoll: You are not Leader");
 		end
 	else
 		RandomRoll(1,1);
@@ -376,15 +373,12 @@ end
 function VBM_LeaderRollResult(arg1)
 	--get nr of players
 	local nr;
-	if(GetNumRaidMembers()>0) then
-		if (IsRaidLeader() or IsRaidOfficer()) then
-			nr = GetNumRaidMembers();
-		else
-			return;
-		end
-	elseif(GetNumPartyMembers()>0) then
-		if(IsPartyLeader()) then
-			nr = GetNumPartyMembers()+1;
+	if(GetNumGroupMembers()>0) then
+		--if (IsRaidLeader() or IsRaidOfficer()) then
+		if (UnitIsGroupLeader("player") or UnitIsGroupAssistant("player")) then
+			nr = GetNumGroupMembers();
+        --elseif(IsPartyLeader()) then
+		--	nr = GetNumGroupMembers()+1;
 		else
 			return;
 		end
@@ -397,7 +391,7 @@ function VBM_LeaderRollResult(arg1)
 	found, _, rnd_value = string.find(arg1,UnitName("player").." rolls (%d*) %(1%-"..nr.."%)");
 	--disp result
 	if(found) then
-		if(GetNumRaidMembers()>0) then
+		if(GetNumGroupMembers()>0) then
 			vbm_sendchat("Leader Roll: (1-"..nr.."): "..rnd_value.." = "..UnitName("raid"..rnd_value).." ("..VBM_GetGroupNr(UnitName("raid"..rnd_value))..")");
 		else
 			local char_name;
@@ -493,7 +487,7 @@ end
 
 function VBM_MasterLootReminder(status)
 	--if master loot reminder is on and raid members is over 20 and no vbm_boss is set then
-	if(VBM_GetS("MasterLootReminder") and GetNumRaidMembers() > 15) then
+	if(VBM_GetS("MasterLootReminder") and GetNumGroupMembers() > 15) then
 		if(status=="start") then
 			if(GetLootMethod()~="master") then
 				vbm_infowarn("Boss detected Turn on Master Loot",0.1,1,0,0);
@@ -536,10 +530,8 @@ end
 function VBM_BadgeLootReminderCheck()
 	--get nr of group members
 	local nr = 0;
-	if(GetNumRaidMembers()>0) then
-		nr = GetNumRaidMembers();
-	elseif(GetNumPartyMembers()>0) then
-		nr = GetNumPartyMembers();
+	if(GetNumGroupMembers()>0) then
+		nr = GetNumGroupMembers();
 	end
 	nr = math.floor(nr*0.45);
 	--count table
@@ -563,7 +555,7 @@ end
 function SoloAutoLootBoPConfirm(slot)
 	if(not VBM_GetS("AutoSoloBoPLoot")) then return; end
 	
-	if(GetNumRaidMembers()==0 and GetNumPartyMembers()==0) then
+	if(GetNumGroupMembers()==0) then
 		vbm_printc("Trying to auto loot BoP item: "..GetLootSlotLink(slot));
 		--during 1 second try to confirm it 10 times
 		ConfirmLootSlot(slot);
@@ -582,7 +574,7 @@ end
 function SoloAutoLootBoPCleared(slot)
 	if(not VBM_GetS("AutoSoloBoPLoot")) then return; end
 	
-	if(GetNumRaidMembers()==0 and GetNumPartyMembers()==0) then
+	if(GetNumGroupMembers()==0) then
 		--if is auto looting auto click on next BoP
 		if(VBM_AUTO_LOOTING) then
 			local i;

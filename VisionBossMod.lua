@@ -72,7 +72,7 @@ UnitPower("player", ALTERNATE_POWER_INDEX)
 	******************
 ]]--
 
-VBM_VERSION = 2.85;
+VBM_VERSION = 3.02;
 VBM_NEW_VERSION_OUT = false; -- will be set to true if a new version is out
 VBM_VERSION_LIST = {}; -- intern data struct, used by /vbmversion function
 
@@ -350,13 +350,13 @@ end
 
 function VBM_ExtraAutoGreedCheck()
 	-- extra autogreed check
-	if(VBM_GetS("LootSelectAutoGreed") and GetNumRaidMembers()==0) then
+	if(VBM_GetS("LootSelectAutoGreed") and GetNumGroupMembers()==0) then
 		if(VBMSettings['LootSelectOption'] ~= "Greed") then
 			VBMSettings['LootSelectOption'] = "Greed";
 			vbm_printc("You are not in a raid group, Setting AutoLoot to |cFFFFFFFFGreed");
 		end
 	end
-	if(VBM_GetS("LootSelectAutoDiss") and GetNumRaidMembers()==0) then
+	if(VBM_GetS("LootSelectAutoDiss") and GetNumGroupMembers()==0) then
 		if(VBMSettings['LootSelectOption'] ~= "Diss") then
 			VBMSettings['LootSelectOption'] = "Diss";
 			vbm_printc("You are not in a raid group, Setting AutoLoot to |cFFFFFFFFDiss");
@@ -366,7 +366,7 @@ end
 
 function VBM_DetectRaid()
 	--Check if we have joined a raid group and if so request version
-	if(GetNumRaidMembers()>0 and VBM_IN_RAID == false) then
+	if(GetNumGroupMembers()>0 and VBM_IN_RAID == false) then
 		VBM_IN_RAID = true;
 		vbm_verbosec("You have joined a raid group");
 		--ask for new version
@@ -375,7 +375,7 @@ function VBM_DetectRaid()
 		vbm_send_mess("GET SYNC");
 	end
 	
-	if(GetNumRaidMembers()==0 and VBM_IN_RAID == true) then
+	if(GetNumGroupMembers()==0 and VBM_IN_RAID == true) then
 		VBM_IN_RAID = false;
 		vbm_verbosec("Not in a raid group anymore");
 		--turn on autogreed if set to on
@@ -393,7 +393,7 @@ function VBM_DetectRaid()
 		end
 	end
 	
-	if(GetNumRaidMembers()>20 and VBM_GetS("LootSelectAutoPass")) then
+	if(GetNumGroupMembers()>20 and VBM_GetS("LootSelectAutoPass")) then
 		if(VBMSettings['LootSelectOption'] ~= "Pass") then
 			VBMSettings['LootSelectOption'] = "Pass";
 			vbm_printc("Your raid group now has more then 20 members, Setting AutoLoot to |cFFFFFFFFPass");
@@ -1255,7 +1255,7 @@ function vbm_debug(msg)
 end
 
 function vbm_sendchat(msg)
-	if(GetNumRaidMembers()>0) then
+	if(GetNumGroupMembers()>0) then
 		SendChatMessage("<VBM> "..msg,"RAID");
 	elseif(GetNumPartyMembers()>0) then
 		SendChatMessage("<VBM> "..msg,"PARTY");
@@ -1265,7 +1265,7 @@ function vbm_sendchat(msg)
 end
 
 function vbm_sendchatnovbm(msg)
-	if(GetNumRaidMembers()>0) then
+	if(GetNumGroupMembers()>0) then
 		SendChatMessage(""..msg,"RAID");
 	elseif(GetNumPartyMembers()>0) then
 		SendChatMessage(""..msg,"PARTY");

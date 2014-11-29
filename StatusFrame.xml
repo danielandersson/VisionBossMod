@@ -40,7 +40,7 @@
 			</OnMouseDown>
 		</Scripts>
 		<Size>
-			<AbsDimension x="180" y="37"/>
+			<AbsDimension x="188" y="45"/>
 		</Size>
 		<Anchors>
 			<Anchor point="CENTER">
@@ -69,7 +69,7 @@
 					<Anchors>
 						<Anchor point="TOP">
 							<Offset>
-								<AbsDimension x="-10" y="-2"/>
+								<AbsDimension x="0" y="-5"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -84,7 +84,7 @@
 				<Anchors>
 					<Anchor point="TOPRIGHT">
 						<Offset>
-							<AbsDimension x="-1" y="0"/>
+							<AbsDimension x="-2" y="-2"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -104,7 +104,7 @@
 				<Anchors>
 					<Anchor point="BOTTOMLEFT">
 						<Offset>
-							<AbsDimension x="4" y="3"/>
+							<AbsDimension x="6" y="6"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -236,7 +236,7 @@
 				<Anchors>
 					<Anchor point="BOTTOMRIGHT">
 						<Offset>
-							<AbsDimension x="-4" y="3"/>
+							<AbsDimension x="-6" y="6"/>
 						</Offset>
 					</Anchor>
 				</Anchors>

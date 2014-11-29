@@ -177,16 +177,16 @@ function VBM_RangeCheck_OnUpdate(self,elapsed)
 	local player_table = {};
 	VBM_RC_ERROR = false;
 	--first for raid, else for party
-	if(GetNumRaidMembers()>0) then
-		for i = 1, GetNumRaidMembers() do
+	if(GetNumGroupMembers()>0) then
+		for i = 1, GetNumGroupMembers() do
 			unitid = "raid"..i; unitidpet = "raidpet"..i;
 			--for ranges dont include player
 			if(not UnitIsUnit(unitid, "player")) then
 				 RC_AddToTable(player_table, unitid, unitidpet);
 			end
 		end	
-	elseif(GetNumPartyMembers()>0) then
-		for i = 1, GetNumPartyMembers() do
+	elseif(GetNumGroupMembers()>0) then
+		for i = 1, GetNumGroupMembers() do
 			unitid = "party"..i; unitidpet = "partypet"..i;
 			RC_AddToTable(player_table, unitid, unitidpet);
 		end	

@@ -167,9 +167,9 @@ function VBM_ScanForWellFed()
 	local oor_dead = {};
 	local i;
 	
-	if(GetNumRaidMembers()>0) then
+	if(GetNumGroupMembers()>0) then
 		--check raid
-		for i=1,GetNumRaidMembers() do
+		for i=1,GetNumGroupMembers() do
 			--dont check dead or out of range
 			if((not UnitIsDeadOrGhost("raid"..i)) and UnitIsVisible("raid"..i)) then
 				local w = VBM_CheckForBuff("Well Fed","raid"..i);
@@ -180,11 +180,13 @@ function VBM_ScanForWellFed()
 					missing_well[group][UnitName("raid"..i)] = class;
 				end
 			else
-				local _,class = UnitClass("raid"..i);
-				oor_dead[UnitName("raid"..i)] = class;
+                if (not UnitClass("raid"..i) == nil) then
+                    local _,class = UnitClass("raid"..i);
+				    oor_dead[UnitName("raid"..i)] = class;
+                end
 			end
 		end
-	elseif(GetNumPartyMembers()>0) then
+	elseif(GetNumGroupMembers()>0) then
 		--check player
 		local w = VBM_CheckForBuff("Well Fed","player");
 		if(not w) then
@@ -193,7 +195,7 @@ function VBM_ScanForWellFed()
 			missing_well[1][UnitName("player")] = class;
 		end
 		--check party
-		for i=1,GetNumPartyMembers() do
+		for i=1,GetNumGroupMembers() do
 			--dont check dead or out of range
 			if((not UnitIsDeadOrGhost("party"..i)) and UnitIsVisible("party"..i)) then
 				local w = VBM_CheckForBuff("Well Fed","party"..i);
@@ -214,7 +216,7 @@ end
 function VBM_PopulateFlaskTooltip(self)
 	local text = "Flask Check:";
 	local texttochat = "Missing Elixir: ";
-	if(GetNumRaidMembers()>0) then
+	if(GetNumGroupMembers()>0) then
 		local both,battle,guard,except = VBM_ScanForElixirs();
 		local n,d,name,class;
 		--text = text.."\n"..vbm_c_y.."(Under dev, need help with buff names)";
@@ -303,8 +305,8 @@ end
 function VBM_ScanForElixirs(msg,_,announce)
 	local missing_both,missing_battle,missing_guardian,exceptions = {},{},{},{};
 	local i;
-	if(GetNumRaidMembers()>0) then
-		for i=1,GetNumRaidMembers() do
+	if(GetNumGroupMembers()>0) then
+		for i=1,GetNumGroupMembers() do
 			--dont check dead or out of range
 			if((not UnitIsDeadOrGhost("raid"..i)) and UnitIsVisible("raid"..i)) then
 				local b,g,except = VBM_ScanUnitForElixirs("raid"..i);
@@ -428,8 +430,8 @@ function VBM_PopulateRebirthTooltip(self)
 	--scan party or raid for druids shamans and locks
 	local druids,warlocks,shamans,priests = {},{},{},{};
 	local c;
-	if(GetNumRaidMembers()>0) then
-		for i=1,GetNumRaidMembers() do
+	if(GetNumGroupMembers()>0) then
+		for i=1,GetNumGroupMembers() do
 			_,c = UnitClass("raid"..i);
 			if(c=="DRUID") then
 				druids[#druids+1] = UnitName("raid"..i);
@@ -441,8 +443,8 @@ function VBM_PopulateRebirthTooltip(self)
 				priests[#priests+1] = UnitName("raid"..i);
 			end
 		end
-	elseif(GetNumPartyMembers()>0) then
-		for i=1,GetNumPartyMembers() do
+	elseif(GetNumGroupMembers()>0) then
+		for i=1,GetNumGroupMembers() do
 			_,c = UnitClass("party"..i);
 			if(c=="DRUID") then
 				druids[#druids+1] = UnitName("party"..i);
