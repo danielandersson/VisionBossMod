@@ -1,0 +1,497 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\FrameXML\UI.xsd">
+	<Script file="BGJoinFrame.lua"/>
+	
+	<!-- Frame to handle all core events --> 
+	<Frame name="VBMBGJoinDropDownMenu" inherits="UIDropDownMenuTemplate" />
+	
+	<Frame name="VBMBGJoinTemplate" frameStrata="LOW" hidden="true" virtual="true" enableMouse="true">
+      	<Size>
+			<AbsDimension x="250" y="16"/>
+		</Size>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentText" inherits="GameFontNormalSmall" text="Battleground *nr* *timeleft*">
+					<Color r="1.0" g="1.0" b="1.0"/>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset>
+								<AbsDimension x="5" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parentHide" inherits="UIPanelButtonTemplate" text="Hide">
+				<Size>
+					<AbsDimension x="25" y="14"/>
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativeTo="$parent" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="-5" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						getglobal(self:GetName().."Text"):SetFont("Fonts\\FRIZQT__.TTF",10)
+						self:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+					</OnLoad>
+					<OnClick>
+						if(button == "LeftButton") then
+					  		VBM_BGJoin_State[self:GetParent():GetID()] = "hide"
+					  		VBM_BGJoin_Status[self:GetParent():GetID()] = ""
+					  		VBM_BGJoinFrame_Update()
+						end
+						if(button == "RightButton") then
+							VBM_BGJoin_BgMenu = self:GetParent():GetID()
+							ToggleDropDownMenu(1, nil, VBMBGJoinDropDownMenu, self, 0, 0)
+						end
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parentJoin" inherits="UIPanelButtonTemplate" text="Join">
+				<Size>
+					<AbsDimension x="25" y="14"/>
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativeTo="$parentHide" relativePoint="LEFT">
+						<Offset>
+							<AbsDimension x="-5" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						getglobal(self:GetName().."Text"):SetFont("Fonts\\FRIZQT__.TTF",10)
+					</OnLoad>
+					<OnClick>
+						VBM_BGJoin_AcceptJoin(self:GetParent():GetID())
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnUpdate>
+				--dont update to fast
+				if(self.lastupdate and self.lastupdate + 0.25 > GetTime()) then
+					return;
+				end
+				self.lastupdate = GetTime();
+				VBM_BGJoin_UpdateText(self:GetID());
+			</OnUpdate>
+		</Scripts>
+	</Frame>
+	
+	<Frame name="VBMBGJoinFrame" toplevel="true" enableMouse="true" movable="true" frameStrata="LOW" hidden="true" parent="UIParent"> 
+      <Scripts> 
+			<OnLoad> 
+				VBM_BGJoinFrame_OnLoad(self);
+			</OnLoad> 
+			<OnEvent>
+				VBM_BGJoinFrame_OnEvent(event);
+			</OnEvent>
+         	<OnHide>
+				if(self.isMoving) then
+					self:StopMovingOrSizing();
+					ValidateFramePosition(self);
+					self.isMoving = false;
+				end
+			</OnHide>
+			<OnMouseUp>
+				if(self.isMoving) then
+			  		self:StopMovingOrSizing();
+			  		ValidateFramePosition(self);
+			  		self.isMoving = false;
+			 	end
+			</OnMouseUp>
+			<OnMouseDown>
+				if(button == "LeftButton" and not VBM_BGJ_S['locked']) then
+			  		self:StartMoving();
+			  		self.isMoving = true;
+				end
+			</OnMouseDown>
+      </Scripts> 
+      	<Size>
+			<AbsDimension x="250" y="24"/>
+		</Size>
+		<Anchors>
+			<Anchor point="TOP">
+				<Offset>
+					<AbsDimension x="0" y="-150"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="0" right="0" top="0" bottom="0"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="16"/>
+			</EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentHeaderText" inherits="GameFontNormal" text="Join Battleground">
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-5"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parentHideButton" inherits="OptionsButtonTemplate" text="Hide Now" hidden="true">
+				<Size>
+					<AbsDimension x="70" y="12"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-5"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						VBM_BGJoinFrame_ForceHide()
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parentExpandButton" inherits="OptionsButtonTemplate" text="+">
+				<Size>
+					<AbsDimension x="12" y="12"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="$parent" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-24" y="-5"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnEnter>
+						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+						GameTooltip:SetText("Show Hidden");
+						GameTooltip:Show();
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+					<OnClick>
+						for i=1,MAX_BATTLEFIELD_QUEUES do
+							if(VBM_BGJoin_State[i] == "hide") then
+								VBM_BGJoin_State[i] = nil;
+							end
+						end
+						
+						VBM_BGJoinFrame_Update()
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parentShowOptionsButton">
+				<Size>
+					<AbsDimension x="12" y="12"/>
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentExpandButton" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="6" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Up"/>
+				<PushedTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Down"/>
+				<DisabledTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Disabled"/>
+				<HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD"/>
+				<Scripts>
+					<OnEnter>
+						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+						GameTooltip:SetText("Show Option Frame");
+						GameTooltip:Show();
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+					<OnClick>
+						if(VBMBGJoinFrameOptions:IsShown()) then
+							VBMBGJoinFrameOptions:Hide()
+						else
+							VBMBGJoinFrameOptions:Show()
+						end
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Frame name="$parentBG1" parent="VBMBGJoinFrame" inherits="VBMBGJoinTemplate" id="1">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="VBMBGJoinFrame" relativePoint="TOP">
+						<Offset>
+							<AbsDimension x="0" y="-22"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Frame>
+			<Frame name="$parentBG2" parent="VBMBGJoinFrame" inherits="VBMBGJoinTemplate" id="2">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="$parentBG1" relativePoint="BOTTOM"/>
+				</Anchors>
+			</Frame>
+			<Frame name="$parentBG3" parent="VBMBGJoinFrame" inherits="VBMBGJoinTemplate" id="3">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="$parentBG2" relativePoint="BOTTOM"/>
+				</Anchors>
+			</Frame>
+		</Frames>
+   </Frame>
+   
+   
+   
+   
+   
+   <Frame name="VBMBGJoinFrameOptions" enableMouse="true" frameStrata="LOW" hidden="true" parent="VBMBGJoinFrame"> 
+		<Size>
+			<AbsDimension x="250" y="132"/>
+		</Size>
+		<Anchors>
+			<Anchor point="TOP" relativeTo="$parent" relativePoint="BOTTOM">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="5" right="5" top="5" bottom="5"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="16"/>
+			</EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentInfoText" inherits="GameFontNormalSmall" text="" justifyH="RIGHT">
+					<Anchors>
+						<Anchor point="TOPRIGHT">
+							<Offset>
+								<AbsDimension x="-5" y="-5"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnShow>
+				VBM_BGJoin_Option_OnShow();
+			</OnShow>
+		</Scripts>
+		<Frames>
+			<CheckButton name="$parentCheckLocked" inherits="OptionsCheckButtonTemplate">
+				<Size>
+					<AbsDimension x="16" y="16"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="10" y="-10"></AbsDimension>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						VBM_BGJoin_Option_Update()
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="$parentCheckCollapse" inherits="OptionsCheckButtonTemplate">
+				<Size>
+					<AbsDimension x="16" y="16"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentCheckLocked" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="0"></AbsDimension>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						VBM_BGJoin_Option_Update()
+						VBM_BGJoinFrame_Update()
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+						GameTooltip:SetText("Auto Collapse\n"..vbm_c_w.."Collapses empty rows to save space.\n(move bg2 ready msg to bg1 spot if bg1 are not ready)");
+						GameTooltip:Show();
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+			</CheckButton>
+			<EditBox name="$parentAutoJoinTime" letters="2" numeric="true" autoFocus="false" inherits="InputBoxTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentCheckCollapse" relativePoint="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="60" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Size>
+					<AbsDimension x="30" y="12"/>
+				</Size>
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString name="$parentText" inherits="GameFontNormalSmall" text="sek" justifyH="LEFT">
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
+									<Offset>
+										<AbsDimension x="0" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnTextChanged>
+						VBM_BGJoin_Option_Update()
+					</OnTextChanged>
+				</Scripts>
+			</EditBox>
+			<CheckButton name="$parentCheckAutoJoin" inherits="OptionsCheckButtonTemplate" enable="true">
+				<Size>
+					<AbsDimension x="16" y="16"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentCheckCollapse" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="0"></AbsDimension>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						VBM_BGJoin_Option_Update()
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+						GameTooltip:SetText("Auto Join\n"..vbm_c_w.."Currently disabled by Blizzard.");
+						GameTooltip:Show();
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="$parentCheckAutoRelease" inherits="OptionsCheckButtonTemplate">
+				<Size>
+					<AbsDimension x="16" y="16"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentCheckAutoJoin" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="0"></AbsDimension>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						VBM_BGJoin_Option_Update()
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+						GameTooltip:SetText("Auto Release\n"..vbm_c_w.."Does only release in a battleground.\nNot in a arena.");
+						GameTooltip:Show();
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="$parentCheckHide" inherits="OptionsCheckButtonTemplate">
+				<Size>
+					<AbsDimension x="16" y="16"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentCheckAutoRelease" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="0"></AbsDimension>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						VBM_BGJoin_Option_Update()
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="$parentCheckBGSound" inherits="OptionsCheckButtonTemplate">
+				<Size>
+					<AbsDimension x="16" y="16"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentCheckHide" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="0"></AbsDimension>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						VBM_BGJoin_Option_Update()
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+						GameTooltip:SetText("Handle Sound in Background\n"..vbm_c_w..
+											"If this is checked VBM will enable Sound in Background then battleground\n"..
+											"activity is detected. (so you can hear the join sound if tabbed)\n"..
+											"And disable Sound in Background after 2 min then bg activity stops.\n");
+						GameTooltip:Show();
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="$parentCheckExtraSound" inherits="OptionsCheckButtonTemplate">
+				<Size>
+					<AbsDimension x="16" y="16"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentCheckBGSound" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="0"></AbsDimension>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						VBM_BGJoin_Option_Update()
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+						GameTooltip:SetText("Extra Wardrum Sound\n"..vbm_c_w..
+											"This option plays an extra wardrum sound then a BG is ready");
+						GameTooltip:Show();
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+			</CheckButton>
+		</Frames>
+   </Frame>
+</Ui>

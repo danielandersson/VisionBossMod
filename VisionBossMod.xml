@@ -1,0 +1,200 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\FrameXML\UI.xsd">
+	<Script file="VisionBossMod.lua"/>
+	
+	<!-- Frame to handle all core events --> 
+	<Frame name="VisionBossModFrame"> 
+		<Scripts> 
+			<OnLoad function="VisionBossMod_OnLoad" /> 
+			<OnEvent function="VisionBossMod_OnEvent" />
+			<OnUpdate function="VisionBossMod_OnUpdate" />
+		</Scripts> 
+	</Frame>
+   
+   <!-- Frame to handle debuff events -->
+   <Frame name="VBMDebuffFrame"> 
+      <Scripts> 
+         <OnEvent function="VBM_Debuff_OnEvent" />
+      </Scripts> 
+   </Frame>
+   <Frame name="VBMSpellWarnFrame"> 
+      <Scripts> 
+         <OnEvent function="VBM_SpellWarner_OnEvent" />
+      </Scripts> 
+   </Frame>
+   <Frame name="VBMEmoteWarnFrame"> 
+      <Scripts> 
+         <OnEvent function="VBM_EmoteWarner_OnEvent" />
+      </Scripts> 
+   </Frame>
+   
+   	<Frame name="VBM_EdgeFlashFrame" parent="UIParent" setAllPoints="true" hidden="true">
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentT" file="Interface\FullScreenTextures\LowHealth" alphaMode="ADD">
+					<!-- <Color r="1" g="1" b="1" a="1" /> -->
+				</Texture>	
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnShow>
+				self.elapsed = 0;
+				self:SetAlpha(0);
+			</OnShow>
+			<OnLoad>
+				self:SetScript("OnUpdate", VBM_FlashFrame_OnUpdate);
+			</OnLoad>
+		</Scripts> 
+	</Frame>
+
+   	<Frame name="VBM_FullFlashFrame" parent="UIParent" setAllPoints="true" hidden="true">
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentT" alphaMode="ADD">
+					<Color r="1" g="1" b="1" a="1" />
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnShow>
+				self.elapsed = 0;
+				self:SetAlpha(0);
+			</OnShow>
+			<OnLoad>
+				self:SetScript("OnUpdate", VBM_FlashFrame_OnUpdate);
+			</OnLoad>
+		</Scripts> 
+	</Frame>
+   
+	<Font name="VBM_ZoneTextFont" font="Fonts\FRIZQT__.TTF" outline="THICK" virtual="true">
+		<FontHeight>
+			<AbsValue val="52"/>
+		</FontHeight>
+		<Color r="1.0" g="0.9294" b="0.7607"/>
+		<Shadow/>
+	</Font>
+	<Font name="VBM_ErrorFont" font="Fonts\FRIZQT__.TTF" virtual="true">
+		<FontHeight>
+			<AbsValue val="16"/>
+		</FontHeight>
+		<Color r="1.0" g="0.82" b="0"/>
+		<Shadow>
+			<Offset>
+				<AbsDimension x="1" y="-1"/>
+			</Offset>
+			<Color r="0" g="0" b="0"/>
+		</Shadow>
+	</Font>
+	
+    <MessageFrame name="VBM_InfoWarningFrame" insertMode="BOTTOM" parent="UIParent" frameStrata="DIALOG" toplevel="true">
+		<Size>
+			<AbsDimension x="1600" y="56"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset>
+					<AbsDimension x="0" y="26"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Scripts>
+		</Scripts>
+		<FontString inherits="VBM_ZoneTextFont" virtual="true"/>
+    </MessageFrame>
+    <MessageFrame name="VBM_DebuffWarningFrame" insertMode="BOTTOM" parent="UIParent" frameStrata="DIALOG" toplevel="true">
+		<Size>
+			<AbsDimension x="1600" y="56"/>
+		</Size>
+		<Anchors>
+			<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="VBM_InfoWarningFrame">
+				<Offset>
+					<AbsDimension x="0" y="12"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Scripts>
+		</Scripts>
+		<FontString inherits="VBM_ZoneTextFont" virtual="true"/>
+    </MessageFrame>
+   <MessageFrame name="VBM_WarningFrame" insertMode="BOTTOM" parent="UIParent" frameStrata="DIALOG" toplevel="true">
+		<Size>
+			<AbsDimension x="1600" y="56"/>
+		</Size>
+		<Anchors>
+			<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="VBM_DebuffWarningFrame">
+				<Offset>
+					<AbsDimension x="0" y="12"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Scripts>
+		</Scripts>
+		<FontString inherits="VBM_ZoneTextFont" virtual="true"/>
+    </MessageFrame>
+    <MessageFrame name="VBM_SmallWarningFrame" insertMode="TOP" parent="UIParent" frameStrata="DIALOG" toplevel="true">
+		<Size>
+			<AbsDimension x="800" y="18"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER" relativePoint="CENTER" relativeTo="VBM_DebuffWarningFrame">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<FontString inherits="VBM_ErrorFont" justifyH="CENTER"/>
+    </MessageFrame>
+    
+    <GameTooltip name="VisionBossMod_TT" frameStrata="TOOLTIP" hidden="true" inherits="GameTooltipTemplate">
+		<Scripts>
+			<OnLoad>
+				self:SetOwner(UIParent, "ANCHOR_NONE");
+			</OnLoad>
+		</Scripts>
+    </GameTooltip>
+    
+    <GameTooltip name="VisionBossMod_TextBoxTT" inherits="GameTooltipTemplate" parent="UIParent" enableMouse="true" toplevel="true" movable="true" frameStrata="TOOLTIP" hidden="true">
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Frames>
+			<Button name="$parentCloseButton">
+				<Size>
+					<AbsDimension x="32" y="32"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="1" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						HideUIPanel(VisionBossMod_TextBoxTT);
+					</OnClick>
+				</Scripts>
+				<NormalTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Up"/>
+				<PushedTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Down"/>
+				<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				GameTooltip_OnLoad(self);
+				self:RegisterForDrag("LeftButton");
+			</OnLoad>
+			<OnDragStart>
+				self:StartMoving();
+			</OnDragStart>
+			<OnDragStop>
+				self:StopMovingOrSizing();
+				ValidateFramePosition(self);
+			</OnDragStop> 
+		</Scripts>
+    </GameTooltip>
+</Ui>

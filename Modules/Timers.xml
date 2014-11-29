@@ -1,0 +1,390 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\FrameXML\UI.xsd">
+	<Script file="Timers.lua"/>
+	
+	<Font name="VBM_TimerFontTimer" font="Fonts\FRIZQT__.TTF" virtual="true">
+		<Color r="1.0" g="1.0" b="1.0"/>
+		<Shadow>
+			<Offset>
+				<AbsDimension x="1" y="-1"/>
+			</Offset>
+			<Color r="0" g="0" b="0"/>
+		</Shadow>
+		<FontHeight>
+			<AbsValue val="10"/>
+		</FontHeight>
+	</Font>
+	<Font name="VBM_TimerFontText" font="Fonts\FRIZQT__.TTF" virtual="true">
+		<Color r="1.0" g="1.0" b="1.0"/>
+		<Shadow>
+			<Offset>
+				<AbsDimension x="1" y="-1"/>
+			</Offset>
+			<Color r="0" g="0" b="0"/>
+		</Shadow>
+		<FontHeight>
+			<AbsValue val="8"/>
+		</FontHeight>
+	</Font>
+	<Frame name="VBMTimersDropDownMenu" inherits="UIDropDownMenuTemplate" />
+	
+	<!-- Frame to handle all core events --> 
+	<Frame name="VBMTimersAchorFrame" toplevel="true" clampedToScreen="true" enableMouse="true" movable="true" frameStrata="LOW" hidden="true" parent="UIParent"> 
+		<Scripts> 
+			<OnLoad> 
+				self:RegisterForDrag("LeftButton");
+			</OnLoad> 
+			<OnDragStop>
+		  		self:StopMovingOrSizing();
+			</OnDragStop>
+			<OnDragStart>
+		  		if(not VBM_Timers_GetS('locked')) then
+		  			self:StartMoving();
+		  		end
+			</OnDragStart>
+			<OnMouseDown>
+				if(button == "RightButton") then
+					ToggleDropDownMenu(1, nil, VBMTimersDropDownMenu, self, 0, 0);
+				end
+			</OnMouseDown>
+		</Scripts>
+      	<Size>
+			<AbsDimension x="80" y="20"/>
+		</Size>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="0" right="0" top="0" bottom="0"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+		</Backdrop>
+		<Anchors>
+			<Anchor point="CENTER" relativePoint="CENTER" relativeTo="UIParent">
+				<Offset>
+					<AbsDimension x="220" y="70"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentHeaderText" inherits="GameFontNormal" text="VBM Timers">
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+	</Frame>
+	
+	<Frame name="VBMTimersFlyingAchorFrame" toplevel="true" clampedToScreen="true" enableMouse="true" movable="true" frameStrata="LOW" hidden="true" parent="UIParent"> 
+		<Scripts> 
+			<OnLoad> 
+				self:RegisterForDrag("LeftButton");
+			</OnLoad> 
+			<OnDragStop>
+		  		self:StopMovingOrSizing();
+			</OnDragStop>
+			<OnDragStart>
+		  		if(not VBM_Timers_GetS('locked')) then
+		  			self:StartMoving();
+		  		end
+			</OnDragStart>
+		</Scripts>
+      	<Size>
+			<AbsDimension x="100" y="20"/>
+		</Size>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="0" right="0" top="0" bottom="0"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+		</Backdrop>
+		<Anchors>
+			<Anchor point="CENTER" relativePoint="CENTER" relativeTo="UIParent">
+				<Offset>
+					<AbsDimension x="0" y="70"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentHeaderText" inherits="GameFontNormal" text="Flying Anchor">
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+	</Frame>
+	
+	<Frame name="VBMTimersAddNew" enableMouse="true" frameStrata="LOW" hidden="true" parent="VBMTimersAchorFrame"> 
+      	<Size>
+			<AbsDimension x="200" y="50"/>
+		</Size>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="0" right="0" top="0" bottom="0"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+		</Backdrop>
+		<Anchors>
+			<Anchor point="BOTTOM" relativePoint="TOP">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Frames>
+			<EditBox name="$parentTime" letters="4" numeric="true" autoFocus="false" inherits="InputBoxTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="50" y="-20"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Size>
+					<AbsDimension x="50" y="14"/>
+				</Size>
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString name="$parentText" inherits="GameFontNormal" text="Time" justifyH="RIGHT">
+							<Anchors>
+								<Anchor point="RIGHT" relativeTo="$parent" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="-8" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad>
+						self:SetText("10");
+					</OnLoad>
+				</Scripts>
+			</EditBox>
+			<EditBox name="$parentName" letters="25" autoFocus="false" inherits="InputBoxTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="50" y="-2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Size>
+					<AbsDimension x="145" y="14"/>
+				</Size>
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString name="$parentText" inherits="GameFontNormal" text="Name" justifyH="RIGHT">
+							<Anchors>
+								<Anchor point="RIGHT" relativeTo="$parent" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="-8" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad>
+						self:SetText("My Timer");
+					</OnLoad>
+				</Scripts>
+			</EditBox>
+			<Button name="$parentSet" inherits="OptionsButtonTemplate" text="Set">
+				<Size>
+					<AbsDimension x="35" y="20"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parent" relativePoint="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-2" y="2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						VBM_StartTimer(tonumber(getglobal(self:GetParent():GetName().."Time"):GetText()),getglobal(self:GetParent():GetName().."Name"):GetText(),nil,true);
+						self:GetParent():Hide();
+					</OnClick>
+				</Scripts>
+				<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
+			</Button>
+		</Frames>
+	</Frame>
+	
+	<Frame name="VBMTimerBarTemplate" parent="UIParent" frameStrata="HIGH" hidden="true" virtual="true">
+	  	<Size>
+			<AbsDimension x="150" y="13"/>
+		</Size>
+		<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="0" right="0" top="0" bottom="1"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+		</Backdrop>
+		<Frames>
+			<StatusBar name="$parentBar" minValue="0" maxValue="100" defaultValue="100">
+			  	<Size>
+					<AbsDimension x="150" y="12"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOP">
+						<Offset>
+							<AbsDimension x="0" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<BarTexture file="Interface\AddOns\VisionBossMod\Data\BantoBar"/>
+				<BarColor r="0" g="1" b="0"/>
+				<Layers>
+					<Layer level="OVERLAY">
+						<Texture name="$parentSpark" file="Interface\CastingBar\UI-CastingBar-Spark" alphaMode="ADD">
+							<Size>
+								<AbsDimension x="12" y="28"/>
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER"/>
+							</Anchors>
+						</Texture>
+						<Texture name="$parentTexture" file="Interface\Icons\Spell_Shadow_Blackplague">
+							<TexCoords left="0.1" right="0.9" top="0.1" bottom="0.9"/>
+							<Size>
+								<AbsDimension x="12" y="12"/>
+							</Size>
+							<Anchors>
+								<Anchor point="RIGHT" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="-1" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</Texture>
+						<FontString name="$parentTimeText" inherits="VBM_TimerFontTimer" justifyH="CENTER" text="1:30">
+						  	<Size>
+								<AbsDimension x="36" y="12"/>
+							</Size>
+							<Anchors>
+								<Anchor point="LEFT">
+									<Offset>
+										<AbsDimension x="-3" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="$parentText" inherits="VBM_TimerFontText" maxLines="1" justifyH="CENTER" text="In The Name of Kil'Jaeden">
+						  	<Size>
+								<AbsDimension x="120" y="12"/>
+							</Size>
+							<Anchors>
+								<Anchor point="LEFT">
+									<Offset>
+										<AbsDimension x="30" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad>
+						self.spark = getglobal(self:GetName().."Spark");
+					</OnLoad>
+					<OnValueChanged>
+						if(self.spark) then VBM_Timers_Move_Spark(self); end
+					</OnValueChanged>
+					<OnMouseDown>
+						if(button == "LeftButton") then
+							VBM_Timer_Click(self);
+						end
+					</OnMouseDown>
+				</Scripts>
+			</StatusBar>
+		</Frames>
+		<Scripts>
+			<OnUpdate>
+				VBM_Timers_OnTimerUpdate(self);
+			</OnUpdate>
+			<OnLoad>
+				self.start = 0;
+				self.stop = 0;
+				self.timername = "";
+				self:SetBackdropColor(0,0,0,0.8);
+				self.bar = getglobal(self:GetName().."Bar");
+				self.bartext = getglobal(self:GetName().."BarText");
+				self.bartime = getglobal(self:GetName().."BarTimeText");
+				self.texture = getglobal(self:GetName().."BarTexture");
+			</OnLoad>
+		</Scripts>
+	</Frame>
+	
+	<Frame name="VBMTimer1" inherits="VBMTimerBarTemplate">
+		<Anchors>
+			<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="VBMTimersAchorFrame"/>
+		</Anchors>
+	</Frame>
+	<Frame name="VBMTimer2" inherits="VBMTimerBarTemplate">
+		<Anchors>
+			<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="VBMTimer1"/>
+		</Anchors>
+	</Frame>
+	<Frame name="VBMTimer3" inherits="VBMTimerBarTemplate">
+		<Anchors>
+			<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="VBMTimer2"/>
+		</Anchors>
+	</Frame>
+	<Frame name="VBMTimer4" inherits="VBMTimerBarTemplate">
+		<Anchors>
+			<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="VBMTimer3"/>
+		</Anchors>
+	</Frame>
+	<Frame name="VBMTimer5" inherits="VBMTimerBarTemplate">
+		<Anchors>
+			<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="VBMTimer4"/>
+		</Anchors>
+	</Frame>
+	<Frame name="VBMTimer6" inherits="VBMTimerBarTemplate">
+		<Anchors>
+			<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="VBMTimer5"/>
+		</Anchors>
+	</Frame>
+	<Frame name="VBMTimer7" inherits="VBMTimerBarTemplate">
+		<Anchors>
+			<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="VBMTimer6"/>
+		</Anchors>
+	</Frame>
+	<Frame name="VBMTimer8" inherits="VBMTimerBarTemplate">
+		<Anchors>
+			<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="VBMTimer7"/>
+		</Anchors>
+	</Frame>
+	<Frame name="VBMTimer9" inherits="VBMTimerBarTemplate">
+		<Anchors>
+			<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="VBMTimer8"/>
+		</Anchors>
+	</Frame>
+	<Frame name="VBMTimer10" inherits="VBMTimerBarTemplate">
+		<Anchors>
+			<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="VBMTimer9"/>
+		</Anchors>
+	</Frame>
+</Ui>

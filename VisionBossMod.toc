@@ -1,0 +1,55 @@
+## Interface: 40100
+## Title: VisionBossMod 2.0
+## Notes: Raid Warnings and UI improvments. By: |cff00ff00Vislike|r @ |cFFFF8080EU Shattered Halls|r
+## Author: Vislike @ EU Shattered Halls
+## RequiredDeps:
+## OptionalDeps:
+## SavedVariables: VBMSettings, VBM_RC_Settings, VBM_BGJ_S, VBM_Timers_Settings, VBM_TV, VBM_ARROW
+## SavedVariablesPerCharacter: VBMRB, VBM_CHAR_SAVE
+
+VBMSettings.lua
+ExtraSlashCommands.lua
+HelpFunctions.lua
+Hooks.lua
+DebuffWarner.lua
+SpellWarner.lua
+EmoteWarner.lua
+BossHelpFuncs.lua
+
+VisionBossMod.xml
+StatusFrame.xml
+
+ExtraFeatures.xml
+ExtraFeatures\BlizzardUIEnhancements.xml
+ExtraFeatures\ClassSpecific.xml
+ExtraFeatures\CombatLogParsing.xml
+ExtraFeatures\InstanceSpecific.xml
+ExtraFeatures\InterfaceAddons.xml
+ExtraFeatures\RaidModes.xml
+
+Modules\RangeChecker.xml
+Modules\ReagentBuyer.xml
+Modules\BGJoinFrame.xml
+Modules\Timers.xml
+Modules\Tv.xml
+Modules\Arrow.xml
+Modules\BlizzAnimationSystem.lua
+
+InstanceData.lua
+InstancesTBC\GruulMag.lua
+InstancesTBC\BlackTemple.lua
+InstancesTBC\HyjalSummit.lua
+InstancesTBC\TempestKeep.lua
+InstancesTBC\SerpentshrineCavern.lua
+InstancesTBC\Karazhan.lua
+InstancesTBC\ZulAman.lua
+InstancesTBC\SunwellPlateau.lua
+InstancesWOTLK\Wintergrasp.lua
+InstancesWOTLK\Naxxramas.lua
+InstancesWOTLK\ObsidianSanctum.lua
+InstancesWOTLK\EyeofEternity.lua
+InstancesWOTLK\Ulduar.lua
+InstancesWOTLK\CrusadersColiseum.lua
+InstancesWOTLK\IcecrownCitadel.lua
+InstancesCATA\Tier1Raid.lua
+InstancesCATA\BaradinHold.lua

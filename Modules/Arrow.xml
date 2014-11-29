@@ -1,0 +1,87 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\FrameXML\UI.xsd">
+	<Script file="Arrow.lua"/>
+	
+	<Frame name="VBMArrowDropDownMenu" inherits="UIDropDownMenuTemplate" />
+	
+	<Frame name="VBMArrowAnchor" clampedToScreen="true" movable="true" hidden="true" parent="UIParent">
+		<Size>
+			<AbsDimension x="40" y="40"/>
+		</Size>
+		<Anchors>
+			<Anchor point="BOTTOM" relativePoint="BOTTOM" relativeTo="UIParent">
+				<Offset>
+					<AbsDimension x="0" y="250"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+	</Frame>
+	
+	<Frame name="VBMArrowTemplate" virtual="true" toplevel="true" enableMouse="true" frameStrata="HIGH" hidden="true" parent="UIParent"> 
+		<Size>
+			<AbsDimension x="56" y="42"/>
+		</Size>
+		<Scripts> 
+			<OnLoad>
+				self.elapsed = 0;
+				self.arrow = getglobal(self:GetName().."Arrow");
+				self.dist = getglobal(self:GetName().."ArrowText");
+				self.player = getglobal(self:GetName().."ArrowTextP");
+				self.error = getglobal(self:GetName().."ErrorText");
+				self:RegisterForDrag("LeftButton");
+			</OnLoad>
+			<OnUpdate>
+				VBM_Arrow_OnUpdate(self,elapsed);
+			</OnUpdate>
+			<OnHide>
+				VBMArrowAnchor:StopMovingOrSizing();
+			</OnHide>
+			<OnDragStop>
+		  		VBMArrowAnchor:StopMovingOrSizing();
+			</OnDragStop>
+			<OnDragStart>
+				if(VBM_ARROW['locked'] == 0) then
+	  				VBMArrowAnchor:StartMoving();
+	  			end
+			</OnDragStart>
+			<OnMouseUp>
+				VBM_Arrow_OnClick(self,button);
+			</OnMouseUp>
+		</Scripts>
+		<Anchors>
+			<Anchor point="CENTER" relativeTo="VBMArrowAnchor" relativePoint="CENTER" />
+		</Anchors>
+		<Layers>
+			<Layer level="OVERLAY">
+				<Texture name="$parentArrow" file="Interface\AddOns\VisionBossMod\Data\Arrow"/>
+				<FontString name="$parentArrowText" inherits="GameFontNormal" text="">
+					<Anchors>
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent" />
+					</Anchors>
+				</FontString>
+				<FontString name="$parentErrorText" inherits="GameFontNormal" text="No Data">
+					<Color r="1" g="0" b="0" />
+					<Anchors>
+						<Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent" />
+					</Anchors>
+				</FontString>
+				<FontString name="$parentArrowTextP" inherits="GameFontNormal" text="">
+					<Anchors>
+						<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="$parent" />
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+	</Frame>
+	
+	<Frame name="VBMArrow1" inherits="VBMArrowTemplate" id="1">
+	</Frame>
+	<Frame name="VBMArrow2" inherits="VBMArrowTemplate" id="2">
+	</Frame>
+	<Frame name="VBMArrow3" inherits="VBMArrowTemplate" id="3">
+	</Frame>
+	<Frame name="VBMArrow4" inherits="VBMArrowTemplate" id="4">
+	</Frame>
+	<Frame name="VBMArrow5" inherits="VBMArrowTemplate" id="5">
+	</Frame>
+</Ui>

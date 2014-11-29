@@ -1,0 +1,180 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\FrameXML\UI.xsd">
+	<Script file="ReagentBuyer.lua"/>
+	
+	<!-- Frame to handle all core events --> 
+   <Frame name="VBMReagentBuyerFrame" toplevel="true" enableMouse="true" movable="true" frameStrata="LOW" hidden="true" parent="UIParent"> 
+      <Scripts> 
+			<OnLoad> 
+				VBM_ReagentBuyer_OnLoad(self);
+			</OnLoad> 
+			<OnEvent>
+				VBM_ReagentBuyer_OnEvent(event);
+			</OnEvent>
+         	<OnHide>
+				if(self.isMoving) then
+					self:StopMovingOrSizing();
+					ValidateFramePosition(self);
+					self.isMoving = false;
+				end
+			</OnHide>
+			<OnMouseUp>
+				if(self.isMoving) then
+			  		self:StopMovingOrSizing();
+			  		ValidateFramePosition(self);
+			  		self.isMoving = false;
+			 	end
+			</OnMouseUp>
+			<OnMouseDown>
+				if(arg1 == "LeftButton") then
+			  		self:StartMoving();
+			  		self.isMoving = true;
+				end
+			</OnMouseDown>
+      </Scripts> 
+      	<Size>
+			<AbsDimension x="220" y="105"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="5" right="5" top="5" bottom="5"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="16"/>
+			</EdgeSize>
+		</Backdrop>
+		<Frames>
+			<EditBox name="$parentReagent1" hidden="true" letters="3" numeric="true" autoFocus="false" inherits="InputBoxTemplate">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="$parent" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-10" y="-14"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Size>
+					<AbsDimension x="30" y="14"/>
+				</Size>
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString name="$parentText" inherits="GameFontNormal" text="Reagent1" justifyH="RIGHT">
+							<Anchors>
+								<Anchor point="RIGHT" relativeTo="$parent" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="-8" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnTextChanged>
+						VBM_RB_SaveValues();
+					</OnTextChanged>
+				</Scripts>
+			</EditBox>
+			<EditBox name="$parentReagent2" hidden="true" letters="3" numeric="true" autoFocus="false" inherits="InputBoxTemplate">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="$parentReagent1" relativePoint="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="0" y="-7"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Size>
+					<AbsDimension x="30" y="14"/>
+				</Size>
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString name="$parentText" inherits="GameFontNormal" text="Reagent2" justifyH="RIGHT">
+							<Anchors>
+								<Anchor point="RIGHT" relativeTo="$parent" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="-8" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnTextChanged>
+						VBM_RB_SaveValues();
+					</OnTextChanged>
+				</Scripts>
+			</EditBox>
+			<EditBox name="$parentReagent3" hidden="true" letters="3" numeric="true" autoFocus="false" inherits="InputBoxTemplate">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="$parentReagent2" relativePoint="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="0" y="-7"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Size>
+					<AbsDimension x="30" y="14"/>
+				</Size>
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString name="$parentText" inherits="GameFontNormal" text="Reagent3" justifyH="RIGHT">
+							<Anchors>
+								<Anchor point="RIGHT" relativeTo="$parent" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="-8" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnTextChanged>
+						VBM_RB_SaveValues();
+					</OnTextChanged>
+				</Scripts>
+			</EditBox>
+			<Button name="$parentBuyButton" inherits="OptionsButtonTemplate" text="Buy">
+				<Size>
+					<AbsDimension x="35" y="20"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="$parentReagent3" relativePoint="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="0" y="-4"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						VBM_RB_Buy();
+					</OnClick>
+				</Scripts>
+				<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString name="$parentExtraText" inherits="GameFontNormal" text="ReagentInfo" justifyH="RIGHT">
+							<Anchors>
+								<Anchor point="RIGHT" relativeTo="$parent" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="-8" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+			</Button>	
+		</Frames>
+   </Frame>
+</Ui>

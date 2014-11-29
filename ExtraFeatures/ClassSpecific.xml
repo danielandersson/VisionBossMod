@@ -1,0 +1,59 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\FrameXML\UI.xsd">
+	<Script file="ClassSpecific.lua"/>
+	
+	<!-- Frame to handle all core events --> 
+   <Frame name="VBMClassExtraFrame"> 
+      <Scripts> 
+         <OnLoad function="VBM_ClassExtra_OnLoad" /> 
+         <OnEvent function="VBM_ClassExtra_OnEvent" />
+      </Scripts> 
+   </Frame>
+   
+	<Frame name="VBM_ShamanMaelstromDropDownMenu" inherits="UIDropDownMenuTemplate"></Frame>
+   	<Frame name="VBM_ShamanMaelstrom" parent="UIParent" hidden="true" toplevel="true" enableMouse="true" movable="true" frameStrata="HIGH" clampedToScreen="true">
+		<Size>
+			<AbsDimension x="40" y="40"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentT" file="Interface\Icons\spell_shaman_maelstromweapon"/>
+			</Layer>
+			<Layer level="ARTWORK">
+				<FontString name="$parentText" inherits="SystemFont_OutlineThick_Huge4" text="1" maxLines="1">
+					<Size>
+						<AbsDimension x="40" y="26"/>
+					</Size>
+					<Color r="1" g="1" b="0"/>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnHide>
+				self:StopMovingOrSizing();
+			</OnHide>
+			<OnMouseUp>
+				if(self.isMoving) then
+			  		self:StopMovingOrSizing();
+			  		self.isMoving = false;
+			 	end
+			</OnMouseUp>
+			<OnMouseDown>
+				if(not VBM_CHAR_SAVE.shaman.maelstromframe.locked and button == "LeftButton") then
+			  		self:StartMoving();
+			  		self.isMoving = true;
+				end
+
+				if(button == "RightButton") then
+					ToggleDropDownMenu(1, nil, VBM_ShamanMaelstromDropDownMenu, self, 0, 0);
+				end
+			</OnMouseDown>
+		</Scripts> 
+	</Frame>
+</Ui>

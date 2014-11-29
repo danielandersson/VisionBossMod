@@ -1,0 +1,204 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\FrameXML\UI.xsd">
+	<Script file="RangeChecker.lua"/> 
+	
+	<!-- Menu frame -->
+	<Frame name="VBMRangeCheckDropDownMenu" inherits="UIDropDownMenuTemplate" />
+	
+	<Frame name="VBMRangeCheckAnchorGreen" clampedToScreen="true" toplevel="true" enableMouse="true" movable="true" frameStrata="DIALOG" hidden="true" parent="UIParent">
+		<Scripts> 
+			<OnHide>
+				self:StopMovingOrSizing();
+			</OnHide>
+			<OnMouseUp>
+		  		self:StopMovingOrSizing();
+			</OnMouseUp>
+			<OnMouseDown>
+				if(arg1 == "LeftButton") then
+			  		self:StartMoving();
+				end
+			</OnMouseDown>
+		</Scripts>
+		<Size>
+			<AbsDimension x="40" y="40"/>
+		</Size>
+		<Anchors>
+			<Anchor point="BOTTOM" relativePoint="BOTTOM" relativeTo="UIParent">
+				<Offset>
+					<AbsDimension x="0" y="150"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="0" right="0" top="0" bottom="0"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+		</Backdrop>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentHeaderText" inherits="GameFontNormal" text="Green">
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+	</Frame>
+	<Frame name="VBMRangeCheckAnchorRed" clampedToScreen="true" toplevel="true" enableMouse="true" movable="true" frameStrata="DIALOG" hidden="true" parent="UIParent">
+		<Scripts> 
+			<OnHide>
+				self:StopMovingOrSizing();
+			</OnHide>
+			<OnMouseUp>
+		  		self:StopMovingOrSizing();
+			</OnMouseUp>
+			<OnMouseDown>
+				if(arg1 == "LeftButton") then
+			  		self:StartMoving();
+				end
+			</OnMouseDown>
+		</Scripts>
+		<Size>
+			<AbsDimension x="40" y="40"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="0" right="0" top="0" bottom="0"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+		</Backdrop>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentHeaderText" inherits="GameFontNormal" text="Red">
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+	</Frame>
+	
+	
+	<!-- Frame that handle the onupdate function to RangeCheck function -->
+	<Frame name="VBMRangeCheckFrame" toplevel="true" enableMouse="true" movable="false" frameStrata="HIGH" hidden="true" parent="UIParent">
+		<Scripts> 
+			<OnLoad>
+				self.MovedTo = "green";
+				self.ScaleTo = "green";
+				self.lastupdate = 0;
+			</OnLoad>
+			<OnUpdate function="VBM_RangeCheck_OnUpdate" />
+			<OnHide>
+				if(self.isMoving) then
+					VBMRangeCheckAnchorGreen:StopMovingOrSizing();
+			  		VBMRangeCheckAnchorRed:StopMovingOrSizing();
+					self.isMoving = false;
+				end
+			</OnHide>
+			<OnMouseUp>
+				if(self.isMoving) then
+				  	VBMRangeCheckAnchorGreen:StopMovingOrSizing();
+			  		VBMRangeCheckAnchorRed:StopMovingOrSizing();
+			  		self.isMoving = false;
+			 	end
+			</OnMouseUp>
+			<OnMouseDown>
+				if(not self.animating) then
+					if(VBM_RC_Settings['locked'] == 0 and button == "LeftButton") then
+				  		if(self.MovedTo == "green") then
+				  			VBMRangeCheckAnchorGreen:StartMoving();
+				  		else
+				  			VBMRangeCheckAnchorRed:StartMoving();
+				  		end
+				  		self.isMoving = true;
+					end
+					
+					if(button == "RightButton") then
+						ToggleDropDownMenu(1, nil, VBMRangeCheckDropDownMenu, self, 150, 70);
+					end
+				end
+			</OnMouseDown>
+		</Scripts>
+		<Size>
+			<AbsDimension x="148" y="66"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER" relativePoint="CENTER" relativeTo="VBMRangeCheckAnchorGreen"/>
+		</Anchors>
+		<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="5" right="5" top="5" bottom="5"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="16"/>
+			</EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentHeaderText" inherits="GameFontNormal" text="RangeChecker">
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-8"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Frame name="$parentScaleAni" hidden="true" />
+			<Button name="$parentMessage1" hidden="false" id="1">
+				<Size>
+					<AbsDimension x="135" y="14"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOP">
+						<Offset>
+							<AbsDimension x="0" y="-30"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="$parentText" inherits="ChatFontNormal" text="Testar ! 2" maxLines="2" justifyV="MIDDLE">
+							<Size>
+								<AbsDimension x="135"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOP">
+									<Offset>
+										<AbsDimension x="0" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnEnter>
+						if(self.tooltip) then
+							GameTooltip:SetOwner(self);
+							GameTooltip:SetText(self.tooltip);
+							GameTooltip:Show();
+						end
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+			</Button>
+		</Frames>
+	</Frame>
+</Ui>

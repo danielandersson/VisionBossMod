@@ -1,0 +1,571 @@
+ChangeLog for VisionBossMod - Vislike @ EU Shattered Halls
+http://www.closure-wow.com/forum/viewtopic.php?f=13&t=13
+Read version number like this .xxy
+
+3.0 BETA
+- Some version updates require restart of wow.
+
+CATA Tier 1 Raid Content
+- Omnotron Defense System
+- Halfus Wyrmbreaker
+- Valiona and Theralion
+- Magmaw
+- Conclave of Wind
+- Maloriak
+- Argaloth
+- Atramedes
+- Chimaeron
+- Twilight Ascendant Council
+- Cho'gall
+- Al'Akir
+- Nefarian
+
+FIXED
+- Hopefully all issues with 4.1.0 Patch
+- Soulstone cooldown tracker
+
+CHANGED
+- Moved Announce Interrupts in Say to not be part of the Interrupt Watcher anymore, so you can choose to only use 1 of the features.
+- SS/DI/Feast Alert into SS/Feast/Jeeves Alert, and removed the old tbc/classic sync code since it not needed.
+- 'Invite' Keyword now also works with realID whispers
+- 20 yrd detection to use "Dense Embersilk Bandage"
+
+ADDED
+- New / command : /rgx, for Restart GFX shortcut.
+- Tranquility & Divine Hymn to RaidRess tracker
+- Option for Announce Interrupts in Say to only do so while inside a raid instance and not while dueling and such.
+- VBM vill now autorun the code in a macro called "AutoRunAsLUA" if found during loading.
+- New / command : /movebossbar, Hooks the Boss Alt Power Bar so it can be moved.
+- New / command : /pettank, Auto marks your pets target with a skull
+- Goblin Barbecue as a Feast
+- Lightwell Renew as a buff alert
+
+REMOVED
+- the ModMods.lua stuff
+
+FINAL VERSION 2.x
+2.505
+- Fixed: Detection of buff removal.
+2.503
+- Added: New feature "Temp UnMute WoW Sound" under VBM Settings
+- Fixed: Officer chat commands
+2.502
+- Started: To remake the main setting menu.
+- Fixed: Some errors in the Hide Minimap button features, and added minimap clock
+- Fixed: Login GMOTD
+2.501
+- Fixed all errors that I could find, vbm will now load without errors but there might be more. More updates will follow.
+- Updated: Toc to 40000
+2.493
+- Added: About button in Print Info menu and made som other minor cosmetic stuff.
+- Added: Heavens Burn timer for Halion
+2.492
+- Added: Meteor Strike damage taken alert
+2.491
+- Corrected: Timers
+2.49
+- Added: Halion
+2.485
+- New Macro Command: "/raidcast BuffName;TextToSend%t" just like whispercast but sends to raid chat, and replaces %t with the name of the spells target.
+- Changed: /pull command so you can cancel it by just typing: abort, stop, a, s
+- Changed: Lich King, Shadow Trap Warning, to only play sound if the trap is within 10 yrd of you.
+- Changed: Defile detection to also include pets for finding lich kings target.
+2.484
+- New Macro Command: "/whispercast Buffname,TexttoWhisper" this will only whisper if you successfully cast the spell eg. /wc Innervate;You have Innervate! !!/cast Innervate
+2.483
+- Added: New macro commands: /erroroff /errortextoff /errorsoundoff, and /*on commands. (See the new macro print info option for details)
+- Changed: /h and /n commands, they now try to auto detect what instace size to set heroic and normal for.
+- Updated: Print info menu, clarified som texts, splited the commands to one more subtab (macro commands), version info now displays something outside a raidgroup.
+- Changed: /sellall to also accept item links.
+2.482
+- New Feature for Timers: You can now choose to fill timer bars up instead of decaying them.
+- Added: Summary for /sellgrey and /sellall how many items sold and for how much gold.
+- Added: Corpse Dust to reagent buyer for DKs.
+- Added: Fail check for Neck-Deep in Vile achievemnt on lich king (will announce in chat like all other fail checks)
+2.481
+- Changed: Sindragosa block positions to show up in normal aswell.
+2.48
+- Info: Many new slash commands in this verion, info for all slash commands can be found under VBM > Print Info > Extra Slash Commands / Groupleader Info
+- New Commands: /vote *subject* | /votea (Anonymous vote) | /craftall *craftname* | /sellall *itemname* | /at or /addtimer to add a vbm timer
+- Updated: Some tooltips
+- Added: Warning for Deformed Fanatic spawn at Lady Deathwhisper
+2.472
+- Fixed: Unstable Ooze Explosion warning.
+- Changed: Upped Mystic Buffet Achievment Tracker to 5
+2.471
+- Added: 3 arrows that point to the 3 closest players without Plague Sickness when you get plague @ Professor Putricide Hard Mode
+2.47
+- Minor: Some minor cosmetic stuff on some bosses.
+- Fixed: The sound bug that could occur during Professor Putricide Hard Mode, also changed some cosmetic stuff here.
+- Added: Option for a smaller Mind Control Warning for Lady Deathwhisper
+- Added: Option under VBM Settings, to change assumed ping value back to 200ms (See ingame tooltip for more info).
+- Low ping: VBM will from now on assume 100ms instead of 200ms to the server for its target checks.
+- Fixed: Lich King hard mode Harvest Soul timer.
+2.462
+- Hopefully last fix for Shadow Trap.
+2.461
+2.459
+2.458
+- More: Trying to fix Shadow Trap so it won't give false alarm.
+2.457
+- Lich King: Changes of timing of some stuff.
+2.455
+- Changed: Putricide 25, plague timer to 10 sec, 10 man is still 12.
+- Added: So sindragosa beacons auto show rangechecker (if you have the autoshow rangechecker option checked)
+2.454
+- Sindragosa changes.
+2.453
+- Added: Positions for Sindragosa 25 HC
+- Fixes: Small fixes for some ICC bosses.
+- Fixed: GMOTD mid screen if gmotd event was fired before varibles_loaded it will assume yes and show it.
+2.452
+- Moved: BuffAlerter to combat log parsing.
+- Some: Minor ICC boss fixes.
+- More: Internal optimizations.
+- Added: More options for warning text customization.
+2.451
+- Changed: Many internal optimizations for faster loading.
+- Fixed: A bug who was causing vbm timers to do more computing then intended.
+- Fixed: Rotface heroic 25 warning sound.
+2.45
+- Fixed the Veichle UI taint
+- File change: Require restart of WoW
+2.447
+- Changed: Some Blood Prince Council warnings, turning down the less important and make it easier to notice the more important warnings.
+- Added: Say warning for Rune of Blood, and Gastric Bloat
+2.446
+- Some boss fixes
+- Many: Cosmetic fixes for a lot of ICC bosses
+2.445
+- Fixes: Putricide
+2.444
+- Fixes: Putricide/Festergut
+2.443
+- Added: Malleable Goo warning for Festergut Hard Mode.
+2.442
+- Sindragosa / Lich King fixes.
+2.44
+- Sindragosa changes.
+2.438
+- More Updates for Hard Mode
+2.436
+- Changed: Hard mode timers for Marrowgar, Deathwhisper
+- Fixed: Impale Tracking on Marrowgar
+- Added: Support for Blizzards Haxx DynamicDifficulty, to support Hard Modes
+- Added: Option to Disable Soul Reaper timer at Lich King.
+2.431
+- Random Lich King Fixes
+2.43
+- Added: Raging Spirit Spawn warning.
+2.429
+- Added: Midscreen countdown for Soul Reaper
+- Changed phases so everyone know what ppl talk about, pull = phase 1, first winter = p2, val'kyr = p3, second winter = p4, spirits = p5
+- Lich king fixes.
+2.42
+- First Try: The Lick King
+2.416
+- Sindragosa Changes
+2.413
+- Fixed: Blood Queen 10 man timer
+- Minor fixes in ICC: Gunship, Blood Prince, Blood-Queen, Valithiria
+2.412
+- Added: Option to Auto sell all grey when you visit a vendor as a extra option to the reagent buyer.
+2.411
+- New slash command: /sellgrey - will sell all grey items in inventroy to the active vendor.
+2.41
+- First Try: Valithiria and Sindragosa
+- New Feature: LFG/BG Handle Sound in Background, it can enable sound in background when you join a queue so you can tab out and still hear the sound when the bg/dungeon is ready.
+- Added: LFG Ready Timeout timer
+2.401
+- New: VBM Arrows can now be set to follow target or mouseover (right click them in test mode and choose mouseover or target)
+- Fixed: VBM Arrows to sync with raid members, so now they can point to members with vbm again. Non vbm members is still broken by blizz.
+- Changed: 25 man Essence of the Blood Queen to 60 sec
+2.393
+- Added a "Gone" Message then Pact of the Darkfallen fades
+2.391
+- New boss fixes
+2.39
+- First try: Blood Prince Council, Blood-Queen Lana'thel
+- Added: Maelstrom Weapon Tracker under class specific > shaman
+- Changed: Upped /pull timer to 1200 seconds so Kreml can manage Anub'Arak Pulls
+2.387
+- Changed: Timer for Choking Gas Bomb @ phase 3 for professor to 13 from 17 sec
+2.386
+- Added: Timers for Choking Gas Bomb and Malleable Goo
+2.385
+- Corrections: For Professor
+2.384
+- Fixed: VBM TV showing Lady Deathwhisper and Professor Putricide
+- Lots of fixes for ICC
+2.382
+- Lots of fixes for ICC
+2.381
+- Beta: Plagueworks bosses first take
+- More: Minor Tweaks to ICC
+2.38
+- Require Restart: This version changes alot of files so Require Wow Restart.
+- Changed: More internal changes for vbm.
+- Changed: The option to Enable Anub Adds timer, to a Disable the Adds timer option (to be more consequent in the settings) (defaults to off)
+- Option: To turn off GMOTD mid screen display during login (under vbm settings)
+- Fixed: Many updates for ICC bosses.
+2.376
+- Fixed: An error while loading hooks.lua, so it will now load last and not disable the rest of VBM if some hook fail.
+2.375
+- Fixes: More ICC fixes
+- Fixed: Some internal things that might and up in an stuck loop.
+2.374
+- Changed: Sorcerer spawn timers to depend on the death of the sorcerer instead of the spawn and auto rangecheck on Saurfang
+- Fixed: Lots of ICC boss fixes, including Lady Deathwhisper not working at all
+- Added: Recipe Design etc to auto loot exceptions.
+2.373
+- Files: Added so this Version REQUIRE restart of wow
+- Added: Minimap dungeon difficulty hider (under minimap button hider)
+- Lots of fixes for ICC bosses
+2.372
+- First BETA: for icc
+- Changed: Rebirth timer to 10 min and soulstone timer to 15
+2.371
+- Added: Option for VBM tv to ban/unban raids, so you won't see them.
+- Added: So vbm will display GMOTD mid screen on login.
+2.37
+- Fixed: Onyxian Whelpling trigger deep breath warning.
+- Redid: Autoloot select some, added option to ignore epics and added option for the new disenchant comming next patch. (it falls back to greed if no diss option is avaible)
+- Added: Elixir of Armor Piercing to flask detection
+- Changed: The Manaul Update to Manual Update/Reset, this will reset current boss data so if vbm refuse to load a boss try this option.
+- Changed: Some of the core boss switching functions so if it bugs some bosses may not load.
+- Added: Files and some initial boss info for Icecrown Citadel
+- Delayed: Sahdow strike timer with 0.5 sec for better sync (it still go out of sync at some point if they dosen't cast alot in a row)
+- Added: Mighty Defense to flask check
+2.36
+- Changed: So all 3 of the rightmost buttons have liveupdate during mouseover.
+- Added: Simple Rebirth and Soulstone tracker as a button under the main VBM window.
+2.352
+- Fixed: Shadow Strike timer could stop during phase 3 of anub.
+2.351
+- Added: Option under instance specific and ToC to disable the Anub adds and shadow strike timers.
+- Added: Anub adds spawn timer
+2.35
+- Added: Flask of the North to flask exceptions. Will show as: Playername (North)
+- Added: Ashen Sack of Gems (Onyxia) to auto loot select exceptions.
+- Final: Shadow Strike timer, is now working
+2.347
+2.346
+2.345
+- Experimental Shadow Strike timer
+- Readded: Sound for penetrating cold in phase 3 for Anub
+2.344
+- Added: Shadow Strike warning on Anub
+- Added: Jaraxxus Timers
+2.343
+- Fixed: Some with the Algalon timers, the first pull timers out of sync and Big Bang timer so it counts down to the cast starts instead of counting down to it lands.
+- Fixed: Some errors in TOC25
+2.342
+- Added: Some more features in the BG join replacment (to play sounds in background) in VBM since blizzard have disabled auto join features of addons.
+- Fixes: Small fixes with Coliseum bosses.
+2.341
+- New Feature: Error Message Disabler under Blizzard UI Enhancments
+2.34
+- Fixed: One more !tv sync bug
+- Added: Mid screen notify for brewfest ram race
+- Added: /summon to accept summon if you don't get popup
+- Added: More warnings for Coliseum bosses.
+- Fixed: The option to turn off blizzard default raid warnings so it works again.
+- Added: Option to Open Currency Bag under hidden interface settings.
+- Added: An Herald of the Titans Algalon check under Ulduar instance.
+2.332
+- Added: Dissconnect protection if 2 players whisper each other !tv
+2.331
+- Fixed: Some stuff with the new tv function (it should now update more often)
+2.33
+- Added: New TV function people with vbm can whisper you !tv to see tv data cross guild (require vbm 2.33 or newer for you both)
+- Added: Aspect of the Viper Active warning under class specific and hunter
+- Updated: Coliseum bosses.
+2.322
+- Fixed: Some ToC bosses.
+2.321
+- Fixes: Lots of small boss mod fixes for new 10 man
+- Added: A exception list for items not to auto loot select on.
+- Updated: Koralon
+2.32
+- Added: Boss Warnings for Twin Val'kyr, Northrend Beasts and Koralon the Flame Watcher (Coliseum bosses untested)
+- Added: A Nefarian Land timer :D
+- Added: Emblem of Triumph to badge reminder
+- Fixed: BG Join Replacement so countdown until port expires work again.
+2.312
+- Added: /lrlist as slash command to list players leader roll numbers
+2.311
+- Added: Lots of new /slash commands for setting the new difficultys /n5 /5n nad /h5 /5h for all settings (h10 h25 n10 n25 10n 25n 10h 25h)
+- Fixed: Dungeon Difficulty detection
+2.31
+- Updated: TOC
+- Added: So VBM will load into the new raid instance but i'm not currently raiding so will take some time to add boss data.
+- Added: Debuff check for Flaming Rune
+- Changed: /rp so it also shows how many the random pool selects from if you do not specify a number or text who match only 1 pet
+2.301
+- Lowered: MC Rag knockback timer to 27 sec :)
+- Added: Algalon the Observer warnings
+- Updated: Some stuff in naxx and other older raid instances
+2.294
+- Fixed: Lots of smal fixes including /pull and some other stuff.
+2.293
+- Updated: Yogg 10 man Sara hp back to 200000
+- Updated: Kologarn eyebeam say announce
+2.292
+- Fixed: XT-002 name change to Searing Light
+2.291
+- Fixed: +mark spam updating many marks
+- Fixed: Yogg error with brainlink
+- Updated: Flame Leviathan, now try to auto track players who are not in a Vehicle during the stun period with the Arrows.
+2.29
+- VBM Timers 2.0: With Flying Timers
+- Updated: XT-002 light bomb back to say, and added a light bomb timer instead.
+- Updated: Flame Leviathan, flower message now in say, to help the turrent guy to see if there vehicle got flowers beating on it
+- Raised: The number of arrows to 5.
+2.282
+- New Setting: You can now choose to Disable Mouse on locked arrows.
+- Added: Click on an Arrow in Test Mode to lock it to your Target
+- Reworked: The arrows some and removed a lot of bugs this way.
+- Added: Some more settings to customize main warning text.
+- Updated: Flame Leviathan, added yells if you got a flower on you. And some extra text in warnings.
+- Updated: XT-002, Light bombs are now in yell instead of say to help with hard mode
+- Updated: Hodir, vbm now trys to track Getting Cold in Here and starts to warn you with text on your first Biting Cold and starts to play the dong on your second.
+2.281
+- Changed: Yogg low sanity warning sound to the low dong
+2.28
+- NEw Feature: VBM Arrows (requires game restart) with lots of apperance settings (can be tested with vbms normal mini icons (/vbm))
+- Updated: Freya and Yogg-saron to make arrows point to Roots and Squeeze
+- Updated: RangeChecker so it can detect 40 yrd aswell
+2.27
+- Added: Options to customize the warning text some under VBM Settings
+- Remade: The /nm command to use 40 yrd ant not iclude everyone who are not near you twice
+- Changed: So if you leave a pet on Vezax can also detetc Shadow Crashes instead of just players
+- Fixed: Mimiron Warnings
+2.264
+- Added: New options for fullscreen falsh, you can choose to cut the effect to 3/4 1/2 1/4
+- Added: Toy Train Set Watcher under combat log parsing.
+- Added: A Kalegcos message style to chat on mimiron p4 with his 3 body parts.
+2.262
+- Updated: Yogg-saron
+- Updated: Hodir
+- Updated: Razorscale
+- Updated: Mimiron
+- Updated: Kologarn
+2.261
+- Updated: Yogg Tried to fix some small errors
+- Updated: General, added flash for Mark of the Faceless
+- Fixed: Bug on Freya, and toned down alpha some on the flash warnings
+2.26
+- Added: Flash Screen feature. Located under VBM Settings. And since its a warning module its defaulted to ON.
+- Updated: Freya
+2.254
+- Updated: Lots of Freya
+- Fixed: Some very minor RC bugs. (typo and initial scale)
+2.25
+- Changed: Some stuff in how the autohandling of ranchecker feature works (Auto RangeChecker). It will now only set distance and near me count if it has been auto shown. If you manually show it, it will keep your settings until manually hided again.
+- Redsigned: RangeChecker frame has had a complete redesign and settings have been reset.
+- Added: Option to announce your interrupts in say (under combatlog parsing)
+- Updated: Iron Council
+- Updated: Thorim
+- Updated: Hodir
+- Updated: Razorscale
+2.247
+- Updated: Hodir
+2.245
+- Updated: Thorim
+2.243
+- Updated: Thorim
+- Updated: Yogg-saron
+- Changed: Sorting order of tv for multi groups
+- Fixed: One more TV bug, hopefully the last.
+2.242
+- Updated: Mimiron again, added Magnetic Field Warning.
+- Changed SS/DI Alert to SS/DI/Feast Alert
+2.241
+- Removed: The Berserk timers in Naxxramas since they are hardly needed nowdays then the dps is so high.
+- Updated: Mimiron
+- Updated: Emalon the Storm Watcher
+- Changed: TV to live update then you watch it.
+- Changed: Health detection for TV so 1 hp also == dead for bosses that stay on 1 HP
+- Changed: Tv so it will reset after 15 sec if it detect a boss at 100% and changed running fights to reset after 4 min instead of 5.
+- Changed: So TV Also Update if a player die.
+2.24
+- Verified: All 10 man bosses working now
+- Updated: Yogg
+- Updated: MD Watcher, changed color
+- New Feature: Tricks of the Trade Watcher
+- Updated: Hodir
+- Updated: Thorim
+- Updated: Freya
+- Added: Iron Council hard mode warnings
+- Updated: Razorscale
+- New Feature: Ulduar Vehicle Check under instance specific
+2.239
+- Ulduar: 25 man working up to Yogg
+- Added: Lots of new warnings on Bosses not on EU ptr
+2.22
+- Updated TOC
+- More: Ulduar Boss Data
+- Added: Emblem of Conquest for Badge Loot Reminder
+2.214
+- Fixed: VBM will now always display its big warning texts at max size, regardless of how you have configed UI scale
+- Fixed: UI Scale Menu bug.
+- Added: A Last updated time ago to the right in a red text if data haven't been updated in more then 30 sec on the TV
+- Changed: The death detection to also look for the UNIT_DIED event + the hp of the boss
+- Changed: TV upped the time a boss stay on screen to 90 sec and made so ongoing bosses will show up for 5 min, so it won't remove bosses you can't target all the time, eg Malygos phase 2.
+2.213
+- Added: a Basic count up timer for the tv. It's local only and is not synced in any way.
+- Added: Option to scale tv, right click.
+- Fixed: Tv not detecting if you have a guild.
+- Fixed: High number of errors thing
+2.212
+- Fixed: Another bug with TV, that made it update more often then intended.
+2.211
+- Fixed: A bug with tv so it can detect multiply bosses from diffrent raids.
+2.21
+- New Feature: VBM TV!!! /vbmtv
+- Fixed: The setting menu
+- Removed: /switch slash command, since it can't be used in combat
+- Moved: Some info in the print info menu, all Raidleader and raidofficer extra slash commands moved to officer/raidleader info
+- NewSlashCommand: /mark 1-8 Set a Raid Mark on your current target if mark can be 1-8 (default 8)
+- Added: Lots of Ulduar Boss Warnings
+- ReEnabled: Malygos mid screen combo point counter
+2.183
+- Added: 2 options for the 'invite' keyword: Disable The 'you are in group' whisper and Eenable short 'inv' as second keyword
+- Added: The 'invite' keyword option to Quick Access
+- New Feature: Minimap Button Hider under Blizzard UI Enhancments
+- Added: Dark Command as taunt
+2.182
+- Minor: Fixed some minor cosmetic stuffs with main setting menu
+- Updated: Buff Alerter added Lock and Load
+- Updated: Taunt fail warning added paladins new taunt
+- Added: Timers for Ragnaros and Twin Emperors :D to help low number raids. (2 ppl rag and 4 ppl twins)
+2.181
+- Added: Archavon the Stone Watcher Stomp and Enrage timers
+- Added: Guardian Spirit to Buff Alerter
+2.18
+- Added: Option to permanent disable blizzard bg join popup, so it wont show up if its 10 seconds left, found under the bg replacement option in main vbm settings
+- Fixed: Four Horseman warning, so it only triggers of the debuffs
+- Added: New feature: Auto Solo BoP Loot under Interface Addons
+- Changed: Auto Loot Select renamed to Auto Roll Loot Select
+- Updated: Random pet command (/rp) so you can /rp *petnr* and /rp *petname* to call specific pets
+2.171
+- Added: whelp Spawn timer
+2.17
+- Added: Hook to disable blizzard standard raid warning frames (found under Blizzard UI enhancements)
+- Added: Command for Leave Vehicle or Mount (/lv /lm)
+- Added: Option for malygos UI to autoshow it in malygos zone and hide it after
+- Fixed: With some timers and icons
+- Updated: The icon to check for elixirs/flasks (it dont have all elixirs yet, but more)
+- Updated: Reagent buyer with some rogue poisons 
+2.165
+2.164
+- Fixed: with some Sartharion timers
+2.163
+- Added: a message for Disciple of Vesperon Up and dead
+2.162
+- Added: Option to disable portal timers in obsidain sanctum
+2.161
+- Changed: Some Obsidian warnings
+- Fixed: Malygos UI so it can be locked in combat, still can't be shown though its a limit in WoW
+2.16
+- Added: New feature: Badge Loot Reminder under Interface Addons
+- Added: New command (/pull) Pull countdown in raidwarning
+- Fixed: All timmers and added proper icons to all Wotlk timers
+2.159
+- Added: Malygos UI (Instans Specific > Eye of Eternety > Malygos UI)
+2.156
+- Added: lots of timers for bosses in both 10 and 25 man naxx, obsidian and eye
+- Updated Reagent Buyer
+- Fixed a bug with Interrupt watcher
+2.151
+- Added 2 new files (require restart)
+2.15
+- Changed: Zone detecting so vbm can make diffrence of heroic and non heroic
+- Added: Option for auto set of boss timers 
+- Added: Big new Feature: Timers
+- Added: 2 more buttons to hide/show rangechecker and timers anchor
+- Resized: StatusFrame main window
+- Added: First new button on status frame to check for well feds
+- Added: Option to hide the statusframe border
+- Changed: The Hidden camera distance setting to auto set it during UI load, if checked
+- Fixed: RangeChecker manual distance
+2.143
+- Added: orb up warninrg on KJ
+- Fixed: Some small errors
+2.142
+- Testing: New features no critical update
+2.141
+- Fixed: some minor things
+- Changed: Some cosmetics on KJ warnings
+2.14
+- Added: New features Misdirection watcher under combat log parsing
+- Added: Warnings for KJ: Fire Bloom, Darkness of a Thousand Souls, Sinister Reflection
+- Added: Darkness warning for Muru
+- Moved: SS/DI altert setting to combat log parsing menu and moved auto range check to warning modules under first menu
+- Fixed: FD Success message
+- Removed: BoS Tanking warning
+- Added: Distracting Shot as a taunt, for taunt fail warning.
+- Removed: petbar fix since its no longer needed
+- Fixed: Eredar Twins warning for conflag
+2.131
+- Fixed: Vbm spamming you are not raid leader in raids then you don't have (a)
+2.13
+- Added: new slash command /rp or /randompet, summons a random pet
+- Fixed: the slash commands with an announce option always announcing
+- Removed: The commands to reset frame positions (replaced with the blizzard validate function)
+- Fixed: A tooltip color bug
+- Updated: toc to new wow version
+- Added: Arcane orb warning on Fel Reaver
+- Changed: Kalecgos buff duration text to infowarn instead so both is visible
+2.12
+- Updated: Bloodboil warnings and made them use +group raidmode
+- Updated: Kalecgos warnings and made them use +group raidmode
+- Added: 2 raidmodes +mark and +group
+- Added: New feature (brought back old) for raidmodes, see info menu for help.
+2.111
+- Added: New command (/nm) Near Me Check (/nma for annaounce)
+- Added: New command (/aaa) Promote everyone to assist
+2.11
+- Fixed: Lua errors with BGJoinReplacement
+- Added: The option for Auto Rangecheck in the rangechecker config window aswell
+- Disabled: Temp disabled the advanced tab settings until they can be relocated or is reenabled
+- Added: Some more sounds in the extra features menu. (A lot actualy)
+- Added: Wotlk main song to music list and MGT KT Room music
+2.102
+- Fixed: BG Replacment bugs, and added 2 more options
+2.101
+- ADD: AutoJoin for BG Replacment and fixed some bugs
+2.10
+- ADD: New feature BG Ready Replacement Frame
+- Removed: Old Autopopup BG Join
+- Changed: Some file layout (Need game restart for this version)
+- Lowered: VBM_LOAD_LAG_TIME varibel to 10 sec
+2.094
+- Fixed: CCBigBrother to new SPELL_AURA_BROKEN Events
+- Changed: Some file layout (Need game restart for this version)
+- Changed: RangeCheckers Default Posistion and Settings (now not locked)
+- ADD: Flash powder to reagent buyer for rouges
+- ADD Warning: Eye Blast notice on illidan
+2.093
+- Fixed: The Error in SunwellPlateau.lua
+2.092
+- Changed: AutoRangeCheck to show the frame on boss start and not on boss load
+- Fixed: a bug in Kalecgos health report so it wont detect the friendly version
+2.091
+- Changed: BossOnUpdate to update 3 times each second instead of 2
+- ADD: Chat Notice on Kalecgos and Sathrovarr for HP update if hp is 80 60 40 or <21 (Syncing function so depends on sync)
+2.09
+- ADD Warning: Shows a stomp message then Brutallus stomp
+- ADD: Autorangecheck for Najentus (<8500 HP) and Kalecgos (10 yrd)
+- Fixed: All Problems with RangeChecker
+- NEW Feature: VBM Settings > Auto Rangecheck (DEFAULTS TO ON)
+- NEW Feature: Combat Log parsing > Interrupt watcher
+- Added: Extra Config settings for cc big brother
+- Moved: Around some settings
+- Improved: Main Settings menu of vbm
+- Fixed: Master Loot Reminder so it will display the enable master loot message again
+- Fixed: Line 836 nil error and some other minor fixes.
+2.084
+- ADD Felmyst warning: Warn if you are target of Demonic Vapor, also sends a say message
+- NEW Slash Command: /vbmversiona - To announce version info in raidchat.
+- ChangeLog in english now.

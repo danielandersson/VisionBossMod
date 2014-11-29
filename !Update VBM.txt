@@ -1,0 +1,11 @@
+http://fogz.mine.nu:8080/files/VisionBossMod.rar
+
+Or if the browser caches the file use:
+
+http://fogz.mine.nu:8080/files/downloadvbm.php
+
+Kreml High Homepage:
+http://www.closure-wow.com/
+
+VisionBossMod:
+http://www.closure-wow.com/forum/viewtopic.php?f=13&t=13

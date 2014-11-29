@@ -1,0 +1,352 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\FrameXML\UI.xsd">
+	<Script file="InstanceSpecific.lua"/>
+	
+	<!-- Frame to handle all core events --> 
+   <Frame name="VBMInstanceSpecificFrame"> 
+      <Scripts> 
+			<OnLoad function="VBM_InstanceSpecific_OnLoad" /> 
+			<OnEvent function="VBM_InstanceSpecific_OnEvent" />
+      </Scripts> 
+   </Frame>
+	
+	<Frame name="VBMMalygosFrame" toplevel="true" clampedToScreen="true" enableMouse="true" movable="true" frameStrata="MEDIUM" hidden="true" parent="UIParent"> 
+		<Scripts> 
+			<OnLoad> 
+				self:RegisterForDrag("LeftButton");
+			</OnLoad> 
+			<OnDragStop>
+		  		self:StopMovingOrSizing();
+			</OnDragStop>
+			<OnDragStart>
+	  			if(not self.locked) then
+	  				self:StartMoving();
+	  			end
+			</OnDragStart>
+			<OnUpdate>
+				if(GetComboPoints("pet")>0) then
+					VBMMalygosFrameCombo:SetText("|cFF00FF00"..GetComboPoints("pet"));
+				else
+					VBMMalygosFrameCombo:SetText("|cFFFF00000");
+				end
+				
+				VBMMalygosFrameEnergy:SetText(UnitPower("pet"));
+			</OnUpdate>
+			<OnMouseDown>
+				if(button == "LeftButton") then
+					if(IsControlKeyDown()) then
+						VBM_MalygosUI_LockMouse();
+					end
+				end
+			</OnMouseDown>
+		</Scripts>
+      	<Size>
+			<AbsDimension x="170" y="50"/>
+		</Size>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="0" right="0" top="0" bottom="0"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+		</Backdrop>
+		<Anchors>
+			<Anchor point="CENTER" relativePoint="CENTER" relativeTo="UIParent">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentCombo" inherits="GameFontGreenLarge" text="0">
+					<Anchors>
+						<Anchor point="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="5"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentEnergy" inherits="GameFontNormalLarge" text="0">
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-4"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentDps" inherits="GameFontWhite" text="Dps">
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="20" y="-4"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentHealer" inherits="GameFontWhite" text="Healer">
+					<Anchors>
+						<Anchor point="TOPRIGHT">
+							<Offset>
+								<AbsDimension x="-20" y="-4"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parentFlameSpike" hidden="false" inherits="SecureActionButtonTemplate">
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="5" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Size>
+					<AbsDimension x="30" y="30"/>
+				</Size>
+				<NormalTexture file="Interface\Icons\spell_fire_flare"/>
+				<HighlightTexture alphaMode="ADD">
+					<Color r="1" g="1" b="1" a="0.3"/>
+				</HighlightTexture>
+				<Scripts>
+					<OnLoad>
+						self:SetAttribute("*type1", "macro");
+						self:SetAttribute("macrotext", "/target Malygos\n/cast Flame Spike");
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="$parentEngulfinFlames" hidden="false" inherits="SecureActionButtonTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parentFlameSpike">
+						<Offset>
+							<AbsDimension x="5" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Size>
+					<AbsDimension x="30" y="30"/>
+				</Size>
+				<NormalTexture file="Interface\Icons\spell_fire_burnout"/>
+				<HighlightTexture alphaMode="ADD">
+					<Color r="1" g="1" b="1" a="0.3"/>
+				</HighlightTexture>
+				<Scripts>
+					<OnLoad>
+						self:SetAttribute("*type1", "macro");
+						self:SetAttribute("macrotext", "/target Malygos\n/cast Engulf in Flames");
+					</OnLoad>
+					<OnUpdate>
+						if(GetComboPoints("pet")>0 and UnitPower("pet") >= 50) then
+							self:SetAlpha(1);
+						else
+							self:SetAlpha(0.2);
+						end
+					</OnUpdate>
+				</Scripts>
+			</Button>
+			<Button name="$parentLifeBurst" hidden="false" inherits="SecureActionButtonTemplate">
+				<Anchors>	
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-5" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Size>
+					<AbsDimension x="30" y="30"/>
+				</Size>
+				<NormalTexture file="Interface\Icons\spell_nature_abolishmagic"/>
+				<HighlightTexture alphaMode="ADD">
+					<Color r="1" g="1" b="1" a="0.3"/>
+				</HighlightTexture>
+				<Scripts>
+					<OnLoad>
+						self:SetAttribute("*type1", "macro");
+						self:SetAttribute("macrotext", "/target pet\n/cast Life Burst");
+					</OnLoad>
+					<OnUpdate>
+						if(GetComboPoints("pet")>0 and UnitPower("pet") >= 50) then
+							self:SetAlpha(1);
+						else
+							self:SetAlpha(0.2);
+						end
+					</OnUpdate>
+				</Scripts>
+			</Button>
+			<Button name="$parentRevivify" hidden="false" inherits="SecureActionButtonTemplate">
+				<Anchors>	
+					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="$parentLifeBurst">
+						<Offset>
+							<AbsDimension x="-5" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Size>
+					<AbsDimension x="30" y="30"/>
+				</Size>
+				<NormalTexture file="Interface\Icons\spell_nature_regeneration_02"/>
+				<HighlightTexture alphaMode="ADD">
+					<Color r="1" g="1" b="1" a="0.3"/>
+				</HighlightTexture>
+				<Scripts>
+					<OnLoad>
+						self:SetAttribute("*type1", "macro");
+						self:SetAttribute("macrotext", "/target pet\n/cast Revivify");
+					</OnLoad>
+				</Scripts>
+			</Button>
+		</Frames>
+	</Frame>
+	
+	<Button name="VBMMalygosHealingTemplate" hidden="false" virtual="true" inherits="SecureActionButtonTemplate">
+		<Size>
+			<AbsDimension x="70" y="30"/>
+		</Size>
+		<Scripts>
+			<OnLoad>
+				self.unit = "raid"..self:GetID().."pet";
+				self:SetAttribute("*type1", "macro");
+				self:SetAttribute("macrotext", "/target "..self.unit);
+			</OnLoad>
+			<OnUpdate>
+				local bar = getglobal(self:GetName().."Bar");
+				local text = getglobal(self:GetName().."BarText");
+				if(UnitExists(self.unit)) then
+					if(UnitIsDeadOrGhost(self.unit)) then
+						text:SetText("Dead");
+						bar:SetValue(0);
+					else
+						text:SetText(VBM_UnitHealthPercent(self.unit).."%");
+						bar:SetValue(VBM_UnitHealthPercent(self.unit));
+						bar:SetStatusBarColor(VBM_GetSmoothColor(VBM_UnitHealthPercent(self.unit)));
+					end
+				else
+					text:SetText("N/A");
+					bar:SetValue(0);
+				end
+			</OnUpdate>
+		</Scripts>
+		<Frames>
+			<StatusBar name="$parentBar" minValue="0" maxValue="100" defaultValue="100" setAllPoints="true">
+			  	<Size>
+					<AbsDimension x="70" y="30"/>
+				</Size>
+				<BarTexture file="Interface\AddOns\VisionBossMod\Data\BantoBar"/>
+				<BarColor r="0" g="1" b="0"/>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="$parentText" inherits="GameFontNormal" maxLines="1" justifyH="CENTER" text="In The Name of Kil'Jaeden">
+						  	<Size>
+								<AbsDimension x="70" y="12"/>
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER">
+									<Offset>
+										<AbsDimension x="0" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+			</StatusBar>
+		</Frames>
+	</Button>
+	
+	<Frame name="VBMMalygosHealingFrame" toplevel="true" clampedToScreen="true" enableMouse="true" movable="true" frameStrata="MEDIUM" hidden="true" parent="UIParent">
+		<Scripts> 
+			<OnLoad> 
+				self:RegisterForDrag("LeftButton");
+			</OnLoad> 
+			<OnDragStop>
+		  		self:StopMovingOrSizing();
+			</OnDragStop>
+			<OnDragStart>
+	  			if(not self.locked) then
+	  				self:StartMoving();
+	  			end
+			</OnDragStart>
+		</Scripts>
+      	<Size>
+			<AbsDimension x="140" y="160"/>
+		</Size>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="0" right="0" top="0" bottom="0"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+		</Backdrop>
+		<Anchors>
+			<Anchor point="CENTER" relativePoint="CENTER" relativeTo="UIParent">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Frames>
+			<Button name="$parentHeal1" inherits="VBMMalygosHealingTemplate" id="1">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-10"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="$parentHeal2" inherits="VBMMalygosHealingTemplate" id="2">
+				<Anchors>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parentHeal1" />
+				</Anchors>
+			</Button>
+			<Button name="$parentHeal3" inherits="VBMMalygosHealingTemplate" id="3">
+				<Anchors>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parentHeal2" />
+				</Anchors>
+			</Button>
+			<Button name="$parentHeal4" inherits="VBMMalygosHealingTemplate" id="4">
+				<Anchors>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parentHeal3" />
+				</Anchors>
+			</Button>
+			<Button name="$parentHeal5" inherits="VBMMalygosHealingTemplate" id="5">
+				<Anchors>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parentHeal4" />
+				</Anchors>
+			</Button>
+			
+			<Button name="$parentHeal6" inherits="VBMMalygosHealingTemplate" id="6">
+				<Anchors>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parentHeal1" />
+				</Anchors>
+			</Button>
+			<Button name="$parentHeal7" inherits="VBMMalygosHealingTemplate" id="7">
+				<Anchors>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parentHeal6" />
+				</Anchors>
+			</Button>
+			<Button name="$parentHeal8" inherits="VBMMalygosHealingTemplate" id="8">
+				<Anchors>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parentHeal7" />
+				</Anchors>
+			</Button>
+			<Button name="$parentHeal9" inherits="VBMMalygosHealingTemplate" id="9">
+				<Anchors>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parentHeal8" />
+				</Anchors>
+			</Button>
+			<Button name="$parentHeal10" inherits="VBMMalygosHealingTemplate" id="10">
+				<Anchors>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parentHeal9" />
+				</Anchors>
+			</Button>
+		</Frames>
+	</Frame> 
+</Ui>

@@ -1,0 +1,135 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\FrameXML\UI.xsd">
+	<Script file="ExtraFeatures.lua"/>
+	
+	<!-- Frame to handle all core events --> 
+	<Frame name="VBMExtraFeaturesFrame"> 
+		<Scripts> 
+			<OnLoad function="VBM_ExtraFeatures_OnLoad" /> 
+			<OnEvent function="VBM_ExtraFeatures_OnEvent" />
+		</Scripts> 
+	</Frame>
+	<!-- *******************************
+			Vote Frame
+		 ******************************* -->
+	<Frame name="VBMVoteFrame" toplevel="true" enableMouse="true" movable="true" frameStrata="DIALOG" hidden="true" parent="UIParent">
+		<Size>
+			<AbsDimension x="320" y="100"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+			<Color r="0.1" g="0.1" b="0.1" a="0.8" />
+			<BackgroundInsets>
+				<AbsInset left="5" right="5" top="5" bottom="5"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="16"/>
+			</EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer level="OVERLAY">
+				<FontString name="$parentText" inherits="GameFontNormal" text="VisionBossMod" maxLines="1">
+					<Size>
+						<AbsDimension x="300" y="16"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-8"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentSubject" inherits="GameFontNormal" text="VisionBossMod" maxLines="3">
+					<Size>
+						<AbsDimension x="300" y="32"/>
+					</Size>
+					<Color r="1" g="1" b="1"/>
+					<Anchors>
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parentText">
+							<Offset>
+								<AbsDimension x="0" y="-5"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parentYesButton" inherits="UIPanelButtonTemplate" text="Yes">
+				<Size>
+					<AbsDimension x="80" y="24"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="30" y="10"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnShow>
+						self:Disable();
+						self.t = self:GetText();
+						self:SetText(2);
+						VBM_Delay(1,function() self:SetText(1); end);
+						VBM_Delay(2,function() self:SetText(self.t); self:Enable(); end);
+					</OnShow>
+					<OnClick>
+						VBM_VoteSend(self:GetParent().voteto,"YES");
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parentNoButton" inherits="UIPanelButtonTemplate" text="No">
+				<Size>
+					<AbsDimension x="80" y="24"/>
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentYesButton" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="10" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnShow>
+						self:Disable();
+						self.t = self:GetText();
+						self:SetText(2);
+						VBM_Delay(1,function() self:SetText(1); end);
+						VBM_Delay(2,function() self:SetText(self.t); self:Enable(); end);
+					</OnShow>
+					<OnClick>
+						VBM_VoteSend(self:GetParent().voteto,"NO");
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parentIgnoreButton" inherits="UIPanelButtonTemplate" text="Ignore">
+				<Size>
+					<AbsDimension x="80" y="24"/>
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentNoButton" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="10" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						VBMVoteFrame:Hide();
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+	</Frame>
+</Ui>
