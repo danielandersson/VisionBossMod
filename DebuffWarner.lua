@@ -45,13 +45,13 @@ end
 
 function VBM_Debuff_OnEvent(self,event,...)
 	if(event == "COMBAT_LOG_EVENT_UNFILTERED") then
-       	local timestamp,combatEvent,hideCaster,sourceGUID,sourceName,sourceFlags,destGUID,destName,destFlags,spellId,spellName,spellSchool,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20 = ...;
+       	local timestamp,combatEvent,hideCaster,sourceGUID,sourceName,sourceFlags,sourceRaidFlags,destGUID,destName,destFlags,destRaidFlags,spellId,spellName,spellSchool,arg15,arg16,arg17,arg18,arg19,arg20,arg21,arg22,arg23,arg24,arg25 = ...;
        	
        	--if debuffwarner is on
 		if(VBM_GetS("DebuffWarner")) then
 			--if you gain a debuff
 			if( (combatEvent == "SPELL_AURA_APPLIED" or combatEvent == "SPELL_AURA_APPLIED_DOSE") and destName and destName == UnitName("player")) then
-				if(arg12 == "DEBUFF") then
+				if(arg15 == "DEBUFF") then
 					VBM_DebuffWarner_GainDebuff(spellName);
 				end
 			end
@@ -63,7 +63,7 @@ function VBM_Debuff_OnEvent(self,event,...)
 		
        	--if you lose a debuff
        	if(combatEvent == "SPELL_AURA_REMOVED" and destName and destName == UnitName("player")) then
-       		if(arg12 == "DEBUFF") then
+       		if(arg15 == "DEBUFF") then
        			VBM_DebuffWarner_LooseDebuff(spellName);
        		end
        	end

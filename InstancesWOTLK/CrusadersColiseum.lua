@@ -81,7 +81,7 @@ VBM_LoadInstance["Trial of the Crusader"] = function()
 			
 			["Paralytic Toxin"] = {vbm_c_g.."* * * Paralytic Toxin * * *",function()
 				local i;
-				for i=1,GetNumRaidMembers() do
+				for i=1,GetNumGroupMembers() do
 					if(VBM_CheckForDebuff("Burning Bile", "raid"..i)) then
 						VBM_BossArrow(UnitName("raid"..i),20);
 					end
@@ -89,7 +89,7 @@ VBM_LoadInstance["Trial of the Crusader"] = function()
 			end,false,VBM_RemoveAllArrows},
 			["Burning Bile"] = {"* * * Burning Bile * * *",function()
 				local i;
-				for i=1,GetNumRaidMembers() do
+				for i=1,GetNumGroupMembers() do
 					if(VBM_CheckForDebuff("Paralytic Toxin", "raid"..i)) then
 						VBM_BossArrow(UnitName("raid"..i),20);
 					end
@@ -99,7 +99,7 @@ VBM_LoadInstance["Trial of the Crusader"] = function()
 		during = function()
 			local i;
 			local p = {};
-			for i=1,GetNumRaidMembers() do
+			for i=1,GetNumGroupMembers() do
 				if(VBM_CheckForDebuff("Snobolled!", "raid"..i)) then
 					p[#p+1] = UnitName("raid"..i);
 					if(UnitName("raid"..i)==VBM_YOU) then

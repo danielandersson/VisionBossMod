@@ -53,15 +53,11 @@ end
 
 function VBM_SetArrowByName(name,expire)
 	local i;
-	if(GetNumRaidMembers()>0) then
-		for i=1,GetNumRaidMembers() do
+	if(GetNumGroupMembers()>0) then
+		for i=1,GetNumGroupMembers() do
 			if(UnitName("raid"..i)==name) then
 				VBM_SetFreeArrow("raid"..i,expire);
-			end
-		end
-	elseif(GetNumPartyMembers()>0) then
-		for i=1,GetNumPartyMembers() do
-			if(UnitName("party"..i)==name) then
+            elseif(UnitName("party"..i)==name) then
 				VBM_SetFreeArrow("party"..i,expire);
 			end
 		end
@@ -70,17 +66,17 @@ end
 
 function VBM_RemoveArrowByName(name)
 	local i;
-	if(GetNumRaidMembers()>0) then
-		for i=1,GetNumRaidMembers() do
-			if(UnitName("raid"..i)==name) then
-				VBM_RemoveArrowByUid("raid"..i);
-			end
-		end
-	elseif(GetNumPartyMembers()>0) then
-		for i=1,GetNumPartyMembers() do
-			if(UnitName("party"..i)==name) then
-				VBM_RemoveArrowByUid("party"..i);
-			end
+	if(GetNumGroupMembers()>0) then
+		for i=1,GetNumGroupMembers() do
+            if(IsInRaid()) then
+    			if(UnitName("raid"..i)==name) then
+	    			VBM_RemoveArrowByUid("raid"..i);
+                end
+            else
+                if(UnitName("party"..i)==name) then
+    				VBM_RemoveArrowByUid("party"..i);
+    			end
+            end
 		end
 	end
 end
@@ -177,19 +173,19 @@ end
 function VBM_Arrow_OnClick(self,button)
 	if(button == "LeftButton" and not self.uid and UnitExists("target")) then
 		local i;
-		if(GetNumRaidMembers()>0) then
-			for i=1,GetNumRaidMembers() do
-				if(UnitIsUnit("raid"..i,"target")) then
-					vbm_printc("Locking Arrow "..vbm_c_w..self:GetID()..vbm_c_p.." to "..vbm_c_w.."raid"..i);
-					VBM_Set_Arrow(self:GetID(),"raid"..i,0);
-				end
-			end
-		elseif(GetNumPartyMembers()>0) then
-			for i=1,GetNumPartyMembers() do
-				if(UnitIsUnit("party"..i,"target")) then
-					vbm_printc("Locking Arrow "..vbm_c_w..self:GetID()..vbm_c_p.." to "..vbm_c_w.."party"..i);
-					VBM_Set_Arrow(self:GetID(),"party"..i,0);
-				end
+		if(GetNumGroupMembers()>0) then
+			for i=1,GetNumGroupMembers() do
+                if(IsInRaid()) then
+    				if(UnitIsUnit("raid"..i,"target")) then
+	    				vbm_printc("Locking Arrow "..vbm_c_w..self:GetID()..vbm_c_p.." to "..vbm_c_w.."raid"..i);
+		    			VBM_Set_Arrow(self:GetID(),"raid"..i,0);
+			    	end
+                else
+				    if(UnitIsUnit("party"..i,"target")) then
+					    vbm_printc("Locking Arrow "..vbm_c_w..self:GetID()..vbm_c_p.." to "..vbm_c_w.."party"..i);
+    					VBM_Set_Arrow(self:GetID(),"party"..i,0);
+    				end
+                end
 			end
 		end
 	end

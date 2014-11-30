@@ -150,7 +150,7 @@ VBM_SpellWarner_SpecialSpell = function(event,...)
 	end
 end
 
-VBM_SpellWarner_Spell = function(timestamp,combatEvent,hideCaster,sourceGUID,sourceName,sourceFlags,destGUID,destName,destFlags,arg9,arg10,arg11,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20)
+VBM_SpellWarner_Spell = function(timestamp,combatEvent,hideCaster,sourceGUID,sourceName,sourceFlags,sourceRaidFlags,destGUID,destName,destFlags,destRaidFlags,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20,arg21,arg22,arg23,arg24,arg25)
 	local k,v,go,sendextra;
 	for k,v in pairs(VBM_spells) do
 		if(combatEvent == v.event) then
@@ -159,7 +159,7 @@ VBM_SpellWarner_Spell = function(timestamp,combatEvent,hideCaster,sourceGUID,sou
 			
 			if(combatEvent == "SPELL_CAST_START" or combatEvent == "SPELL_CAST_SUCCESS" or 
 				combatEvent == "SPELL_SUMMON" or combatEvent == "SPELL_HEAL" or combatEvent == "SPELL_CREATE") then
-				local spellName = arg10;
+				local spellName = arg13;
 				if(v.spell and not (v.spell == spellName) ) then
 					go = false;
 				end
@@ -170,7 +170,7 @@ VBM_SpellWarner_Spell = function(timestamp,combatEvent,hideCaster,sourceGUID,sou
 			end
 			
 			if(combatEvent == "SPELL_MISSED") then
-				local spellName,missType = arg10,arg12;
+				local spellName,missType = arg13,arg15;
 				sendextra = missType;
 				if(v.spell and not (v.spell == spellName) ) then
 					go = false;
@@ -178,7 +178,7 @@ VBM_SpellWarner_Spell = function(timestamp,combatEvent,hideCaster,sourceGUID,sou
 			end
 			
 			if(combatEvent == "SPELL_DAMAGE" or combatEvent == "SPELL_PERIODIC_DAMAGE") then
-				local spellName,amount,overkill = arg10,arg12,arg13;
+				local spellName,amount,overkill = arg13,arg15,arg16;
 				sendextra = amount;
 				if(v.spell and not (v.spell == spellName) ) then
 					go = false;
@@ -189,7 +189,7 @@ VBM_SpellWarner_Spell = function(timestamp,combatEvent,hideCaster,sourceGUID,sou
 			end
 			
 			if(combatEvent == "ENVIRONMENTAL_DAMAGE") then
-				local spellName,amount = arg9,arg10;
+				local spellName,amount = arg12,arg13;
 				sendextra = amount;
 				if(v.spell and not (string.upper(v.spell) == spellName) ) then
 					go = false;
@@ -197,14 +197,14 @@ VBM_SpellWarner_Spell = function(timestamp,combatEvent,hideCaster,sourceGUID,sou
 			end
 			
 			if(combatEvent == "SPELL_AURA_APPLIED" or combatEvent == "SPELL_AURA_REMOVED") then
-				local spellName, auraType = arg10,arg12;
+				local spellName, auraType = arg13,arg15;
 				if(v.spell and not (v.spell == spellName) ) then
 					go = false;
 				end
 			end
 			
 			if(combatEvent == "SPELL_INTERRUPT") then
-				local spellName, interruptSpell = arg10,arg13;
+				local spellName, interruptSpell = arg13,arg16;
 				sendextra = interruptSpell;
 				if(v.spell and not (v.spell == spellName) ) then
 					go = false;
@@ -215,7 +215,7 @@ VBM_SpellWarner_Spell = function(timestamp,combatEvent,hideCaster,sourceGUID,sou
 			end
 			
 			if(combatEvent == "SPELL_AURA_APPLIED_DOSE" or combatEvent == "SPELL_AURA_REMOVED_DOSE") then
-				local spellName, auraType, amount = arg10,arg12,arg13;
+				local spellName, auraType, amount = arg13,arg15,arg16;
 				sendextra = amount;
 				if(v.spell and not (v.spell == spellName) ) then
 					go = false;

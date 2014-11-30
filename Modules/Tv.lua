@@ -376,7 +376,7 @@ function VBMTV_OnUpdate(self,elapsed)
 	local deadinraid,nrinraid = 0,0;
 	local leader,class = "Unknown", "Unknown";
 
-	for i=1,GetNumRaidMembers() do
+	for i=1,GetNumGroupMembers() do
 		--first check if we have a boss in target
 		target = "raid"..i.."target";
 		pet = "raid"..i.."pettarget";

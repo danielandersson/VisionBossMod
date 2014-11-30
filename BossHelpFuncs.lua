@@ -111,7 +111,7 @@ end
 
 function VBM_BossTargetNearYou(yrd,boss,text,field,sayifitisyou,showtextoor,playbigsound,playpvpsounds)
 	local target,i;
-	for i = 1, GetNumRaidMembers() do
+	for i = 1, GetNumGroupMembers() do
 		if(UnitName("raid"..i.."target") == boss) then
 			target = "raid"..i.."targettarget";
 			break;
@@ -162,7 +162,7 @@ end
 
 function VBM_BossTargetYouWarning(boss,text,say,spell,field)
 	local target,i;
-	for i = 1, GetNumRaidMembers() do
+	for i = 1, GetNumGroupMembers() do
 		if(UnitName("raid"..i.."target") == boss) then
 			target = "raid"..i.."target";
 			break;
@@ -202,7 +202,7 @@ end
 function VBM_BossTargetYouMoreAlerts(boss,spell,flash,nrflashes,overtime,r,g,b)
 	--find the boss in someones target
 	local target,i;
-	for i = 1, GetNumRaidMembers() do
+	for i = 1, GetNumGroupMembers() do
 		if(UnitName("raid"..i.."target") == boss and UnitExists("raid"..i.."targettarget")) then
 			target = "raid"..i.."targettarget"; --set to boss target
 			bossref = "raid"..i.."target";
@@ -228,7 +228,7 @@ local bossTwoTargetCheck = false;
 local function bossTwoTargetsRun(boss,text,field,mark,marktime,second)
 	--find the boss in someones target
 	local target,i;
-	for i = 1, GetNumRaidMembers() do
+	for i = 1, GetNumGroupMembers() do
 		if(UnitName("raid"..i.."target") == boss and UnitExists("raid"..i.."targettarget")) then
 			target = "raid"..i.."targettarget"; --set to boss target
 			break;
@@ -296,7 +296,7 @@ end
 
 local function debugg_bosstarget(boss,duration)
 	local i;
-	for i = 1, GetNumRaidMembers() do
+	for i = 1, GetNumGroupMembers() do
 		if(UnitName("raid"..i.."target") == boss) then
 			if(UnitExists("raid"..i.."targettarget")) then
 				vbm_printc(boss.." ("..duration..") target: "..vbm_c_w..UnitName("raid"..i.."targettarget"));
@@ -337,7 +337,7 @@ end
 
 function VBM_SetMarkOnName(name,mark,tid)
 	local i;
-	for i = 1, GetNumRaidMembers() do
+	for i = 1, GetNumGroupMembers() do
 		if(UnitName("raid"..i)==name) then
 			VBM_SetMarkOn("raid"..i,mark,tid);
 			return;
@@ -348,7 +348,7 @@ end
 function VBM_RemoveMarkOnName(name)
 	if (IsRaidLeader() or IsRaidOfficer()) then
 		local i;
-		for i = 1, GetNumRaidMembers() do
+		for i = 1, GetNumGroupMembers() do
 			if(UnitName("raid"..i)==name) then
 				SetRaidTarget("raid"..i,0);
 			end

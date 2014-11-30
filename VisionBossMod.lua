@@ -765,9 +765,9 @@ function VBM_DoZoneDetect()
 	if(VBM_Instaces[zone]) then
 		VBM_ZONE = zone;
 		local extratext = "";
-		if(GetRaidDifficulty()==1 or GetRaidDifficulty()==3) then
+		if(GetRaidDifficultyID()==1 or GetRaidDifficultyID()==3) then
 			extratext  = " (10)";
-		elseif(GetRaidDifficulty()==2 or GetRaidDifficulty()==4) then
+		elseif(GetRaidDifficultyID()==2 or GetRaidDifficultyID()==4) then
 			extratext  = " (25)";
 		end
 		
