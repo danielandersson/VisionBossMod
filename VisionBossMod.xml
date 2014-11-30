@@ -66,14 +66,14 @@
 		</Scripts> 
 	</Frame>
    
-	<Font name="VBM_ZoneTextFont" font="Fonts\FRIZQT__.TTF" outline="THICK" virtual="true">
+	<Font name="VBM_ZoneTextFont" font="Interface\AddOns\VisionBossMod\Data\PT_Sans_Narrow.ttf" outline="NORMAL" virtual="true">
 		<FontHeight>
 			<AbsValue val="52"/>
 		</FontHeight>
 		<Color r="1.0" g="0.9294" b="0.7607"/>
 		<Shadow/>
 	</Font>
-	<Font name="VBM_ErrorFont" font="Fonts\FRIZQT__.TTF" virtual="true">
+	<Font name="VBM_ErrorFont" font="Interface\AddOns\VisionBossMod\Data\PT_Sans_Narrow.ttf" virtual="true">
 		<FontHeight>
 			<AbsValue val="16"/>
 		</FontHeight>

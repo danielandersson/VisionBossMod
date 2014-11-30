@@ -2,7 +2,7 @@
 ..\..\FrameXML\UI.xsd">
 	<Script file="Timers.lua"/>
 	
-	<Font name="VBM_TimerFontTimer" font="Fonts\FRIZQT__.TTF" virtual="true">
+	<Font name="VBM_TimerFontTimer" font="Interface\AddOns\VisionBossMod\Data\PT_Sans_Narrow.ttf" virtual="true">
 		<Color r="1.0" g="1.0" b="1.0"/>
 		<Shadow>
 			<Offset>
@@ -14,7 +14,7 @@
 			<AbsValue val="10"/>
 		</FontHeight>
 	</Font>
-	<Font name="VBM_TimerFontText" font="Fonts\FRIZQT__.TTF" virtual="true">
+	<Font name="VBM_TimerFontText" font="Interface\AddOns\VisionBossMod\Data\PT_Sans_Narrow.ttf" virtual="true">
 		<Color r="1.0" g="1.0" b="1.0"/>
 		<Shadow>
 			<Offset>
@@ -23,7 +23,7 @@
 			<Color r="0" g="0" b="0"/>
 		</Shadow>
 		<FontHeight>
-			<AbsValue val="8"/>
+			<AbsValue val="10"/>
 		</FontHeight>
 	</Font>
 	<Frame name="VBMTimersDropDownMenu" inherits="UIDropDownMenuTemplate" />
@@ -62,7 +62,7 @@
 		<Anchors>
 			<Anchor point="CENTER" relativePoint="CENTER" relativeTo="UIParent">
 				<Offset>
-					<AbsDimension x="220" y="70"/>
+					<AbsDimension x="500" y="150"/>
 				</Offset>
 			</Anchor>
 		</Anchors>
@@ -254,7 +254,7 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
-				<BarTexture file="Interface\AddOns\VisionBossMod\Data\BantoBar"/>
+				<BarTexture file="Interface\AddOns\VisionBossMod\Data\Armory"/>
 				<BarColor r="0" g="1" b="0"/>
 				<Layers>
 					<Layer level="OVERLAY">

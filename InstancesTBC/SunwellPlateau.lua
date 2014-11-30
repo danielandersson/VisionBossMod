@@ -194,7 +194,7 @@ end
 
 function VBM_Kalecgos_During()
 	--find a boss
-	for i = 1, GetNumRaidMembers() do
+	for i = 1, GetNumGroupMembers() do
 		if(UnitExists("raid"..i.."target") and UnitIsEnemy("raid"..i.."target","player") and UnitName("raid"..i.."target") == "Kalecgos") then
 			local hp = VBM_UnitHealthPercent("raid"..i.."target");
 			if(hp ~= VBM_KALECGOS_HP) then
@@ -285,7 +285,7 @@ function VBM_Felmyst_OnUpdate()
 	--find felmyst
 	local target = false;
 	
-	for i = 1, GetNumRaidMembers() do
+	for i = 1, GetNumGroupMembers() do
 		--Encapsulate updater
 		if(VBM_CheckForDebuff("Encapsulate","raid"..i)) then
 			VBM_Felmyst_Encapsulate("raid"..i);
@@ -361,7 +361,7 @@ function VBM_EredarTwins_TankTracking()
 
 	--find Lady Sacrolash
 	local target = false;
-	for i = 1, GetNumRaidMembers() do
+	for i = 1, GetNumGroupMembers() do
 		--find a valid unit for Lady Sacrolash
 		if(UnitExists("raid"..i.."target") and UnitName("raid"..i.."target") == "Lady Sacrolash") then
 			target = "raid"..i.."target";

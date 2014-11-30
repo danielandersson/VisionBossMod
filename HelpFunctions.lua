@@ -66,7 +66,7 @@ vbm_c_grey = "|cFFB4B4B4";
 vbm_c_pink = "|cFFFFA3B1";
 vbm_c_ = "|r"; vbm_c = "|r";
 VBM_YOU = UnitName("player");
-VBM_CURRENT_BANDAGE = "Dense Embersilk Bandage";
+VBM_CURRENT_BANDAGE = "Heavy Windwool Bandage";
 VBM_STANDARD_DONG_SOUND = "Sound\\Doodad\\BellTollAlliance.wav";
 VBM_LOWER_DONG_SOUND = "Sound\\Doodad\\BellTollHorde.wav";
 VBM_RUNE_SOUND = "Sound\\Doodad\\PVP_Rune_speedCustom0.wav";
@@ -78,9 +78,9 @@ VBM_TANKHP = 45000;
 VBM_TANKSTA = 2500;
 VBM_BOSSTARGETYOUDELAY = 0.20; --will be changed depending on your ping setting
 VBM_ICONS = "Interface\\Icons\\";
-VBM_FONT_TVCENMT = "Interface\\AddOns\\VisionBossMod\\Data\\Tw_Cen_MT_Bold.ttf";
-VBM_FONT_ABF = "Interface\\AddOns\\VisionBossMod\\Data\\ABF.ttf";
-VBM_TEXTURE_BANTOBAR = "Interface\\AddOns\\VisionBossMod\\Data\\BantoBar";
+VBM_FONT_TVCENMT = "Interface\\AddOns\\VisionBossMod\\Data\\PT_Sans_Narrow.ttf";
+VBM_FONT_ABF = "Interface\\AddOns\\VisionBossMod\\Data\\PT_Sans_Narrow.ttf";
+VBM_TEXTURE_BANTOBAR = "Interface\\AddOns\\VisionBossMod\\Data\\Armory";
 
 function VBM_GetGroupNr(name)
 	local i,n,g;

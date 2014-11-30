@@ -79,7 +79,7 @@ end
 	********************
 ]]--
 
-function VBM_BuffAlerter(timestamp,combatEvent,hideCaster,sourceGUID,sourceName,sourceFlags,destGUID,destName,destFlags,spellId,spellName,spellSchool,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20)
+function VBM_BuffAlerter(timestamp,combatEvent,hideCaster,sourceGUID,sourceName,sourceFlags,sourceRaidFlags,destGUID,destName,destFlags,destRaidFlags,spellId,spellName,spellSchool,arg15,arg16,arg17,arg18,arg19,arg20,arg21,arg22,arg23)
 	--if you gain a buff
 	if(combatEvent == "SPELL_AURA_APPLIED" and destName and destName == VBM_YOU) then
 		if(arg12 == "BUFF") then
@@ -106,7 +106,7 @@ end
 	********************
 ]]--
 
-function VBM_SSDI_Alert(timestamp,combatEvent,hideCaster,sourceGUID,sourceName,sourceFlags,destGUID,destName,destFlags,spellId,spellName,spellSchool,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20)
+function VBM_SSDI_Alert(timestamp,combatEvent,hideCaster,sourceGUID,sourceName,sourceFlags,sourceRaidFlags,destGUID,destName,destFlags,destRaidFlags,spellId,spellName,spellSchool,arg15,arg16,arg17,arg18,arg19,arg20,arg21,arg22,arg23,arg24,arg25)
 	--anyone gains a buff
 	if((combatEvent == "SPELL_AURA_APPLIED" or combatEvent == "SPELL_AURA_REFRESH") and destName) then
 		--check for di or ss
@@ -118,14 +118,21 @@ function VBM_SSDI_Alert(timestamp,combatEvent,hideCaster,sourceGUID,sourceName,s
 			vbm_printc("|cFFFFFFFF"..destName.." |cFF8888CCgains |cFFFFFFFFDivine Intervention");
 		end
 	end
-	--check for a summon of jeeves
+	--check for a summon of Jeeves
 	if(combatEvent == "SPELL_SUMMON" and sourceName) then
 		if(spellName == "Jeeves") then
 			vbm_infowarn(vbm_c_w..sourceName..vbm_c.." summoned "..vbm_c_g.."Jeeves",12);
 			vbm_printc(CombatLog_String_GetIcon(sourceFlags, "source")..vbm_c_w..sourceName..vbm_c_p.." summoned "..vbm_c_g.."Jeeves");
 		end
 	end
-	--check for a cast of MOLL-E
+    --check for a summon of Blingtron 5000
+    if(combatEvent == "SPELL_SUMMON" and sourceName) then
+        if(spellName == "Blingtron 5000") then
+			vbm_infowarn(vbm_c_w..sourceName..vbm_c.." summoned "..vbm_c_g.."Blingtron 5000",12);
+			vbm_printc(CombatLog_String_GetIcon(sourceFlags, "source")..vbm_c_w..sourceName..vbm_c_p.." summoned "..vbm_c_g.."Blingtron 5000");
+        end
+    end
+    --check for a cast of MOLL-E
 	if(combatEvent == "SPELL_CAST_SUCCESS" and sourceName) then
 		if(spellName == "MOLL-E") then
 			vbm_infowarn(vbm_c_w..sourceName..vbm_c.." cast "..vbm_c_g.."MOLL-E",12);
@@ -150,7 +157,7 @@ end
 	********************
 ]]--
 
-function VBM_MisdirectionWatcher(timestamp,combatEvent,hideCaster,sourceGUID,sourceName,sourceFlags,destGUID,destName,destFlags,spellId,spellName,spellSchool,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20)
+function VBM_MisdirectionWatcher(timestamp,combatEvent,hideCaster,sourceGUID,sourceName,sourceFlags,sourceRaidFlags,destGUID,destName,destFlags,destRaidFlags,spellId,spellName,spellSchool,arg15,arg16,arg17,arg18,arg19,arg20,arg21,arg22,arg23,arg24,arg25)
 	if(combatEvent == "SPELL_CAST_SUCCESS" and destName) then
 		if(spellName == "Misdirection") then
 			vbm_print(vbm_c_p.."["..CombatLog_String_GetIcon(sourceFlags, "source")..vbm_c_grey..sourceName..vbm_c_p.."] "..vbm_c_lb.."-Misdirects->"..vbm_c_p.." ["..CombatLog_String_GetIcon(destFlags, "dest")..vbm_c_grey..destName..vbm_c_p.."]");
@@ -164,7 +171,7 @@ end
 	********************
 ]]--
 
-function VBM_TricksoftheTradeWatcher(timestamp,combatEvent,hideCaster,sourceGUID,sourceName,sourceFlags,destGUID,destName,destFlags,spellId,spellName,spellSchool,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20)
+function VBM_TricksoftheTradeWatcher(timestamp,combatEvent,hideCaster,sourceGUID,sourceName,sourceFlags,sourceRaidFlags,destGUID,destName,destFlags,destRaidFlags,spellId,spellName,spellSchool,arg15,arg16,arg17,arg18,arg19,arg20,arg21,arg22,arg23,arg24,arg25)
 	if(combatEvent == "SPELL_CAST_SUCCESS" and destName) then
 		if(spellName == "Tricks of the Trade") then
 			vbm_print(vbm_c_p.."["..CombatLog_String_GetIcon(sourceFlags, "source")..vbm_c_grey..sourceName..vbm_c_p.."] "..vbm_c_t.."-Tricks of the Trade->"..vbm_c_p.." ["..CombatLog_String_GetIcon(destFlags, "dest")..vbm_c_grey..destName..vbm_c_p.."]");
@@ -178,7 +185,7 @@ end
 	********************
 ]]--
 
-function VBM_ToyTrainSet(timestamp,combatEvent,hideCaster,sourceGUID,sourceName,sourceFlags,destGUID,destName,destFlags,spellId,spellName,spellSchool,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20)
+function VBM_ToyTrainSet(timestamp,combatEvent,hideCaster,sourceGUID,sourceName,sourceFlags,sourceRaidFlags,destGUID,destName,destFlags,destRaidFlags,spellId,spellName,spellSchool,arg15,arg16,arg17,arg18,arg19,arg20,arg21,arg22,arg23,arg24,arg25)
 	if(combatEvent == "SPELL_CREATE") then
 		if(spellName == "Toy Train Set") then
 			vbm_print(vbm_c_p.."["..CombatLog_String_GetIcon(sourceFlags, "source")..vbm_c_grey..sourceName..vbm_c_p.."] "..vbm_c_w.."CREATE |cFF0077DD[Toy Train Set]");
@@ -192,7 +199,7 @@ end
 	********************
 ]]--
 
-function VBM_CCBigBrother(timestamp,combatEvent,hideCaster,sourceGUID,sourceName,sourceFlags,destGUID,destName,destFlags,arg9,arg10,arg11,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20)
+function VBM_CCBigBrother(timestamp,combatEvent,hideCaster,sourceGUID,sourceName,sourceFlags,sourceRaidFlags,destGUID,destName,destFlags,destRaidFlags,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20,arg21,arg22,arg23,arg24,arg25)
 	-- if aura is dispelled on an npc
 	-- combatEvent == "SPELL_AURA_BROKEN" dose't exist ingame, noway to detect broken auras by melee attacks
 	if( (combatEvent == "SPELL_AURA_BROKEN_SPELL" or combatEvent == "SPELL_AURA_BROKEN") and destName) then
@@ -224,9 +231,9 @@ function VBM_CCBigBrother(timestamp,combatEvent,hideCaster,sourceGUID,sourceName
 			end
 		end
 	
-		--local extraSpellName, spellName = arg10,arg13;
-		vbm_print(vbm_c_p..">>>"..vbm_c_w..arg10..vbm_c_p.."<<< ["..CombatLog_String_GetIcon(destFlags, "dest")..vbm_c_grey..destName..vbm_c_p.."]"..
-			VBM_FlagsColor(destFlags).." removed by "..CombatLog_String_GetIcon(sourceFlags, "source")..vbm_c_grey..sourceName..vbm_c_p.."'s "..vbm_c_w..arg13);
+		--local extraSpellName, spellName = arg13,arg16;
+		vbm_print(vbm_c_p..">>>"..vbm_c_w..arg13..vbm_c_p.."<<< ["..CombatLog_String_GetIcon(destFlags, "dest")..vbm_c_grey..destName..vbm_c_p.."]"..
+			VBM_FlagsColor(destFlags).." removed by "..CombatLog_String_GetIcon(sourceFlags, "source")..vbm_c_grey..sourceName..vbm_c_p.."'s "..vbm_c_w..arg16);
 	end
 end
 
@@ -236,7 +243,7 @@ end
 	********************
 ]]--
 
-function VBM_InterruptWatcher(timestamp,combatEvent,hideCaster,sourceGUID,sourceName,sourceFlags,destGUID,destName,destFlags,spellId,spellName,spellSchool,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20)
+function VBM_InterruptWatcher(timestamp,combatEvent,hideCaster,sourceGUID,sourceName,sourceFlags,sourceRaidFlags,destGUID,destName,destFlags,destRaidFlags,spellId,spellName,spellSchool,arg15,arg16,arg17,arg18,arg19,arg20,arg21,arg22,arg23)
 	if(combatEvent == "SPELL_INTERRUPT" and destName) then
 		if(not sourceName) then
 			sourceName = "Unknown";
@@ -266,9 +273,9 @@ function VBM_InterruptWatcher(timestamp,combatEvent,hideCaster,sourceGUID,source
 			end
 		end
 		
-		--local extraSpellName = arg13;
+		--local extraSpellName = arg16;
 		vbm_print(vbm_c_p.."["..CombatLog_String_GetIcon(sourceFlags, "source")..vbm_c_grey..sourceName..vbm_c_p.."] "..vbm_c_w..spellName..
-			VBM_FlagsColor(sourceFlags).." INTERRUPT "..vbm_c_p.."["..CombatLog_String_GetIcon(destFlags, "dest")..vbm_c_grey..destName..vbm_c_p.."] "..vbm_c_w..arg13);
+			VBM_FlagsColor(sourceFlags).." INTERRUPT "..vbm_c_p.."["..CombatLog_String_GetIcon(destFlags, "dest")..vbm_c_grey..destName..vbm_c_p.."] "..vbm_c_w..arg16);
 	end	
 end
 
@@ -278,12 +285,12 @@ end
 	********************
 ]]--
 
-function VBM_AnnounceInterrupts(timestamp,combatEvent,hideCaster,sourceGUID,sourceName,sourceFlags,destGUID,destName,destFlags,spellId,spellName,spellSchool,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20)
+function VBM_AnnounceInterrupts(timestamp,combatEvent,hideCaster,sourceGUID,sourceName,sourceFlags,sourceRaidFlags,destGUID,destName,destFlags,destRaidFlags,spellId,spellName,spellSchool,arg15,arg16,arg17,arg18,arg19,arg20,arg21,arg22,arg23,arg24,arg25)
 	if(combatEvent == "SPELL_INTERRUPT" and sourceName and sourceName == VBM_YOU) then
 		--if you only whant to announce in a raid, and VBM_ZONE is not set, return
 		if(VBM_GetS("InterruptWatcherAnnounceOnlyRaid") and not VBM_ZONE) then
 			return;
 		end
-		vbm_say(""..spellName.." - >>"..arg13.."<<");
+		vbm_say(""..spellName.." - >>"..arg16.."<<");
 	end
 end

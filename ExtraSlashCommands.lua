@@ -164,8 +164,8 @@ end
 function VBM_PrintAboutInfo()
 	vbm_print(vbm_c_p.."You are running: "..vbm_c_g.."VisionBossMod v"..vbm_c_w..VBM_VERSION);
 	vbm_print(vbm_c_w.."by Kyau @ US Cenarius");
-	vbm_print(vbm_c_p.."Website: "..vbm_c_lb.."http://kyau.net/vbm/");
-	vbm_print(vbm_c_p.."Get latest VBM: "..vbm_c_lb.."http://kyau.net/VisionBossMod.7z");
+	vbm_print(vbm_c_p.."Website: "..vbm_c_lb.."https://github.com/kyau/VisionBossMod");
+	vbm_print(vbm_c_p.."Get latest VBM: "..vbm_c_lb.."https://github.com/kyau/VisionBossMod/archive/master.zip");
 end
 
 function VBM_Slashcommandinfo()

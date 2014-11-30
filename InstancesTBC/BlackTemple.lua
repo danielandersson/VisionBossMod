@@ -148,7 +148,7 @@ end
 function VBM_Mother_Fatal()
 	local fatals = {};
 	
-	for i=1,GetNumRaidMembers() do
+	for i=1,GetNumGroupMembers() do
 		if(VBM_CheckForDebuff("Fatal Attraction","raid"..i)) then
 			table.insert(fatals,""..UnitName("raid"..i));
 		end

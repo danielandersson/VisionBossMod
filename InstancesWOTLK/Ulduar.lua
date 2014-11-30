@@ -61,7 +61,7 @@ VBM_LoadInstance["Ulduar"] = function()
 				VBM_BossTimer(20,"Stunned",VBM_ICONS.."ability_rogue_kidneyshot");
 				--search for all raid members who are within visible range and are not dead and point arrows to them if they are not in a Vehicle
 				local i,u,p;
-				for i=1,GetNumRaidMembers() do
+				for i=1,GetNumGroupMembers() do
 					u = "raid"..i; p = "raid"..i.."pet";
 					if(UnitExists(u) and UnitIsVisible(u) and not UnitIsDeadOrGhost(u)) then
 						--now filter out all Vehicles
@@ -489,7 +489,7 @@ VBM_LoadInstance["Ulduar"] = function()
 		},
 		during = function()
 			local i;
-			for i=1,GetNumRaidMembers() do
+			for i=1,GetNumGroupMembers() do
 				local name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable  =  UnitDebuff("raid"..i,"Biting Cold");
 				if(name and count > 2 and not VBM_FAILED) then
 					VBM_FAILED = true;
@@ -681,7 +681,7 @@ VBM_LoadInstance["Ulduar"] = function()
 			if(VBM_PHASE == 4) then
 				--find a boss
 				local i,hp;
-				for i = 1, GetNumRaidMembers() do
+				for i = 1, GetNumGroupMembers() do
 					if(UnitExists("raid"..i.."target") and UnitName("raid"..i.."target") == "Leviathan Mk II") then
 						hp = VBM_UnitHealthPercent("raid"..i.."target",true);
 						if(hp ~= VBM_LEVI) then
@@ -908,7 +908,7 @@ VBM_LoadInstance["Ulduar"] = function()
 			--find boss
 			local target = false;
 			local i;
-			for i = 1, GetNumRaidMembers() do
+			for i = 1, GetNumGroupMembers() do
 				--find a valid unit for boss
 				if(UnitExists("raid"..i.."target") and UnitName("raid"..i.."target") == "General Vezax") then
 					target = "raid"..i.."target";
@@ -1213,7 +1213,7 @@ function VBM_Iron_Council()
 	--find boss
 	local target = false;
 	local i;
-	for i = 1, GetNumRaidMembers() do
+	for i = 1, GetNumGroupMembers() do
 		--find a valid unit for boss
 		if(UnitExists("raid"..i.."target") and UnitName("raid"..i.."target") == "Runemaster Molgeim") then
 			target = "raid"..i.."target";

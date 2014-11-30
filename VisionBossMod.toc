@@ -1,8 +1,8 @@
 ## Interface: 60000
-## Title: VisionBossMod
-## Version: 3.02
-## Notes: Raid Warnings and UI improvments. By: |cff00ff00Kyau|r
-@ |cFFFF8080US Cenarius|r
+## X-Min-Interface: 60000
+## Title: |cff69ccf0<|r|cff696969VBM|r|cff69ccf0>|r VisionBossMod |cffff7d0av3
+## Version: 3.03
+## Notes: Raid Warnings and UI improvments. By: |cff00ff00Kyau|r @ |cFFFF8080US Cenarius|r
 ## Author: Kyau @ US Cenarius
 ## Original Author: Vislike @ EU Shattered Halls
 ## RequiredDeps:
@@ -56,3 +56,4 @@ InstancesWOTLK\CrusadersColiseum.lua
 InstancesWOTLK\IcecrownCitadel.lua
 InstancesCATA\Tier1Raid.lua
 InstancesCATA\BaradinHold.lua
+InstacesWOD\Dungeons.lua

@@ -221,7 +221,7 @@ VBM_LoadInstance["Icecrown Citadel"] = function()
 		},
 		during = function()
 			local i;
-			for i=1,GetNumRaidMembers() do
+			for i=1,GetNumGroupMembers() do
 				local name, rank, icon, count = UnitDebuff("raid"..i,"Inoculated");
 				if(name and count > 2 and not VBM_FAILED) then
 					VBM_FAILED = true;
@@ -470,7 +470,7 @@ VBM_LoadInstance["Icecrown Citadel"] = function()
 					local lol={};
 					local i,x,y;
 					local px,py=VBM_GetPlayerMapPosition("player");
-					for i=1,GetNumRaidMembers() do
+					for i=1,GetNumGroupMembers() do
 						x,y = VBM_GetPlayerMapPosition("raid"..i);
 						if(x+y > 0 and not VBM_CheckForDebuff("Plague Sickness","raid"..i) and UnitName("raid"..i)~=VBM_YOU and not UnitIsDeadOrGhost("raid"..i)) then
 							lol[#lol+1] = {n=UnitName("raid"..i),d=math.sqrt(((x-px)^2)+((y-py)^2))};
@@ -883,7 +883,7 @@ VBM_LoadInstance["Icecrown Citadel"] = function()
 			end
 			--fail achievement warning
 			local i;
-			for i=1,GetNumRaidMembers() do
+			for i=1,GetNumGroupMembers() do
 				local name, rank, icon, count = UnitDebuff("raid"..i,"Mystic Buffet");
 				if(name and count > 5 and not VBM_FAILED) then
 					VBM_FAILED = true;
@@ -1107,7 +1107,7 @@ VBM_LoadInstance["Icecrown Citadel"] = function()
 		},
 		during = function()
 			local i;
-			for i=1,GetNumRaidMembers() do
+			for i=1,GetNumGroupMembers() do
 				--fix plague
 				local name, rank, icon, count = UnitDebuff("raid"..i,"Necrotic Plague");
 				local d = UnitName("raid"..i);

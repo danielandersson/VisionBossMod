@@ -76,7 +76,7 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
-				<BarTexture file="Interface\AddOns\VisionBossMod\Data\BantoBar"/>
+				<BarTexture file="Interface\AddOns\VisionBossMod\Data\Armory"/>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString name="$parentName" inherits="SystemFont_Shadow_Small" maxLines="1" justifyH="LEFT" text="Unknown">
@@ -140,7 +140,7 @@
 						</FontString>
 					</Layer>
 					<Layer level="BORDER">
-						<Texture name="$parentBg" file="Interface\AddOns\VisionBossMod\Data\BantoBar" setAllPoints="true"/>
+						<Texture name="$parentBg" file="Interface\AddOns\VisionBossMod\Data\Armory" setAllPoints="true"/>
 					</Layer>
 				</Layers>
 			</StatusBar>

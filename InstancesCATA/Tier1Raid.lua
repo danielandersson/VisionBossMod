@@ -110,7 +110,7 @@ VBM_LoadInstance["The Bastion of Twilight"] = function()
 
 		during = function()
 			local i;
-			for i=1,GetNumRaidMembers() do
+			for i=1,GetNumGroupMembers() do
 				if(VBM_CheckForDebuff("Twilight Meteorite","raid"..i)) then
 					VBM_SetMarkOnName(UnitName("raid"..i),8,10);
 					vbm_bigwarn(vbm_c_t.."Stack on >>"..vbm_c_w..UnitName("raid"..i)..vbm_c_t.."<<",0.1);
@@ -342,7 +342,7 @@ VBM_LoadInstance["The Bastion of Twilight"] = function()
 		during = function()
 			local found = {};
 			local i;
-			for i=1,GetNumRaidMembers() do
+			for i=1,GetNumGroupMembers() do
 				if(UnitChannelInfo("raid"..i)=="Worshipping") then
 					found[#found+1] = UnitName("raid"..i);
 				end

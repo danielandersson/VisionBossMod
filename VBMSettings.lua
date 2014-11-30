@@ -40,7 +40,7 @@ function VBM_Settings_SetDefaults()
 	if(VBMSettings['MasterLootReminder'] == nil) then VBMSettings['MasterLootReminder'] = 0; end
 	if(VBMSettings['Respons'] == nil) then VBMSettings['Respons'] = "Normal"; end
 	if(VBMSettings['WarningTextScale'] == nil) then VBMSettings['WarningTextScale'] = 1; end
-	if(VBMSettings['WarningTextFont'] == nil) then VBMSettings['WarningTextFont'] = "Fonts\\FRIZQT__.TTF"; end
+	if(VBMSettings['WarningTextFont'] == nil) then VBMSettings['WarningTextFont'] = "Interface\\AddOns\\VisionBossMod\\Data\\PT_Sans_Narrow.ttf"; end
 	if(VBMSettings['WarningTextExtraSpace'] == nil) then VBMSettings['WarningTextExtraSpace'] = 0; end
 	if(VBMSettings['WarningTextAnchor'] == nil) then VBMSettings['WarningTextAnchor'] = 0; end
 	--StatusFrame Settings
@@ -600,13 +600,9 @@ function VBM_Settings_Menuofdoom(self, level)
 							info.checked = (VBMSettings['WarningTextFont'] == "Fonts\\SKURRI.TTF");
 							info.func = function() VBMSettings['WarningTextFont'] = "Fonts\\SKURRI.TTF"; VBM_Setup_Warning_Text(); end;
 							UIDropDownMenu_AddButton(info,level);
-							info.text = "Tw Cen MT Bold";
+							info.text = "PT Sans Narrow";
 							info.checked = (VBMSettings['WarningTextFont'] == VBM_FONT_TVCENMT);
 							info.func = function() VBMSettings['WarningTextFont'] = VBM_FONT_TVCENMT; VBM_Setup_Warning_Text(); end;
-							UIDropDownMenu_AddButton(info,level);
-							info.text = "Myriad Condensed Web (ABF)";
-							info.checked = (VBMSettings['WarningTextFont'] == VBM_FONT_ABF);
-							info.func = function() VBMSettings['WarningTextFont'] = VBM_FONT_ABF; VBM_Setup_Warning_Text(); end;
 							UIDropDownMenu_AddButton(info,level);
 							
 						end

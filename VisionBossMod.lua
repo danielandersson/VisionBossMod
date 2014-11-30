@@ -72,7 +72,7 @@ UnitPower("player", ALTERNATE_POWER_INDEX)
 	******************
 ]]--
 
-VBM_VERSION = 3.02;
+VBM_VERSION = 3.03;
 VBM_NEW_VERSION_OUT = false; -- will be set to true if a new version is out
 VBM_VERSION_LIST = {}; -- intern data struct, used by /vbmversion function
 
@@ -730,12 +730,14 @@ end
 ]]--
 
 function VBM_UpdateRaidSizeDifficulty()
-	local _, _, difficulty, _, _, playerDifficulty, isDynamicInstance = GetInstanceInfo();
+	local _, _, difficulty, _, _, playerDifficulty, isDynamicInstance, _, instanceGroupSize = GetInstanceInfo();
 	--set size
 	if(difficulty==1 or difficulty==3) then
 		VBM_DUNGEON_SIZE = 10;
 	elseif(difficulty==2 or difficulty==4) then
 		VBM_DUNGEON_SIZE = 25;
+    else
+        VBM_DUNGEON_SIZE = instanceGroupSize;
 	end
 	--set difficulty
 	if(isDynamicInstance) then
@@ -751,7 +753,7 @@ function VBM_UpdateRaidSizeDifficulty()
 			VBM_DUNGEON_DIFFICULTY = 1;
 		end
 	else
-		if(difficulty==3 or difficulty==4) then
+		if(difficulty==3 or difficulty==4 or difficulty==7 or difficulty==14) then
 			VBM_DUNGEON_DIFFICULTY = 2;
 		else
 			VBM_DUNGEON_DIFFICULTY = 1;
@@ -769,6 +771,8 @@ function VBM_DoZoneDetect()
 			extratext  = " (10)";
 		elseif(GetRaidDifficultyID()==2 or GetRaidDifficultyID()==4) then
 			extratext  = " (25)";
+        else
+            extratext  = " ("..instanceGroupSize..")";
 		end
 		
 		vbm_printc("Now in a supported zone: |cFFFFFFFF"..VBM_ZONE..extratext.."|cFF8888CC VBM has been turned on");
@@ -817,10 +821,13 @@ function VBM_SimZone(zone)
 	if(VBM_Instaces[zone]) then
 		VBM_ZONE = zone;
 		local extratext = "";
-		if(GetRaidDifficulty()==1 or GetRaidDifficulty()==3) then
+		local _, _, difficulty, _, _, playerDifficulty, isDynamicInstance, _, instanceGroupSize = GetInstanceInfo();
+        if(GetRaidDifficultyID()==1 or GetRaidDifficultyID()==3) then
 			extratext  = " (10)";
-		elseif(GetRaidDifficulty()==2 or GetRaidDifficulty()==4) then
+		elseif(GetRaidDifficultyID()==2 or GetRaidDifficultyID()==4) then
 			extratext  = " (25)";
+        else
+            extratext  = " ("..instanceGroupSize..")";
 		end
 		
 		vbm_printc("Now in a supported zone: |cFFFFFFFF"..VBM_ZONE..extratext.."|cFF8888CC VBM has been turned on");
