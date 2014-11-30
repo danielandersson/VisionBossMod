@@ -513,7 +513,7 @@ function VBM_Slash_SS(msg,_,...)
 	--if not found check party
 	if(not ss) then
 		--check party members
-		for i=1,GetNumPartyMembers() do
+		for i=1,GetNumGroupMembers() do
 			if(VBM_CheckForBuff("Soulstone Resurrection","party"..i)) then
 				if(ss==false) then
 					ss = UnitName("party"..i);

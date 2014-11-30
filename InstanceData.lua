@@ -79,6 +79,8 @@ VBM_Instaces = {
 	["The Bastion of Twilight"] = 1,
 	["Blackwing Descent"] = 1,
 	["Throne of the Four Winds"] = 1,
+    --wod
+    ["Skyreach"] = 1,
 };
 
 VBM_LoadInstance = {};

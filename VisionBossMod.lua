@@ -283,7 +283,17 @@ function VisionBossMod_OnUpdate(self,elapsed)
 end
 
 function VisionBossMod_Init()
-	--setup slash cmd  (/vbm in Status Frame file)
+    --setup vbm comms
+    if not RegisterAddonMessagePrefix then
+        return
+    end
+    RegisterAddonMessagePrefix("VBM")
+    if not IsAddonMessagePrefixRegistered("VBM") then
+        vbm_debug("|cFFFF9922<VisionBossMod> Register(): |cFFFF0000failed!|r");
+    else
+        vbm_debug("|cFFFF9922<VisionBossMod> Register(): |cFF00FF00succeeded!|r");
+    end
+    --setup slash cmd  (/vbm in Status Frame file)
 	SlashCmdList["VBM_update"] = VBM_RequestUpdate;  
 	SLASH_VBM_update1 = "/vbmupdate";
 	--SlashCmdList["VBM_helplist"] = VBM_Slashcommandinfo;  
