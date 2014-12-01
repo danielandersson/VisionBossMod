@@ -195,7 +195,7 @@ function VBM_ScanForWellFed()
 			missing_well[1][UnitName("player")] = class;
 		end
 		--check party
-		for i=1,GetNumGroupMembers() do
+		for i=1,GetNumGroupMembers()-1 do
 			--dont check dead or out of range
 			if((not UnitIsDeadOrGhost("party"..i)) and UnitIsVisible("party"..i)) then
 				local w = VBM_CheckForBuff("Well Fed","party"..i);

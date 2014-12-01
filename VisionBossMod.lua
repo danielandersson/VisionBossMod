@@ -289,7 +289,7 @@ function VisionBossMod_Init()
     end
     RegisterAddonMessagePrefix("VBM")
     RegisterAddonMessagePrefix("VBMVOTE")
-    for num_syncs=1,20 do RegisterAddonMessagePrefix("VBMSYNC "..num_syncs) end
+    for num_syncs=1,99 do RegisterAddonMessagePrefix("VBMSYNC "..num_syncs) end
     if not IsAddonMessagePrefixRegistered("VBM") then
         vbm_debug("|cFFFF9922<VisionBossMod> Register(): |cFFFF0000failed!|r");
     else
@@ -378,7 +378,7 @@ end
 
 function VBM_DetectRaid()
 	--Check if we have joined a raid group and if so request version
-	if(GetNumGroupMembers()>0 and VBM_IN_RAID == false) then
+	if(IsInRaid() and VBM_IN_RAID == false) then
 		VBM_IN_RAID = true;
 		vbm_verbosec("You have joined a raid group");
 		--ask for new version
@@ -438,7 +438,17 @@ function vbm_send_mess(msg)
 	vbm_debug("|cFFFF9922<VisionBossMod> Sent Message: |cFFFFFFFF"..msg);
 end
 
-function vbm_recive_mess(msg,from)
+function vbm_recive_mess(msg,from2)
+    char = {}
+    for n,r in string.gmatch(from2, "(%w+)-(%w+)") do
+        char[0] = n
+        char[1] = r
+    end
+    if(char[1] == GetRealmName()) then
+        from = char[0]
+    else
+        from = from2
+    end
 	vbm_debug("|cFF999922<VisionBossMod> Recived Message: |cFFFFFFFF"..msg.." |cFF999922from: |cFFFFFFFF"..from);
 	
 	local found,p1,p2,p3;
@@ -538,7 +548,17 @@ function vbm_sendsynced_repeatprot(msg)
 	VBM_Delay(8,function() VBM_SYNC_REPEAT_PROTECTION[msg] = nil; end);
 end
 
-function vbm_recive_synced(sync,msg,from)
+function vbm_recive_synced(sync,msg,from2)
+    char = {}
+    for n,r in string.gmatch(from2, "(%w+)-(%w+)") do
+        char[0] = n
+        char[1] = r
+    end
+    if(char[1] == GetRealmName()) then
+        from = char[0]
+    else
+        from = from2
+    end
 	if(sync <= VBM_MSG_SYNC) then
 		vbm_debug("|cFFFF5555<VBM Sync "..sync.."> Declined (SYNC): |cFFFFFFFF"..msg.." |cFF999922from: |cFFFFFFFF"..from);
 		return;
