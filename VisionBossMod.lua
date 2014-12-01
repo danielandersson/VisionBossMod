@@ -72,7 +72,7 @@ UnitPower("player", ALTERNATE_POWER_INDEX)
 	******************
 ]]--
 
-VBM_VERSION = 3.03;
+VBM_VERSION = 3.04;
 VBM_NEW_VERSION_OUT = false; -- will be set to true if a new version is out
 VBM_VERSION_LIST = {}; -- intern data struct, used by /vbmversion function
 
@@ -220,7 +220,7 @@ function VisionBossMod_OnEvent(self,event,arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg
 		local found,_,p1 = string.find(arg1,"VBMSYNC (.+)");
 		if(found and arg3 == "RAID") then
 			VBM_MSG_FROM = arg4;
-			--dont run if it is our own message because it has allready been run
+			--dont run if it is our own message because it has already been run
 			if(VBM_MSG_FROM ~= UnitName("player")) then
 				vbm_recive_synced(tonumber(p1),arg2,VBM_MSG_FROM);
 			end
@@ -288,6 +288,8 @@ function VisionBossMod_Init()
         return
     end
     RegisterAddonMessagePrefix("VBM")
+    RegisterAddonMessagePrefix("VBMVOTE")
+    for num_syncs=1,20 do RegisterAddonMessagePrefix("VBMSYNC "..num_syncs) end
     if not IsAddonMessagePrefixRegistered("VBM") then
         vbm_debug("|cFFFF9922<VisionBossMod> Register(): |cFFFF0000failed!|r");
     else
@@ -1272,9 +1274,9 @@ function vbm_debug(msg)
 end
 
 function vbm_sendchat(msg)
-	if(GetNumGroupMembers()>0) then
+	if(IsInRaid()) then
 		SendChatMessage("<VBM> "..msg,"RAID");
-	elseif(GetNumPartyMembers()>0) then
+	elseif(GetNumGroupMembers()>0) then
 		SendChatMessage("<VBM> "..msg,"PARTY");
 	else
 		vbm_printc(msg);
@@ -1282,9 +1284,9 @@ function vbm_sendchat(msg)
 end
 
 function vbm_sendchatnovbm(msg)
-	if(GetNumGroupMembers()>0) then
+	if(IsInRaid()) then
 		SendChatMessage(""..msg,"RAID");
-	elseif(GetNumPartyMembers()>0) then
+	elseif(GetNumGroupMembers()>0) then
 		SendChatMessage(""..msg,"PARTY");
 	else
 		vbm_print(vbm_c_p..msg);

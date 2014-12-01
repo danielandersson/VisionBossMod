@@ -167,7 +167,7 @@ function VBM_ScanForWellFed()
 	local oor_dead = {};
 	local i;
 	
-	if(GetNumGroupMembers()>0) then
+	if(IsInRaid()) then
 		--check raid
 		for i=1,GetNumGroupMembers() do
 			--dont check dead or out of range
@@ -216,7 +216,7 @@ end
 function VBM_PopulateFlaskTooltip(self)
 	local text = "Flask Check:";
 	local texttochat = "Missing Elixir: ";
-	if(GetNumGroupMembers()>0) then
+	if(IsInRaid()) then
 		local both,battle,guard,except = VBM_ScanForElixirs();
 		local n,d,name,class;
 		--text = text.."\n"..vbm_c_y.."(Under dev, need help with buff names)";
@@ -305,7 +305,7 @@ end
 function VBM_ScanForElixirs(msg,_,announce)
 	local missing_both,missing_battle,missing_guardian,exceptions = {},{},{},{};
 	local i;
-	if(GetNumGroupMembers()>0) then
+	if(IsInRaid()) then
 		for i=1,GetNumGroupMembers() do
 			--dont check dead or out of range
 			if((not UnitIsDeadOrGhost("raid"..i)) and UnitIsVisible("raid"..i)) then
@@ -430,7 +430,7 @@ function VBM_PopulateRebirthTooltip(self)
 	--scan party or raid for druids shamans and locks
 	local druids,warlocks,shamans,priests = {},{},{},{};
 	local c;
-	if(GetNumGroupMembers()>0) then
+	if(IsInRaid()) then
 		for i=1,GetNumGroupMembers() do
 			_,c = UnitClass("raid"..i);
 			if(c=="DRUID") then

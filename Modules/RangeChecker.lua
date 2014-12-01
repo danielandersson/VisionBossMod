@@ -177,7 +177,7 @@ function VBM_RangeCheck_OnUpdate(self,elapsed)
 	local player_table = {};
 	VBM_RC_ERROR = false;
 	--first for raid, else for party
-	if(GetNumGroupMembers()>0) then
+	if(IsInRaid()) then
 		for i = 1, GetNumGroupMembers() do
 			unitid = "raid"..i; unitidpet = "raidpet"..i;
 			--for ranges dont include player

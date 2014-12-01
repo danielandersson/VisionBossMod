@@ -359,7 +359,7 @@ function VBM_MakeLeaderRollList()
 end
 
 function VBM_MakeLeaderRoll()
-	if(GetNumGroupMembers()>0) then
+	if(IsInRaid()) then
 		if (UnitIsGroupLeader("player") or UnitIsGroupAssistant("player")) then
 			RandomRoll(1,GetNumGroupMembers());
 		else
@@ -373,12 +373,9 @@ end
 function VBM_LeaderRollResult(arg1)
 	--get nr of players
 	local nr;
-	if(GetNumGroupMembers()>0) then
-		--if (IsRaidLeader() or IsRaidOfficer()) then
+	if(IsInRaid()) then
 		if (UnitIsGroupLeader("player") or UnitIsGroupAssistant("player")) then
 			nr = GetNumGroupMembers();
-        --elseif(IsPartyLeader()) then
-		--	nr = GetNumGroupMembers()+1;
 		else
 			return;
 		end
@@ -391,7 +388,7 @@ function VBM_LeaderRollResult(arg1)
 	found, _, rnd_value = string.find(arg1,UnitName("player").." rolls (%d*) %(1%-"..nr.."%)");
 	--disp result
 	if(found) then
-		if(GetNumGroupMembers()>0) then
+		if(IsInRaid()) then
 			vbm_sendchat("Leader Roll: (1-"..nr.."): "..rnd_value.." = "..UnitName("raid"..rnd_value).." ("..VBM_GetGroupNr(UnitName("raid"..rnd_value))..")");
 		else
 			local char_name;

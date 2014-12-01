@@ -940,7 +940,7 @@ local function dovotesetupcheck(r)
 		vbm_printc("Error: You are in combat");
 		return false;
 	end
-	if(GetNumGroupMembers()>0 and not (UnitIsGroupLeader("player") or UnitIsGroupAssistant("player")) ) then
+	if(IsInRaid() and not (UnitIsGroupLeader("player") or UnitIsGroupAssistant("player")) ) then
 		vbm_printc("Error: You are not RaidLeader or RaidOfficer");
 		return false;
 	end
