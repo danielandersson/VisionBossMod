@@ -414,7 +414,7 @@ function VBMTV_OnUpdate(self,elapsed)
 			nrinraid = nrinraid + 1;
 		end
 		--now check if this is the leader
-		if(UnitIsPartyLeader("raid"..i)) then
+		if(UnitIsGroupLeader("raid"..i)) then
 			leader = UnitName("raid"..i);
 			_,class = UnitClass("raid"..i);
 			--store raid leader

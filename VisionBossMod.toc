@@ -56,4 +56,5 @@ InstancesWOTLK\CrusadersColiseum.lua
 InstancesWOTLK\IcecrownCitadel.lua
 InstancesCATA\Tier1Raid.lua
 InstancesCATA\BaradinHold.lua
-InstacesWOD\Dungeons.lua
+InstancesWOD\Dungeons.lua
+InstancesWOD\Highmaul.lua

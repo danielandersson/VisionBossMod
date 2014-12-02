@@ -799,12 +799,10 @@ function VBM_DoZoneDetect()
 	if(VBM_Instaces[zone]) then
 		VBM_ZONE = zone;
 		local extratext = "";
-		if(GetRaidDifficultyID()==1 or GetRaidDifficultyID()==3) then
-			extratext  = " (10)";
-		elseif(GetRaidDifficultyID()==2 or GetRaidDifficultyID()==4) then
-			extratext  = " (25)";
-        else
-            extratext  = " ("..instanceGroupSize..")";
+		if(GetRaidDifficultyID()==3 or GetRaidDifficultyID()==5) then
+			extratext  = " (Legacy 10)";
+		elseif(GetRaidDifficultyID()==4 or GetRaidDifficultyID()==6) then
+			extratext  = " (Legacy 25)";
 		end
 		
 		vbm_printc("Now in a supported zone: |cFFFFFFFF"..VBM_ZONE..extratext.."|cFF8888CC VBM has been turned on");
@@ -1086,7 +1084,7 @@ function VBM_DetectBossDeath(arg7)
 end
 
 function VBM_DetectBossStart(uid)
-	if(UnitExists(uid) and VBM_UnitClassification(uid)=="worldboss") then
+	if(UnitExists(uid) and (VBM_UnitClassification(uid)=="worldboss" or VBM_UnitClassification(uid)=="elite")) then
 		if(UnitIsDeadOrGhost(uid)) then
 			VBM_BossDead(UnitName(uid));
 		else
