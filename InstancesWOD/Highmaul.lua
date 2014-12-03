@@ -10,7 +10,7 @@ VBM_LoadInstance["Highmaul"] = function()
             VBM_BossTimer(37,"Impale",VBM_ICONS.."ability_rogue_hungerforblood");
             VBM_BossTimer(48,"Berserker Rush",VBM_ICONS.."ability_fixated_state_red");
             VBM_BossTimer(90,"Chain Hurl",VBM_ICONS.."inv_misc_steelweaponchain");
-            VBM_LoopTimerSetup(2-,"Flame Pillar Spawn",VBM_ICONS.."ability_mage_firestarter");
+            VBM_LoopTimerSetup(20,"Flame Pillar Spawn",VBM_ICONS.."ability_mage_firestarter");
         end,
         debuffs = {
             ["Mauling Brew"] = {vbm_c_g.."* * * Mauling Brew * * *"},
@@ -47,7 +47,7 @@ VBM_LoadInstance["Highmaul"] = function()
                         vbm_say("Berserker Rush - "..VBM_YOU);
                     end
                     VBM_RemoveTimer("Berserker Rush");
-                    VBM_BossTimer(6-,"Berserker Rush",VBM_ICONS.."ability_fixated_state_red");
+                    VBM_BossTimer(60,"Berserker Rush",VBM_ICONS.."ability_fixated_state_red");
                 end,
             },
         },
