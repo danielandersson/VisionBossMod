@@ -49,7 +49,7 @@
 				</Offset>
 			</Anchor>
 		</Anchors>
-		<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Addons\VisionBossMod\Data\KyauBorder" tile="true">
+		<Backdrop bgFile="Interface\Addons\VisionBossMod\Data\kyaubg" edgeFile="Interface\Addons\VisionBossMod\Data\kyauborder" tile="true">
 			<BackgroundInsets>
 				<AbsInset left="5" right="5" top="5" bottom="5"/>
 			</BackgroundInsets>

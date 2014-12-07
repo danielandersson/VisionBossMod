@@ -56,22 +56,22 @@ end
 function VBM_SF_SetBorder()
 	if(VBM_GetS("SFHideBorder")) then
 		VBMStatusFrame:SetBackdrop( { 
-			bgFile = "Interface\\Tooltips\\UI-Tooltip-Background", 
+			bgFile = "Interface\\Addons\\VisionBossMod\\data\\kyaubg", 
 			tile = true,
 			tileSize = 16,
 			insets = { left = 4, right = 4, top = 3, bottom = 3 }
 		});
 	else
 		VBMStatusFrame:SetBackdrop( { 
-			bgFile = "Interface\\Tooltips\\UI-Tooltip-Background", 
-			edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+			bgFile = "Interface\\Addons\\VisionBossMod\\data\\kyaubg", 
+			edgeFile = "Interface\\Addons\\VisionBossMod\\data\\kyauborder",
 			tile = true,
 			tileSize = 16,
 			edgeSize = 16, 
-			insets = { left = 5, right = 5, top = 5, bottom = 5 }
+			insets = { left = 4, right = 4, top = 4, bottom = 4 }
 		});
 	end
-	VBMStatusFrame:SetBackdropColor(0.1,0.1,0.1,0.8);
+	VBMStatusFrame:SetBackdropColor(0,0,0,0.8);
 end
 
 local VBM_SF_TitleTime = false;
