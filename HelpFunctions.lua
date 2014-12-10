@@ -84,7 +84,7 @@ VBM_TEXTURE_BANTOBAR = "Interface\\AddOns\\VisionBossMod\\Data\\Armory";
 
 function VBM_GetGroupNr(name)
 	local i,n,g;
-	for i=1,GetNumRaidMembers() do
+	for i=1,GetNumGroupMembers() do
 		n,_,g = GetRaidRosterInfo(i);
 		if(n==name) then
 			return g;
@@ -95,7 +95,7 @@ end
 
 function VBM_GetRaidId(name)
 	local i,n;
-	for i=1,GetNumRaidMembers() do
+	for i=1,GetNumGroupMembers() do
 		n = GetRaidRosterInfo(i);
 		if(string.lower(n)==string.lower(name)) then
 			return i;
@@ -106,7 +106,7 @@ end
 
 function VBM_GetClass(name)
 	local i,n,c;
-	for i=1,GetNumRaidMembers() do
+	for i=1,GetNumGroupMembers() do
 		n,_,_,_,c = GetRaidRosterInfo(i);
 		if(n==name) then
 			return c;
@@ -117,7 +117,7 @@ end
 
 function VBM_GetRank(name)
 	local i,n,c;
-	for i=1,GetNumRaidMembers() do
+	for i=1,GetNumGroupMembers() do
 		n,c = GetRaidRosterInfo(i);
 		if(n==name) then
 			return c;
@@ -233,8 +233,8 @@ function VBM_GetUnitReferens(bossname)
 		end
 	end
 	--search all raid members
-	if(GetNumRaidMembers()>0) then
-		for i=1,GetNumRaidMembers() do
+	if(IsInRaid()) then
+		for i=1,GetNumGroupMembers() do
 			uid = "raid"..i.."target";
 			pet = "raid"..i.."pettarget";
 			if(UnitExists(uid) and UnitName(uid)==bossname) then

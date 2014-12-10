@@ -1,7 +1,7 @@
 ## Interface: 60000
 ## X-Min-Interface: 60000
 ## Title: |cff69ccf0<|r|cff696969VBM|r|cff69ccf0>|r VisionBossMod |cffff7d0av3
-## Version: 3.051
+## Version: 3.052
 ## Notes: Raid Warnings and UI improvments. By: |cff00ff00Kyau|r @ |cFFFF8080US Cenarius|r
 ## Author: Kyau @ US Cenarius
 ## Original Author: Vislike @ EU Shattered Halls

@@ -229,11 +229,11 @@ end
 
 function VBM_AVBGUpdate()
 	local i;
-	for i=1, MAX_BATTLEFIELD_QUEUES do
-		local status, mapName, instanceID = GetBattlefieldStatus(i);
+	for i=1, GetMaxBattlefieldID() do
+		local status, mapName = GetBattlefieldStatus(i);
 		if(status == "confirm" and mapName == "Alterac Valley") then
 			if(VBM_AVCOUNTDOWNID>0) then
-				vbm_sendchat("Got "..mapName.." "..instanceID.." random id "..VBM_AVCOUNTDOWNID);
+				vbm_sendchat("Got "..mapName.." random id "..VBM_AVCOUNTDOWNID);
 				VBM_AVCOUNTDOWNID = 0;
 			end
 		end

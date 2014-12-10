@@ -146,6 +146,10 @@ function VBM_Feast_Check(msg,from)
 		local pos = string.find(msg,"prepares a");
 		vbm_infowarn(vbm_c_w..from..vbm_c_t.." "..string.sub(msg,pos),12);
 	end
+    if(string.find(msg,"is hosting a")) then
+        local pos = string.find(msg,"is hosting a");
+        vbm_infowarn(vbm_c_w..from..vbm_c_t.." "..string.sub(msg,pos),12);
+    end
 	if(string.find(msg,"Goblin Barbecue")) then
 		vbm_infowarn(vbm_c_w..from..vbm_c_t.." ".."Goblin Barbecue",12);
 	end
