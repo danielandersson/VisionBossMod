@@ -256,7 +256,7 @@ function VBM_GetUnitReferens(bossname)
 			return pet;
 		end
 		--check party
-		for i=1,GetNumPartyMembers() do
+		for i=1,GetNumGroupMembers() do
 			uid = "party"..i.."target";
 			pet = "party"..i.."pettarget";
 			if(UnitExists(uid) and UnitName(uid)==bossname) then
