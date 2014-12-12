@@ -323,7 +323,7 @@ end
 ]]--
 
 function VBM_SetMarkOn(uid,mark,tid)
-	if (IsRaidLeader() or IsRaidOfficer()) then
+	if (UnitIsGroupLeader("player") or UnitIsGroupAssistant("player")) then
 		if(mark) then
 			SetRaidTarget(uid,mark);
 		else
@@ -346,7 +346,7 @@ function VBM_SetMarkOnName(name,mark,tid)
 end
 
 function VBM_RemoveMarkOnName(name)
-	if (IsRaidLeader() or IsRaidOfficer()) then
+	if (UnitIsGroupLeader("player") or UnitIsGroupAssistant("player")) then
 		local i;
 		for i = 1, GetNumGroupMembers() do
 			if(UnitName("raid"..i)==name) then

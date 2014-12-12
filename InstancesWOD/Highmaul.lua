@@ -57,7 +57,7 @@ VBM_LoadInstance["Highmaul"] = function()
     --[[ ** The Butcher ** ]]--
     VBM_BOSS_DATA["The Butcher"] = {
 		start = function()
-            VBM_BossTimer(6*60,"Berserk",VBM_ICONS.."spell_shadow_unholyfrenzy");
+            VBM_BossTimer(5*60,"Berserk",VBM_ICONS.."spell_shadow_unholyfrenzy");
         end,
         debuffs = {
             ["The Tenderizer"] = {VBM_WarnTextIcon("The Tenderizer","inv_mace_52"),function()
@@ -101,6 +101,133 @@ VBM_LoadInstance["Highmaul"] = function()
                 end
             end
         end,
+    };
+    --[[ ** Brackenspore ** ]]--
+    VBM_BOSS_DATA["Brackenspore"] = {
+		start = function()
+            VBM_BossTimer(32,"Necrotic Breath",VBM_ICONS.."ability_mage_worldinflamesgreen");
+            VBM_BossTimer(45,"Infesting Spores",VBM_ICONS.."ability_creature_disease_01");
+            VBM_BossTimer(10*60,"Berserk",VBM_ICONS.."spell_shadow_unholyfrenzy");
+            VBM_BoopTimer(18,"Living Mushroom",VBM_ICONS.."inv_misc_starspecklemushroom");
+            VBM_BoopTimer(82,"Rejuvenating Mushroom",VBM_ICONS.."inv_elemental_primal_mana");
+        end,
+        debuffs = {
+            ["Creeping Moss"] = {vbm_c_g.."* * * Creeping Moss * * *"},
+        },
+        spells = {
+			--tank stacks
+            ["Rot"] = {
+				event = "SPELL_AURA_APPLIED_DOSE",
+				spell = "Rot",
+				amount = 3,
+				logic = ">",
+				dest = VBM_YOU,
+                simonsound = true,
+				func = function(s,d,a)
+					vbm_debuffwarn(vbm_c_r.."* * * Rot - "..a.." Stacks * * *");
+                    vbm_say("Rot - "..a.." Stacks - "..VBM_YOU);
+				end,
+			},
+            ["Necrotic Breath Tracker"] = {
+                event = "SPELL_CAST_START",
+                spell = "Necrotic Breath",
+                texture = "ability_mage_worldinflamesgreen",
+                func = function()
+                    VBM_RemoveTimer("Necrotic Breath");
+                    VBM_BossTimer(32,"Necrotic Breath",VBM_ICONS.."ability_mage_worldinflamesgreen");
+                end,
+            },
+            ["Necrotic Breath"] = {
+                event = "SPELL_DAMAGE",
+                spell = "Necrotic Breath",
+                simonsound = true,
+                texture = "ability_mage_worldinflamesgreen",
+                func = function()
+                    vbm_infowarn(vbm_c_bronze.."* * * Necrotic Breath * * *");
+                end,
+            },
+            ["Infesting Spores Tracker"] = {
+                event = "SPELL_CAST_START",
+                spell = "Infesting Spores",
+                texture = "ability_creature_disease_01",
+                timer = 10,
+                mess = "* * * Infesting Spores * * *",
+                pvpflag2sound = true,
+                func = function()
+                    VBM_RemoveTimer("Infesting Spores");
+                    VBM_BossTimer(65,"Infesting Spores",VBM_ICONS.."ability_creature_disease_01");
+                end,
+            },
+            ["Decay Cast"] = {
+                event = "SPELL_CAST_START",
+                src = "Fungal Flesh-Eater",
+                spell = "Decay",
+                mess = "* * * Kick Decay * * *",
+                color = "purple",
+                duration = 1.5;
+                lowersound = true,
+            },
+            ["Decay Kick"] = {
+                event = "SPELL_INTERRUPT",
+                src = "Fungal Flesh-Eater",
+                interrupted = "Decay",
+                mess = "* * * Interrupted * * *",
+                color = "green",
+                duration = 0.1,
+            },
+            ["Living Mushroom Tracker"] = {
+                event = "SPELL_CAST_SUCCESS",
+                spell = "Living Mushroom",
+                sound = true,
+                mess = "* * Living Mushroom * *",
+                func = function()
+                    VBM_RemoveTimer("Living Mushroom");
+                    VBM_BossTimer(58,"Living Mushroom",VBM_ICONS.."inv_misc_starspecklemushroom");
+                end,
+            },
+            ["Rejuvenating Mushroom Tracker"] = {
+                event = "SPELL_CAST_SUCCESS",
+                spell = "Rejuvenating Mushroom",
+                sound = true,
+                mess = "* * Rejuvenating Mushroom * *",
+                func = function()
+                    VBM_RemoveTimer("Rejuvenating Mushroom");
+                    VBM_BossTimer(135,"Rejuvenating Mushroom",VBM_ICONS.."inv_elemental_primal_mana");
+                end,
+            },
+            --[[
+            ["Spore Shooter Tracker"] = {
+                event = "SPELL_CAST_SUCCESS",
+                spell = "Spore Shooter",
+                sound = true,
+                mess = "* * Spore Shooter Spawn * *",
+                func = function()
+                    VBM_RemoveTimer("Spore Shooter");
+                    VBM_BossTimer(60,"Spore Shooter",VBM_ICONS.."inv_elemental_primal_mana");
+                end,
+            },
+            ["Mind Fungus Tracker"] = {
+                event = "SPELL_CAST_SUCCESS",
+                spell = "Mind Fungus",
+                sound = true,
+                mess = "* * Mind Fungus Spawn * *",
+                func = function()
+                    VBM_RemoveTimer("Mind Fungus");
+                    VBM_BossTimer(51,"Mind Fungus",VBM_ICONS.."inv_elemental_primal_mana");
+                end,
+            },
+            ["Fungal Flesh-Eater Tracker"] = {
+                event = "SPELL_CAST_SUCCESS",
+                spell = "Fungal Flesh-Eater",
+                sound = true,
+                mess = "* * * Fungal Flesh-Eater Spawn * * *",
+                func = function()
+                    VBM_RemoveTimer("Fungal Flesh-Eater");
+                    VBM_BossTimer(120,"Fungal Flesh-Eater",VBM_ICONS.."inv_elemental_primal_mana");
+                end,
+            },
+            ]]--
+        },
     };
     --[[ ** Trash ** ]]--
     VBM_BOSS_DATA["Trash"] = {
