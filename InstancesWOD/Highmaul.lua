@@ -108,8 +108,8 @@ VBM_LoadInstance["Highmaul"] = function()
             VBM_BossTimer(32,"Necrotic Breath",VBM_ICONS.."ability_mage_worldinflamesgreen");
             VBM_BossTimer(45,"Infesting Spores",VBM_ICONS.."ability_creature_disease_01");
             VBM_BossTimer(10*60,"Berserk",VBM_ICONS.."spell_shadow_unholyfrenzy");
-            VBM_BoopTimer(18,"Living Mushroom",VBM_ICONS.."inv_misc_starspecklemushroom");
-            VBM_BoopTimer(82,"Rejuvenating Mushroom",VBM_ICONS.."inv_elemental_primal_mana");
+            VBM_BossTimer(18,"Living Mushroom",VBM_ICONS.."inv_misc_starspecklemushroom");
+            VBM_BossTimer(82,"Rejuvenating Mushroom",VBM_ICONS.."inv_elemental_primal_mana");
         end,
         debuffs = {
             ["Creeping Moss"] = {vbm_c_g.."* * * Creeping Moss * * *"},
