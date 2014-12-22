@@ -57,9 +57,9 @@ end
 ]]--
 
 function VBM_AutoZoneIn()
-	if(VBM_GetS("AutoDetailedLoot")) then
+	--[[if(VBM_GetS("AutoDetailedLoot")) then
 		VBM_SetCVar("showLootSpam","0",1);
-	end
+	end]]--
 	if(VBM_GetS("AutoPlayerNames")) then
 		VBM_SetCVar("UnitNamePlayer","0",1);
 	end
@@ -74,9 +74,9 @@ function VBM_AutoZoneIn()
 end
 
 function VBM_AutoZoneOut()
-	if(VBM_GetS("AutoDetailedLoot")) then
+	--[[if(VBM_GetS("AutoDetailedLoot")) then
 		VBM_SetCVar("showLootSpam","1",1);
-	end
+	end]]--
 	if(VBM_GetS("AutoPlayerNames")) then
 		VBM_SetCVar("UnitNamePlayer","1",1);
 	end

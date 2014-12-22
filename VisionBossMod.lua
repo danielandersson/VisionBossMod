@@ -72,7 +72,7 @@ UnitPower("player", ALTERNATE_POWER_INDEX)
 	******************
 ]]--
 
-VBM_VERSION = 3.053;
+VBM_VERSION = 3.054;
 VBM_NEW_VERSION_OUT = false; -- will be set to true if a new version is out
 VBM_VERSION_LIST = {}; -- intern data struct, used by /vbmversion function
 
@@ -109,7 +109,7 @@ function VisionBossMod_OnLoad(self)
 
 	self:RegisterEvent("PLAYER_ENTERING_WORLD");
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA");
-	self:RegisterEvent("RAID_ROSTER_UPDATE");
+	self:RegisterEvent("GROUP_ROSTER_UPDATE");
 	
 	self:RegisterEvent("CHAT_MSG_ADDON");
 	
@@ -194,7 +194,7 @@ function VisionBossMod_OnEvent(self,event,arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg
 	--if not fully inited then just return
 	if(not VBM_HAS_INIT) then return; end
 	
-	if (event == "RAID_ROSTER_UPDATE") then 
+	if (event == "GROUP_ROSTER_UPDATE") then 
 		VBM_DetectRaid();
 		return;
 	end
@@ -1292,20 +1292,20 @@ function vbm_debug(msg)
 end
 
 function vbm_sendchat(msg)
-	if(IsInRaid()) then
-		SendChatMessage("<VBM> "..msg,"RAID");
-	elseif(GetNumGroupMembers()>0) then
-		SendChatMessage("<VBM> "..msg,"PARTY");
+	if(GetNumGroupMembers()>0) then
+		SendChatMessage("<VBM> "..msg,"INSTANCE_CHAT");
+	--elseif(GetNumGroupMembers()>0) then
+	--	SendChatMessage("<VBM> "..msg,"PARTY");
 	else
 		vbm_printc(msg);
 	end
 end
 
 function vbm_sendchatnovbm(msg)
-	if(IsInRaid()) then
-		SendChatMessage(""..msg,"RAID");
-	elseif(GetNumGroupMembers()>0) then
-		SendChatMessage(""..msg,"PARTY");
+	if(GetNumGroupMembers()>0) then
+		SendChatMessage(""..msg,"INSTANCE_CHAT");
+	--elseif(GetNumGroupMembers()>0) then
+	--	SendChatMessage(""..msg,"PARTY");
 	else
 		vbm_print(vbm_c_p..msg);
 	end

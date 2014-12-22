@@ -132,7 +132,7 @@ function VBM_Settings_SetDefaults()
 		if(VBMSettings['MaelstromWeaponTracker'] == nil) then VBMSettings['MaelstromWeaponTracker'] = 0; end
 	--Instance Specific
 	if(VBMSettings['AVAutoJoin'] == nil) then VBMSettings['AVAutoJoin'] = 0; end
-	if(VBMSettings['AutoDetailedLoot'] == nil) then VBMSettings['AutoDetailedLoot'] = 0; end
+	--if(VBMSettings['AutoDetailedLoot'] == nil) then VBMSettings['AutoDetailedLoot'] = 0; end
 	if(VBMSettings['AutoPlayerNames'] == nil) then VBMSettings['AutoPlayerNames'] = 0; end
 	if(VBMSettings['AutoPlayerGuildNames'] == nil) then VBMSettings['AutoPlayerGuildNames'] = 0; end
 	if(VBMSettings['AutoPlayerTitles'] == nil) then VBMSettings['AutoPlayerTitles'] = 0; end
@@ -498,9 +498,9 @@ function VBM_Settings_Menuofdoom(self, level)
 			info.tooltipOnButton = 1;
 			info.notCheckable = 1;
 			info.keepShownOnClick = 1;
-			info.text = "Text Respons ("..VBMSettings['Respons']..")";
+			info.text = "Text Response ("..VBMSettings['Respons']..")";
 			info.tooltipTitle = info.text;
-			info.tooltipText = "Controls how many events vbm should report in chat:\nNormal: Only standard info\nVerbose: Gives some more info about certain events\nDebug: Also Displays debug output";
+			info.tooltipText = "Controls which VBM events should print info:\n\nNormal: standard output\nVerbose: detailed event output\nDebug: developer/debug output";
 			info.func = function() VBM_Toggle_Options("Respons","Normal","Verbose","Debug"); end;
 			UIDropDownMenu_AddButton(info,level);			
 			info.text = "Manual Update/Reset";
@@ -1785,13 +1785,14 @@ function VBM_Settings_Menuofdoom(self, level)
 				end
 				
 				if(UIDROPDOWNMENU_MENU_VALUE == "AutoZoneingOptions") then
-					info = {};
+					--[[
+                    info = {};
 					info.text = "Detailed Loot Information";
 					info.keepShownOnClick = 1;
 					info.checked = VBM_GetS("AutoDetailedLoot");
 					info.func = VBM_Toggle_Setting;
 					info.value = "AutoDetailedLoot";
-					UIDropDownMenu_AddButton(info,level);
+					UIDropDownMenu_AddButton(info,level);]]--
 					info = {};
 					info.text = "Player Names";
 					info.keepShownOnClick = 1;
@@ -1990,7 +1991,7 @@ function VBM_Settings_Menuofdoom(self, level)
 			UIDropDownMenu_AddButton(info,level);
 			
 			info = {};
-			info.text = "VBM Varibel Info (Debug info)";
+			info.text = "VBM Variable Info (Debug info)";
 			info.notCheckable = 1;
 			info.func = VBM_PrintVaribelInfo;
 			UIDropDownMenu_AddButton(info,level);

@@ -169,7 +169,7 @@ VBM_LoadInstance["Highmaul"] = function()
             },
             ["Decay Kick"] = {
                 event = "SPELL_INTERRUPT",
-                src = "Fungal Flesh-Eater",
+                dest = "Fungal Flesh-Eater",
                 interrupted = "Decay",
                 mess = "* * * Interrupted * * *",
                 color = "green",
@@ -205,17 +205,13 @@ VBM_LoadInstance["Highmaul"] = function()
                     VBM_RemoveTimer("Spore Shooter");
                     VBM_BossTimer(60,"Spore Shooter",VBM_ICONS.."inv_elemental_primal_mana");
                 end,
-            },
+            },]]--
             ["Mind Fungus Tracker"] = {
                 event = "SPELL_CAST_SUCCESS",
                 spell = "Mind Fungus",
                 sound = true,
                 mess = "* * Mind Fungus Spawn * *",
-                func = function()
-                    VBM_RemoveTimer("Mind Fungus");
-                    VBM_BossTimer(51,"Mind Fungus",VBM_ICONS.."inv_elemental_primal_mana");
-                end,
-            },
+            },--[[
             ["Fungal Flesh-Eater Tracker"] = {
                 event = "SPELL_CAST_SUCCESS",
                 spell = "Fungal Flesh-Eater",
