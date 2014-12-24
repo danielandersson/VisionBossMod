@@ -72,7 +72,7 @@ UnitPower("player", ALTERNATE_POWER_INDEX)
 	******************
 ]]--
 
-VBM_VERSION = 3.054;
+VBM_VERSION = 3.055;
 VBM_NEW_VERSION_OUT = false; -- will be set to true if a new version is out
 VBM_VERSION_LIST = {}; -- intern data struct, used by /vbmversion function
 
