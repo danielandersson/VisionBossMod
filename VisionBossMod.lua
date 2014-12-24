@@ -48,8 +48,8 @@ VBM_PlaySoundFile("Sound\\Interface\\AlarmClockWarning2.wav");
 VBM_PlaySoundFile("Sound\\Interface\\AuctionWindowClose.wav");
 VBM_PlaySoundFile("Sound\\Interface\\PvpFlagTakenMono.wav");
 
-vbm_verbose("|cFF4444CC<VisionBossMod> Verbose color");
-vbm_print("|cFF8888CC<VisionBossMod> Print color");
+vbm_verbose("|cFF4444CC<VBM> Verbose color");
+vbm_print("|cFF8888CC<VBM> Print color");
 
 COMBATLOG_MESSAGE_LIMIT = 300;
 CONTAINER_SCALE = 0.75;
@@ -291,9 +291,9 @@ function VisionBossMod_Init()
     RegisterAddonMessagePrefix("VBMVOTE")
     for num_syncs=1,99 do RegisterAddonMessagePrefix("VBMSYNC "..num_syncs) end
     if not IsAddonMessagePrefixRegistered("VBM") then
-        vbm_debug("|cFFFF9922<VisionBossMod> Register(): |cFFFF0000failed!|r");
+        vbm_debug("|cFFFF9922<VBM> Register(): |cFFFF0000failed!|r");
     else
-        vbm_debug("|cFFFF9922<VisionBossMod> Register(): |cFF00FF00succeeded!|r");
+        vbm_debug("|cFFFF9922<VBM> Register(): |cFF00FF00succeeded!|r");
     end
     --setup slash cmd  (/vbm in Status Frame file)
 	SlashCmdList["VBM_update"] = VBM_RequestUpdate;  
@@ -430,12 +430,12 @@ function VBM_RequestUpdate()
 		VBM_BOSSSTART = {};
 		vbm_send_mess("GETBOSS");
 		--print msg
-		vbm_print("|cFF8888CC<VisionBossMod> Manual update/reset complete.");
+		vbm_print("|cFF8888CC<VBM> Manual update/reset complete.");
 end
 
 function vbm_send_mess(msg)
 	SendAddonMessage("VBM",msg,"RAID");
-	vbm_debug("|cFFFF9922<VisionBossMod> Sent Message: |cFFFFFFFF"..msg);
+	vbm_debug("|cFFFF9922<VBM> Sent Message: |cFFFFFFFF"..msg);
 end
 
 function vbm_recive_mess(msg,from2)
@@ -449,7 +449,7 @@ function vbm_recive_mess(msg,from2)
     else
         from = from2
     end
-	vbm_debug("|cFF999922<VisionBossMod> Recived Message: |cFFFFFFFF"..msg.." |cFF999922from: |cFFFFFFFF"..from);
+	vbm_debug("|cFF999922<VBM> Recived Message: |cFFFFFFFF"..msg.." |cFF999922from: |cFFFFFFFF"..from);
 	
 	local found,p1,p2,p3;
 	
@@ -468,7 +468,7 @@ function vbm_recive_mess(msg,from2)
 		--check for new version
 		if(v > VBM_VERSION and VBM_NEW_VERSION_OUT == false) then
 			VBM_NEW_VERSION_OUT = true;
-			vbm_print("|cFF8888CC<VisionBossMod> New Version out!!! |cFFFFFFFF"..p1.." |cFF8888CCYour Version is: |cFFFFFFFF"..VBM_VERSION);
+			vbm_print("|cFF8888CC<VBM> New Version out!!! |cFFFFFFFF"..p1.." |cFF8888CCYour Version is: |cFFFFFFFF"..VBM_VERSION);
 			vbm_infowarn("New Version out of VBM!",10);
 		end
 		--update the newestversion setting
@@ -1301,7 +1301,7 @@ function vbm_printc(msg)
 	vbm_print("|cFF8888CC<VBM> "..msg);
 end
 
-function vbm_verbose(msg) -- vbm_verbose("|cFF4444CC<VisionBossMod> MSG");
+function vbm_verbose(msg) -- vbm_verbose("|cFF4444CC<VBM> MSG");
 	if(VBMSettings['Respons']=="Verbose" or VBMSettings['Respons']=="Debug") then
 		DEFAULT_CHAT_FRAME:AddMessage(msg);
 	end

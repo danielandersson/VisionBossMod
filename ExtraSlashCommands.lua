@@ -537,13 +537,13 @@ function VBM_Slash_SS(msg,_,...)
 		if(arg[1]) then
 			vbm_sendchat("Soulstone found on: "..ss);
 		else
-			vbm_print("|cFF8888CC<VisionBossMod> Soulstone found on: |cFFFFFFFF"..ss);
+			vbm_print("|cFF8888CC<VBM> Soulstone found on: |cFFFFFFFF"..ss);
 		end
 	else
 		if(arg[1]) then
 			vbm_sendchat("No Soulstone found");
 		else
-			vbm_print("|cFF8888CC<VisionBossMod> No Soulstone found");
+			vbm_print("|cFF8888CC<VBM> No Soulstone found");
 		end
 	end
 end

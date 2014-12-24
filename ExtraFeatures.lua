@@ -259,18 +259,18 @@ function VisionBossMod_Auto_Repair()
 		if(VBM_GetS("AutoRepairUseGBank")) then
 			if(CanGuildBankRepair()) then
 				RepairAllItems(1);
-				vbm_print("|cFF8888CC<VisionBossMod> AutoRepair (Guild Bank) cost: "..VBM_FormatMoney(rc));
+				vbm_print("|cFF8888CC<VBM> AutoRepair (Guild Bank) cost: "..VBM_FormatMoney(rc));
 				gbank = true;
 			end
 		end
 
 		-- if rc + 5g is more then the money you got abort
 		if(rc + 50000 > money and VBM_GetS("AutoRepairSave5g")) then
-			vbm_print("|cFF8888CC<VisionBossMod> Aborting AutoRepair, Your total Gold will be under|cFFFFFFFF 5 |cFF8888CCafter a repair");
+			vbm_print("|cFF8888CC<VBM> Aborting AutoRepair, Your total Gold will be under|cFFFFFFFF 5 |cFF8888CCafter a repair");
 		else
 			RepairAllItems();
 			if(not gbank) then
-				vbm_print("|cFF8888CC<VisionBossMod> AutoRepair cost: "..VBM_FormatMoney(rc));
+				vbm_print("|cFF8888CC<VBM> AutoRepair cost: "..VBM_FormatMoney(rc));
 			end
 		end
 
@@ -285,7 +285,7 @@ function VisionBossMod_TellLogoutName(name)
 	  button1 = "Yes",
 	  button2 = "No",
 	  OnAccept = function()
-		vbm_print("|cFF8888CC<VisionBossMod> Remote logout on: |cFFFFFFFF"..name);
+		vbm_print("|cFF8888CC<VBM> Remote logout on: |cFFFFFFFF"..name);
 		vbm_send_mess("RLOGOUT "..name);
 	  end,
 	  timeout = 0,
@@ -297,7 +297,7 @@ end
 
 function VisionBossMod_ReciveLogout(who,from)
 	if(string.lower(who) == string.lower(UnitName("player")) and VBM_GetRank(from) > 0) then
-		vbm_print("|cFF8888CC<VisionBossMod> Recived remote logout from: |cFFFFFFFF"..from);
+		vbm_print("|cFF8888CC<VBM> Recived remote logout from: |cFFFFFFFF"..from);
 		VBM_DelayByName("RLReplay", 1, VisionBossMod_ReciveLogoutReply,from);
 		if(not IsResting()) then
 			Logout();

@@ -79,9 +79,7 @@ VBM_Instaces = {
 	["The Bastion of Twilight"] = 1,
 	["Blackwing Descent"] = 1,
 	["Throne of the Four Winds"] = 1,
-    --wod dungeons
-    ["Skyreach"] = 1,
-    --wod raids
+    --wod
     ["Highmaul"] = 1,
 };
 
