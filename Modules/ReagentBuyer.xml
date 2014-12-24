@@ -3,7 +3,7 @@
 	<Script file="ReagentBuyer.lua"/>
 	
 	<!-- Frame to handle all core events --> 
-   <Frame name="VBMReagentBuyerFrame" toplevel="true" enableMouse="true" movable="true" frameStrata="LOW" hidden="true" parent="UIParent"> 
+   <Frame name="VBMReagentBuyerFrame" toplevel="true" enableMouse="true" movable="true" frameStrata="DIALOG" hidden="true" parent="MerchantFrame"> 
       <Scripts> 
 			<OnLoad> 
 				VBM_ReagentBuyer_OnLoad(self);
@@ -36,13 +36,13 @@
 			<AbsDimension x="220" y="105"/>
 		</Size>
 		<Anchors>
-			<Anchor point="CENTER">
+			<Anchor point="BOTTOMLEFT">
 				<Offset>
-					<AbsDimension x="0" y="0"/>
+					<AbsDimension x="0" y="-150"/>
 				</Offset>
 			</Anchor>
 		</Anchors>
-		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+		<Backdrop bgFile="Interface\Addons\VisionBossMod\Data\kyaubg" edgeFile="Interface\Addons\VisionBossMod\Data\kyauborder" tile="true">
 			<BackgroundInsets>
 				<AbsInset left="5" right="5" top="5" bottom="5"/>
 			</BackgroundInsets>

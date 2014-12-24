@@ -9,7 +9,8 @@
 ]]--
 
 VBM_RB_ReagentTree = {
-	["Gift of the Wild"] = {
+--[[ class skills no longer have reagents
+    ["Gift of the Wild"] = {
 		[0] = "NONE",
 		[1] = "Wild Berries",
 		[2] = "Wild Thornroot",
@@ -69,6 +70,16 @@ VBM_RB_ReagentTree = {
 	["Raise Dead"] = {
 		[0] = "Corpse Dust",
 	};
+]]--
+    ["Vanishing Powder"] = {
+        [0] = "Vanishing Powder",
+    };
+    ["Dust of Disappearance"] = {
+        [0] = "Dust of Disappearance",
+    };
+    ["Tome of the Clear Mind"] = {
+        [0] = "Tome of the Clear Mind",
+    };
 };
 
 VBM_RB_skill = 0;
@@ -230,8 +241,10 @@ function VBM_RB_GetSkills()
 	local skill = {};
 	local rank = {};
 	local class = UnitClass("player");
+    local level = UnitLevel("player");
 
 	--get skills
+    --[[ class skills no longer have reagents
 	if(class == "Druid") then
 		skill[1] = "Gift of the Wild";
 		skill[2] = "Rebirth";
@@ -258,6 +271,17 @@ function VBM_RB_GetSkills()
 	else
 		return;
 	end
+    ]]--
+    --
+    if(level < 81) then
+        skill[1] = "Vanishing Powder";
+    elseif(level > 80 and level < 86) then
+        skill[1] = "Dust of Disappearance";
+    elseif(level > 85) then
+        skill[1] = "Tome of the Clear Mind";
+    else
+        return;
+    end
 	--set rank to 0
 	for i=1,#skill do
 		rank[skill[i]] = 0;

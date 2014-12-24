@@ -186,7 +186,7 @@ function VBM_ScanForWellFed()
                 end
 			end
 		end
-	elseif(GetNumGroupMembers()>0) then
+	else
 		--check player
 		local w = VBM_CheckForBuff("Well Fed","player");
 		if(not w) then
@@ -291,8 +291,8 @@ function VBM_PopulateFlaskTooltip(self)
 			texttochat = texttochat.."All Have";
 		end
 	else
-		text = text.."\n"..vbm_c_r.."Not in Raid";
-		texttochat = texttochat.."Not in Raid";
+		text = text.."\n"..vbm_c_r.."Not in Group";
+		texttochat = texttochat.."Not in Group";
 	end
 	--add extra info
 	text = text.."\n"..vbm_c_grey.."(Shift+Click): Paste to chat.";
@@ -457,66 +457,67 @@ function VBM_PopulateRebirthTooltip(self)
 			end
 		end
 	end
-	-- RESS SPELLS **************************************************************
-	--Rebirth
-	text = text.."\n"..vbm_c_w.."Rebirth:";
-	if(#druids > 0) then
-		table.sort(druids);
-		texttochat = texttochat.."Rebirth: ";
-		local tid,tidtext;
-		for i=1,#druids do
-			--get data
-			if(rebirth.druid[druids[i]]) then
-				--found rebirth data
-				tid = rebirth.druid[druids[i]].O - time();
-				if(tid > 0) then
-					tidtext = string.format("%d:%.2d",tid/60,math.fmod(tid,60));
-					texttochat = texttochat..druids[i].." ("..tidtext..") ";
-					tidtext = vbm_c_w..tidtext;
-				else
-					texttochat = texttochat..druids[i].." (Ready) ";
-					tidtext = vbm_c_g.."Ready";
-				end
-			else
-				--nodata found
-				texttochat = texttochat..druids[i].." (Ready*) ";
-				tidtext = vbm_c_g.."Ready"..vbm_c_w.."*";
-			end
-			text = text.."\n"..VBM_GetTextClassColor("DRUID")..druids[i].." "..vbm_c_grey.."("..tidtext..vbm_c_grey..")";
-		end
-	else
-		text = text.."\n"..vbm_c_grey.."No Druids in Group";
-	end
-	--Soulstone
-	text = text.."\n"..vbm_c_w.."Soulstone:";
-	if(#warlocks > 0) then
-		table.sort(warlocks);
-		texttochat = texttochat.."Soulstone: ";
-		local tid,tidtext;
-		for i=1,#warlocks do
-			--get data
-			if(rebirth.warlock[warlocks[i]]) then
-				--found rebirth data
-				tid = rebirth.warlock[warlocks[i]].O - time();
-				if(tid > 0) then
-					tidtext = string.format("%d:%.2d",tid/60,math.fmod(tid,60));
-					texttochat = texttochat..warlocks[i].." ("..tidtext..") ";
-					tidtext = vbm_c_w..tidtext;
-				else
-					texttochat = texttochat..warlocks[i].." (Ready) ";
-					tidtext = vbm_c_g.."Ready";
-				end
-			else
-				texttochat = texttochat..warlocks[i].." (Ready*) ";
-				tidtext = vbm_c_g.."Ready"..vbm_c_w.."*";
-			end
+    if(IsInRaid() or GetNumGroupMembers()>0) then
+	    -- RESS SPELLS **************************************************************
+    	--Rebirth
+    	text = text.."\n"..vbm_c_w.."Rebirth:";
+	    if(#druids > 0) then
+    		table.sort(druids);
+    		texttochat = texttochat.."Rebirth: ";
+    		local tid,tidtext;
+    		for i=1,#druids do
+    			--get data
+    			if(rebirth.druid[druids[i]]) then
+    				--found rebirth data
+    				tid = rebirth.druid[druids[i]].O - time();
+    				if(tid > 0) then
+    					tidtext = string.format("%d:%.2d",tid/60,math.fmod(tid,60));
+    					texttochat = texttochat..druids[i].." ("..tidtext..") ";
+    					tidtext = vbm_c_w..tidtext;
+    				else
+    					texttochat = texttochat..druids[i].." (Ready) ";
+    					tidtext = vbm_c_g.."Ready";
+    				end
+    			else
+    				--nodata found
+    				texttochat = texttochat..druids[i].." (Ready*) ";
+    				tidtext = vbm_c_g.."Ready"..vbm_c_w.."*";
+    			end
+    			text = text.."\n"..VBM_GetTextClassColor("DRUID")..druids[i].." "..vbm_c_grey.."("..tidtext..vbm_c_grey..")";
+    		end
+    	else
+    		text = text.."\n"..vbm_c_grey.."No Druids in Group";
+    	end
+        --Soulstone
+    	text = text.."\n"..vbm_c_w.."Soulstone:";
+    	if(#warlocks > 0) then
+    		table.sort(warlocks);
+    		texttochat = texttochat.."Soulstone: ";
+    		local tid,tidtext;
+    		for i=1,#warlocks do
+    			--get data
+    			if(rebirth.warlock[warlocks[i]]) then
+    				--found rebirth data
+    				tid = rebirth.warlock[warlocks[i]].O - time();
+    				if(tid > 0) then
+    					tidtext = string.format("%d:%.2d",tid/60,math.fmod(tid,60));
+    					texttochat = texttochat..warlocks[i].." ("..tidtext..") ";
+    					tidtext = vbm_c_w..tidtext;
+    				else
+    					texttochat = texttochat..warlocks[i].." (Ready) ";
+    					tidtext = vbm_c_g.."Ready";
+    				end
+    			else
+    				texttochat = texttochat..warlocks[i].." (Ready*) ";
+    				tidtext = vbm_c_g.."Ready"..vbm_c_w.."*";
+    			end
 
-			text = text.."\n"..VBM_GetTextClassColor("WARLOCK")..warlocks[i].." "..vbm_c_grey.."("..tidtext..vbm_c_grey..")";
-		end
-	else
-		text = text.."\n"..vbm_c_grey.."No Warlocks in Group";
-	end
-	--Reincarnation
+    			text = text.."\n"..VBM_GetTextClassColor("WARLOCK")..warlocks[i].." "..vbm_c_grey.."("..tidtext..vbm_c_grey..")";
+    		end
+    	else
+    		text = text.."\n"..vbm_c_grey.."No Warlocks in Group";
+    	end
+    	--Reincarnation
 --	text = text.."\n"..vbm_c_w.."Reincarnation:";
 --	if(#shamans > 0) then
 --		table.sort(shamans);
@@ -552,70 +553,76 @@ function VBM_PopulateRebirthTooltip(self)
 --		text = text.."\n"..vbm_c_grey.."No Shamans in Group";
 --	end
 
-	-- HEALING SPELLS **************************************************************
-	text = text.."\n"..vbm_c.."AOE Healing Tracking:";
-	--Divine Hymn
-	text = text.."\n"..vbm_c_w.."Divine Hymn:";
-	if(#priests > 0) then
-		table.sort(priests);
-		texttochat2 = texttochat2.."Divine Hymn: ";
-		local tid,tidtext;
-		for i=1,#priests do
-			--get data
-			if(rebirth.priestheal[priests[i]]) then
-				--found Tranquility data
-				tid = rebirth.priestheal[priests[i]].O - time();
-				if(tid > 0) then
-					tidtext = string.format("%d:%.2d",tid/60,math.fmod(tid,60));
-					texttochat2 = texttochat2..priests[i].." ("..tidtext..") ";
-					tidtext = vbm_c_w..tidtext;
-				else
-					texttochat2 = texttochat2..priests[i].." (Ready) ";
-					tidtext = vbm_c_g.."Ready";
-				end
-			else
-				--nodata found
-				texttochat2 = texttochat2..priests[i].." (Ready*) ";
-				tidtext = vbm_c_g.."Ready"..vbm_c_w.."*";
-			end
-			text = text.."\n"..vbm_c_grey..priests[i].." "..vbm_c_grey.."("..tidtext..vbm_c_grey..")";
-		end
-	else
-		text = text.."\n"..vbm_c_grey.."No Priests in Group";
-	end
-	--Tranquility
-	text = text.."\n"..vbm_c_w.."Tranquility:";
-	if(#druids > 0) then
-		table.sort(druids);
-		texttochat2 = texttochat2.."Tranquility: ";
-		local tid,tidtext;
-		for i=1,#druids do
-			--get data
-			if(rebirth.druidheal[druids[i]]) then
-				--found Tranquility data
-				tid = rebirth.druidheal[druids[i]].O - time();
-				if(tid > 0) then
-					tidtext = string.format("%d:%.2d",tid/60,math.fmod(tid,60));
-					texttochat2 = texttochat2..druids[i].." ("..tidtext..") ";
-					tidtext = vbm_c_w..tidtext;
-				else
-					texttochat2 = texttochat2..druids[i].." (Ready) ";
-					tidtext = vbm_c_g.."Ready";
-				end
-			else
-				--nodata found
-				texttochat2 = texttochat2..druids[i].." (Ready*) ";
-				tidtext = vbm_c_g.."Ready"..vbm_c_w.."*";
-			end
-			text = text.."\n"..VBM_GetTextClassColor("DRUID")..druids[i].." "..vbm_c_grey.."("..tidtext..vbm_c_grey..")";
-		end
-	else
-		text = text.."\n"..vbm_c_grey.."No Druids in Group";
-	end
+	    -- HEALING SPELLS **************************************************************
+    	text = text.."\n"..vbm_c.."AOE Healing Tracking:";
+    	--Divine Hymn
+    	text = text.."\n"..vbm_c_w.."Divine Hymn:";
+    	if(#priests > 0) then
+    		table.sort(priests);
+    		texttochat2 = texttochat2.."Divine Hymn: ";
+    		local tid,tidtext;
+    		for i=1,#priests do
+    			--get data
+    			if(rebirth.priestheal[priests[i]]) then
+    				--found Tranquility data
+    				tid = rebirth.priestheal[priests[i]].O - time();
+    				if(tid > 0) then
+    					tidtext = string.format("%d:%.2d",tid/60,math.fmod(tid,60));
+    					texttochat2 = texttochat2..priests[i].." ("..tidtext..") ";
+    					tidtext = vbm_c_w..tidtext;
+    				else
+    					texttochat2 = texttochat2..priests[i].." (Ready) ";
+    					tidtext = vbm_c_g.."Ready";
+    				end
+    			else
+    				--nodata found
+    				texttochat2 = texttochat2..priests[i].." (Ready*) ";
+    				tidtext = vbm_c_g.."Ready"..vbm_c_w.."*";
+    			end
+    			text = text.."\n"..vbm_c_grey..priests[i].." "..vbm_c_grey.."("..tidtext..vbm_c_grey..")";
+    		end
+    	else
+    		text = text.."\n"..vbm_c_grey.."No Priests in Group";
+    	end
+	    --Tranquility
+    	text = text.."\n"..vbm_c_w.."Tranquility:";
+    	if(#druids > 0) then
+    		table.sort(druids);
+    		texttochat2 = texttochat2.."Tranquility: ";
+    		local tid,tidtext;
+    		for i=1,#druids do
+    			--get data
+    			if(rebirth.druidheal[druids[i]]) then
+    				--found Tranquility data
+    				tid = rebirth.druidheal[druids[i]].O - time();
+    				if(tid > 0) then
+    					tidtext = string.format("%d:%.2d",tid/60,math.fmod(tid,60));
+    					texttochat2 = texttochat2..druids[i].." ("..tidtext..") ";
+    					tidtext = vbm_c_w..tidtext;
+    				else
+    					texttochat2 = texttochat2..druids[i].." (Ready) ";
+    					tidtext = vbm_c_g.."Ready";
+    				end
+    			else
+    				--nodata found
+    				texttochat2 = texttochat2..druids[i].." (Ready*) ";
+    				tidtext = vbm_c_g.."Ready"..vbm_c_w.."*";
+    			end
+    			text = text.."\n"..VBM_GetTextClassColor("DRUID")..druids[i].." "..vbm_c_grey.."("..tidtext..vbm_c_grey..")";
+    		end
+    	else
+    		text = text.."\n"..vbm_c_grey.."No Druids in Group";
+    	end
+    else
+		text = text.."\n"..vbm_c_r.."Not in Group";
+		texttochat = texttochat.."Not in Group";
+    end
 	
 	-- SAVE **************************************************************
 	text = text.."\n"..vbm_c_grey.."(Shift+Click): Paste to chat.";
-	text = text.."\n"..vbm_c_w.."*"..vbm_c_grey.." = Not seen the spell casted, so assuming ready.";
+    if(IsInRaid() or GetNumGroupMembers()>0) then 
+    	text = text.."\n"..vbm_c_w.."*"..vbm_c_grey.." = Not seen the spell casted, so assuming ready.";
+    end
 	self.texttochat = texttochat;
 	self.texttochat2 = texttochat2;
 	GameTooltip:SetOwner(self);

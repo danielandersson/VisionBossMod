@@ -762,7 +762,8 @@ end
 ]]--
 
 function VBM_UpdateRaidSizeDifficulty()
-	local _, _, difficulty, _, _, playerDifficulty, isDynamicInstance, _, instanceGroupSize = GetInstanceInfo();
+	--local _, _, difficulty, _, _, playerDifficulty, isDynamicInstance, _, instanceGroupSize = GetInstanceInfo();
+	local _, _, difficulty, _, _, _, _, _, instanceGroupSize = GetInstanceInfo();
 	--set size
 	if(difficulty==1 or difficulty==3) then
 		VBM_DUNGEON_SIZE = 10;
@@ -772,6 +773,18 @@ function VBM_UpdateRaidSizeDifficulty()
         VBM_DUNGEON_SIZE = instanceGroupSize;
 	end
 	--set difficulty
+    if(difficulty == 3 or difficulty == 4 or difficulty == 14) then
+        VBM_DUNGEON_DIFFICULTY = 1;
+        VBM_RAID_NORMAL = true;
+    elseif(difficulty == 5 or difficulty == 6 or difficulty == 15) then
+        VBM_DUNGEON_DIFFICULTY = 2;
+        VBM_RAID_HEROIC = true;
+    elseif(difficulty == 16) then
+        VBM_RAID_MYTHIC = true;
+    elseif(difficulty == 17) then
+        VBM_RAID_LFR = true;
+    end
+    --[[
 	if(isDynamicInstance) then
 		local selectedRaidDifficulty = difficulty;
 		if ( playerDifficulty == 1 ) then
@@ -791,6 +804,7 @@ function VBM_UpdateRaidSizeDifficulty()
 			VBM_DUNGEON_DIFFICULTY = 1;
 		end
 	end
+    ]]--
 end
 
 function VBM_DoZoneDetect()
@@ -799,18 +813,30 @@ function VBM_DoZoneDetect()
 	if(VBM_Instaces[zone]) then
 		VBM_ZONE = zone;
 		local extratext = "";
-		if(GetRaidDifficultyID()==3 or GetRaidDifficultyID()==5) then
+        local _,_,rid = GetInstanceInfo();
+        if rid==3 then extratext = " (Legacy 10)"
+        elseif rid==4 then extratext = " (Legacy 25)"
+        elseif rid==5 then extratext = " (Legacy 10H)"
+        elseif rid==6 then extratext = " (Legacy 25H)"
+        elseif rid==7 or rid==17 then
+            extratext = " (LFR)";
+        elseif rid==15 then
+            extratext = " (Heroic)";
+        elseif rid==16 then
+            extratext = " (Mythic)";
+        end
+		--[[if(GetRaidDifficultyID()==3 or GetRaidDifficultyID()==5) then
 			extratext  = " (Legacy 10)";
 		elseif(GetRaidDifficultyID()==4 or GetRaidDifficultyID()==6) then
 			extratext  = " (Legacy 25)";
-		end
+		end]]--
 		
-		vbm_printc("Now in a supported zone: |cFFFFFFFF"..VBM_ZONE..extratext.."|cFF8888CC VBM has been turned on");
+		vbm_printc("Supported Zone: |cFFFFFFFF"..VBM_ZONE..extratext.."|cFF8888CC VBM:|cFFFFFFFF on");
 		VBM_AutoZoneIn();
 		--load boss data
 		if(VBM_LoadInstance[VBM_ZONE]) then
 			VBM_LoadInstance[VBM_ZONE]();
-			vbm_verbosec("Found boss data for this zone");
+			vbm_verbosec("Zone Bosses loaded!");
 		end
 		--update size and difficulty
 		--VBM_UpdateRaidSizeDifficulty(); handled by event instead
@@ -823,7 +849,7 @@ function VBM_DoZoneDetect()
 		vbm_send_mess("GETBOSS");
 	else
 		if(VBM_ZONE) then
-			vbm_printc("You are no longer in |cFFFFFFFF"..VBM_ZONE.."|cFF8888CC VBM is turning off");
+			vbm_printc("Leaving: |cFFFFFFFF"..VBM_ZONE.."|cFF8888CC VBM:|cFFFFFFFF off");
 			VBM_AutoZoneOut();
 			VBM_ZONE = false;
 			--VBM_DUNGEON_DIFFICULTY = nil; handled by event instead
@@ -1272,7 +1298,7 @@ function vbm_print_table(d,l)
 end
 
 function vbm_printc(msg)
-	vbm_print("|cFF8888CC<VisionBossMod> "..msg);
+	vbm_print("|cFF8888CC<VBM> "..msg);
 end
 
 function vbm_verbose(msg) -- vbm_verbose("|cFF4444CC<VisionBossMod> MSG");
@@ -1282,7 +1308,7 @@ function vbm_verbose(msg) -- vbm_verbose("|cFF4444CC<VisionBossMod> MSG");
 end
 
 function vbm_verbosec(msg)
-	vbm_verbose("|cFF4444CC<VisionBossMod> "..msg);
+	vbm_verbose("|cFF4444CC<VBM> "..msg);
 end
 
 function vbm_debug(msg)
