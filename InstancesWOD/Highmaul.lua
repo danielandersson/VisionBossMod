@@ -253,7 +253,7 @@ VBM_LoadInstance["Highmaul"] = function()
     VBM_BOSS_DATA["Pol"] = {
         realname = "Twin Ogron",
 		start = function()
-            VBM_TMP_COUNT = 1;
+            VBM_COUNT = 1;
             polInterval = VBM_RAID_MYTHIC and 23 or VBM_RAID_HEROIC and 26 or 28;
             phemosInterval = VBM_RAID_MYTHIC and 28 or VBM_RAID_HEROIC and 31 or 33;
             quakeCount = 0;
@@ -355,7 +355,9 @@ VBM_LoadInstance["Highmaul"] = function()
             local target = VBM_GetUnitReferens("Pol");
             if(target) then
                 if(UnitPower(target) >= 98) then
-                    VBM_RC_Auto_Show(3,1);
+                    VBM_RC_Auto_Show(10,1);
+                else
+                    VBM_RC_Auto_Hide();
                 end
             end
         end,
@@ -400,7 +402,7 @@ VBM_LoadInstance["Highmaul"] = function()
                 vbm_say("Supression Field - "..VBM_YOU);
             end},
             ["Expel Magic: Fire"] = {VBM_WarnTextIcon("Expel Magic: Fire","inv_elemental_primal_fire"),function()
-                VBM_RC_Auto_Show(5, 1);
+                VBM_RC_Auto_Show(10, 1);
                 --VBM_Delay(11,VBM_RC_Auto_Hide);
             end,false,function()
                 VBM_RC_Auto_Hide();
