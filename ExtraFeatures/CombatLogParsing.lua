@@ -135,8 +135,8 @@ function VBM_SSDI_Alert(timestamp,combatEvent,hideCaster,sourceGUID,sourceName,s
     --check for a cast of MOLL-E
 	if(combatEvent == "SPELL_CAST_SUCCESS" and sourceName) then
 		if(spellName == "MOLL-E") then
-			vbm_infowarn(vbm_c_w..sourceName..vbm_c.." cast "..vbm_c_g.."MOLL-E",12);
-			vbm_printc(CombatLog_String_GetIcon(sourceFlags, "source")..vbm_c_w..sourceName..vbm_c_p.." cast "..vbm_c_g.."MOLL-E");
+			vbm_infowarn(vbm_c_w..sourceName..vbm_c.." summoned "..vbm_c_g.."MOLL-E",12);
+			vbm_printc(CombatLog_String_GetIcon(sourceFlags, "source")..vbm_c_w..sourceName..vbm_c_p.." summoned "..vbm_c_g.."MOLL-E");
 		end
 	end
 end

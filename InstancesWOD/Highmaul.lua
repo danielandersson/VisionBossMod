@@ -10,7 +10,7 @@ VBM_LoadInstance["Highmaul"] = function()
             VBM_BossTimer(37,"Impale",VBM_ICONS.."ability_rogue_hungerforblood");
             VBM_BossTimer(48,"Berserker Rush",VBM_ICONS.."ability_fixated_state_red");
             VBM_BossTimer(90,"Chain Hurl",VBM_ICONS.."inv_misc_steelweaponchain");
-            VBM_LoopTimerSetup(20,"Flame Pillar Spawn",VBM_ICONS.."ability_mage_firestarter");
+            VBM_LoopTimer_Setup(20,"Flame Pillar Spawn",VBM_ICONS.."ability_mage_firestarter");
         end,
         debuffs = {
             ["Mauling Brew"] = {vbm_c_g.."* * * Mauling Brew * * *"},
@@ -112,11 +112,10 @@ VBM_LoadInstance["Highmaul"] = function()
     --[[ ** Brackenspore ** ]]--
     VBM_BOSS_DATA["Brackenspore"] = {
 		start = function()
-            VBM_BossTimer(32,"Necrotic Breath",VBM_ICONS.."ability_mage_worldinflamesgreen");
             VBM_BossTimer(45,"Infesting Spores",VBM_ICONS.."ability_creature_disease_01");
             VBM_BossTimer(10*60,"Berserk",VBM_ICONS.."spell_shadow_unholyfrenzy");
-            VBM_BossTimer(18,"Living Mushroom",VBM_ICONS.."inv_misc_starspecklemushroom");
-            VBM_BossTimer(82,"Rejuvenating Mushroom",VBM_ICONS.."inv_elemental_primal_mana");
+            --VBM_BossTimer(18,"Living Mushroom",VBM_ICONS.."inv_misc_starspecklemushroom");
+            --VBM_BossTimer(82,"Rejuvenating Mushroom",VBM_ICONS.."inv_elemental_primal_mana");
         end,
         debuffs = {
             ["Creeping Moss"] = {vbm_c_g.."* * * Creeping Moss * * *"},
@@ -135,15 +134,6 @@ VBM_LoadInstance["Highmaul"] = function()
                     vbm_say("Rot - "..a.." Stacks - "..VBM_YOU);
 				end,
 			},
-            ["Necrotic Breath Tracker"] = {
-                event = "SPELL_CAST_START",
-                spell = "Necrotic Breath",
-                texture = "ability_mage_worldinflamesgreen",
-                func = function()
-                    VBM_RemoveTimer("Necrotic Breath");
-                    VBM_BossTimer(32,"Necrotic Breath",VBM_ICONS.."ability_mage_worldinflamesgreen");
-                end,
-            },
             ["Necrotic Breath"] = {
                 event = "SPELL_DAMAGE",
                 spell = "Necrotic Breath",
@@ -187,20 +177,20 @@ VBM_LoadInstance["Highmaul"] = function()
                 spell = "Living Mushroom",
                 sound = true,
                 mess = "* * Living Mushroom * *",
-                func = function()
+                --[[func = function()
                     VBM_RemoveTimer("Living Mushroom");
                     VBM_BossTimer(58,"Living Mushroom",VBM_ICONS.."inv_misc_starspecklemushroom");
-                end,
+                end,]]--
             },
             ["Rejuvenating Mushroom Tracker"] = {
                 event = "SPELL_CAST_SUCCESS",
                 spell = "Rejuvenating Mushroom",
                 sound = true,
                 mess = "* * Rejuvenating Mushroom * *",
-                func = function()
+                --[[func = function()
                     VBM_RemoveTimer("Rejuvenating Mushroom");
                     VBM_BossTimer(135,"Rejuvenating Mushroom",VBM_ICONS.."inv_elemental_primal_mana");
-                end,
+                end,]]--
             },
             ["Mind Fungus Tracker"] = {
                 event = "SPELL_CAST_SUCCESS",
