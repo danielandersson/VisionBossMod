@@ -4,7 +4,7 @@
 VBM_LoadInstance["Highmaul"] = function()
     --[[ ** Kargath Bladefist ** ]]--
     VBM_BOSS_DATA["Kargath Bladefist"] = {
-        rangecheck = 7,
+        rangecheck = 10,
         rccount = 1,
         start = function()
             VBM_BossTimer(37,"Impale",VBM_ICONS.."ability_rogue_hungerforblood");
@@ -134,7 +134,7 @@ VBM_LoadInstance["Highmaul"] = function()
                     vbm_say("Rot - "..a.." Stacks - "..VBM_YOU);
 				end,
 			},
-            ["Necrotic Breath"] = {
+--[[            ["Necrotic Breath"] = {
                 event = "SPELL_DAMAGE",
                 spell = "Necrotic Breath",
                 simonsound = true,
@@ -142,7 +142,7 @@ VBM_LoadInstance["Highmaul"] = function()
                 func = function()
                     vbm_infowarn(vbm_c_bronze.."* * * Necrotic Breath * * *");
                 end,
-            },
+            },]]--
             ["Infesting Spores Tracker"] = {
                 event = "SPELL_CAST_START",
                 spell = "Infesting Spores",
