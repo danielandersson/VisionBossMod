@@ -498,6 +498,7 @@ function VBM_LoopTimer_Setup(firsttime,name,extratime,texture)
 end
 
 function VBM_LoopTimer_Running(name,extratime,texture)
+    extratime = tonumber(extratime);
 	if(VBM_IsCurrentBossActive()) then
 		VBM_BossTimer(extratime-5,name,VBM_ICONS..texture);
 		VBM_DelayByName(name,extratime-5+5,VBM_LoopTimer_Running,name,extratime,texture);

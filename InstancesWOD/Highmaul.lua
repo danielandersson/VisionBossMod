@@ -458,6 +458,42 @@ VBM_LoadInstance["Highmaul"] = function()
             end
         end,
     };
+    --[[ ** Imperator Mar'gok ** ]]--
+    VBM_BOSS_DATA["Imperator Mar'gok"] = {
+        debuffs = {
+            ["Mark of Chaos"] = {VBM_WarnTextIcon("Mark of Chaos","spell_arcane_blast"),function()
+                if(UnitGroupRolesAssigned("player") == "TANK") then vbm_say("Mark of Chaos - "..VBM_YOU); end
+            end},
+            ["Destructive Resonance"] = {VBM_WarnTextIcon("Destructive Resonance","ability_socererking_arcanemines"),function()
+                vbm_say("Destructive Resonance - "..VBM_YOU);
+            end},
+            ["Arcane Wrath"] = {VBM_WarnTextIcon("Arcane Wrath","ability_socererking_arcanewrath"),function()
+                vbm_say("Arcane Wrath - "..VBM_YOU);
+            end},
+        },
+        spells = {
+            ["Accelerated Assault"] = {
+				event = "SPELL_AURA_APPLIED_DOSE",
+				spell = "Accelerated Assault",
+				amount = 9,
+				logic = ">",
+				dest = VBM_YOU,
+                simonsound = true,
+				func = function(s,d,a)
+					vbm_debuffwarn(vbm_c_r.."* * * Accelerated Assault - "..a.." Stacks * * *");
+                    vbm_say("Accelerated Assault - "..a.." Stacks - "..VBM_YOU);
+				end,
+            },
+            ["Force Nova"] = {
+                event = "SPELL_CAST_START",
+                spell = "Force Nova",
+                mess = "* * * Force Nova * * *",
+                color = "blue",
+                duration = 5,
+                lowersound = true,
+            },
+        },
+    };
 
     --[[ ** Trash ** ]]--
     VBM_BOSS_DATA["Trash"] = {
